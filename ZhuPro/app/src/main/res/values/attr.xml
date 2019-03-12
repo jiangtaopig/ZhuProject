@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="normalColor" format="color" /> <!-- 正常状态下圆圈的颜色 -->
+    <attr name="selectColor" format="color" /> <!-- 选中状态下圆圈的颜色 -->
+    <attr name="correctColor" format="color" /> <!-- 正确状态下圆圈的颜色 -->
+    <attr name="wrongColor" format="color" /> <!-- 错误状态下圆圈的颜色 -->
+    <attr name="lineWidth" format="dimension" /> <!-- 连线的宽度 -->
+
+    <declare-styleable name="LockView">
+        <attr name="normalColor" />
+        <attr name="selectColor" />
+        <attr name="correctColor" />
+        <attr name="wrongColor" />
+        <attr name="lineWidth" />
+    </declare-styleable>
+</resources>

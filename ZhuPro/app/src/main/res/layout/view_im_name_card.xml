@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:background="@drawable/round_4dp_fffe9e00_solid"
+    android:paddingTop="10dp"
+    >
+
+    <EditText
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"/>
+    <TextView
+        android:id="@+id/company"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#ff0000"
+        android:layout_marginLeft="15dp"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:lines="1"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="170dp"
+        android:background="@drawable/icon_default_avatar"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/company"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="14dp"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textColor="#999999"
+        android:textSize="13sp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="220dp"
+        android:layout_height="1px"
+        android:layout_below="@id/text3"
+        android:layout_marginTop="10dp"
+        android:background="#cccccc" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="4dp"
+        android:text="个人名片"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+</RelativeLayout>
