@@ -12,6 +12,8 @@ import com.example.za_zhujiangtao.zhupro.utils.RsaEncryptUtils;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -43,7 +45,18 @@ public class RsaActivity extends AppCompatActivity {
 
 
             rsaSignAndUnsign();
+            testList();
         });
+    }
+
+    private void testList(){
+        List<String> list = new ArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+        list.add("6");
     }
 
     private void rsaSignAndUnsign(){
