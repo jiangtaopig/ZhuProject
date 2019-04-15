@@ -14,20 +14,60 @@ public class TestMain {
     public static void main(String [] args){
 //        testSleep();
 //        testConsumerAndProducer();
-        testWait();
-
-        List list = new ArrayList();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("4");
-        list.add("5");
-        list.add("6");
-
-        List list1 = new LinkedList();
-        list1.add("1");
+//        testWait();
+        threadLocal();
+        int i = 3;
+        long j = 5;
     }
 
+
+    private static void threadLocal(){
+        final ThreadLocal<String> threadLocal = new ThreadLocal<String>(){
+            @Override
+            protected String initialValue() {
+                return "i an initial value";
+            }
+        };
+
+        System.out.println("main: "+threadLocal.get());
+
+        try {
+            Thread.currentThread().sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(){
+            @Override
+            public void run() {
+                System.out.println("thread: "+threadLocal.get());
+            }
+        }.start();
+    }
+
+    private static void testThreadLocal(){
+        final ThreadLocal<String> threadLocal = new ThreadLocal<>();
+        threadLocal.set("hello world");
+
+        System.out.println("main: "+threadLocal.get());
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                System.out.println("thread: "+threadLocal.get());
+            }
+        };
+
+        try {
+            thread.start();
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("main: "+threadLocal.get());
+    }
 
     /**
      * sleep 不会导致锁行为改变，如果当前的线程拥有锁，那么调用sleep后不会让线程释放锁, 而wait方法则会释放锁
