@@ -1,4 +1,4 @@
-package com.example.za_zhujiangtao.zhupro;
+package com.example.za_zhujiangtao.zhupro.bean;
 
 import java.util.List;
 

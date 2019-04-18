@@ -9,9 +9,10 @@ import android.widget.Button;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.example.za_zhujiangtao.zhupro.bean.ResultBean;
+import com.example.za_zhujiangtao.zhupro.utils.SharePreferenceUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

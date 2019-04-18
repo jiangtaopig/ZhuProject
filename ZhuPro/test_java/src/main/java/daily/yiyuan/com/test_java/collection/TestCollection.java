@@ -9,7 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * 测试集合
@@ -47,6 +50,28 @@ public class TestCollection {
         LinkedList<String> stringList = new LinkedList<>();
         stringList.add("a");
         System.out.println("last = "+stringList.getLast());
+
+        Queue<Integer> queue = new PriorityQueue<>();
+        queue.offer(3);
+        queue.offer(4);
+        queue.offer(1);
+        queue.offer(2);
+
+
+//        while (iterator.hasNext()){
+//            System.out.println(" 元素: "+iterator.next());
+//        }
+//        System.out.println("队列头元素："+queue.poll());
+
+        System.out.println("第2个元素"+queue.remove(2));
+        Iterator<Integer> iterator = queue.iterator();
+        while (iterator.hasNext()){
+            System.out.println(" 元素: "+iterator.next());
+        }
+
+        Vector<String> vector = new Vector<>();
+        vector.add("1");
+
     }
 
     private static void testConcurrentModificationException() {

@@ -1,10 +1,12 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -66,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        String s_question="问答题：String是基本类型吗？可以被继承吗？";
-        SpannableStringBuilder style=new SpannableStringBuilder(s_question);
-        style.setSpan(new BackgroundColorSpan(Color.parseColor("#f04343")),0,3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(Color.WHITE),0,3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        String s_question = "问答题：String是基本类型吗？可以被继承吗？";
+        SpannableStringBuilder style = new SpannableStringBuilder(s_question);
+        style.setSpan(new BackgroundColorSpan(Color.parseColor("#f04343")), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(Color.WHITE), 0, 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         mTv.setText(style);
 
         mImagview.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/20181203_182509521_69e22fe06226876716e29fcb5f7087aa.jpg"));
@@ -130,9 +132,10 @@ public class MainActivity extends AppCompatActivity {
 //                })
 //                .build().show(getSupportFragmentManager(), "xxx");
 
-                Intent intent = new Intent(MainActivity.this, TestAppBarActivity.class);
-                startActivity(intent);
-
+                Intent intent = new Intent(MainActivity.this, TransitionActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                }
 
 
             }
