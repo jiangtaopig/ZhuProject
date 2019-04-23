@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:textSize="15sp"
         android:textColor="#ffb6b6b6"
         android:text="收藏本次直播"

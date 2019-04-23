@@ -46,7 +46,7 @@
         <meta-data android:name="com.alibaba.app.appkey" android:value="25820455"/>
         <meta-data android:name="com.alibaba.app.appsecret" android:value="d2f915f756e7c1a5701b152c09e7424f"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".arouter.ARouterMainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>
@@ -56,6 +56,23 @@
         </activity>
 
         <activity android:name=".TransitionActivity"/>
+
+        <activity android:name=".arouter.RouterActivity1"/>
+
+        <activity android:name=".arouter.ARouterWebActivity"/>
+
+        <activity android:name=".arouter.ARouterUrlActivity"/>
+
+        <activity android:name=".arouter.URLReceiverActivity">
+            <intent-filter>
+                <data
+                    android:host="zhujiangtao"
+                    android:scheme="arouter"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
 
         <!--<activity android:name=".appbar_test.TestAppBarActivity"-->
             <!--android:screenOrientation="portrait"-->
