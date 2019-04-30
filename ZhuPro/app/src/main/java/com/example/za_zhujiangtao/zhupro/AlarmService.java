@@ -16,12 +16,10 @@ import android.widget.Toast;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.subjects.Subject;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by za-zhujiangtao on 2019/2/27.
@@ -38,7 +36,7 @@ public class AlarmService extends Service {
     private AlarmManager mAlarmManager;
     private PendingIntent mAlarmIntent;
 
-    private Disposable mTimerDisposable;
+    private Subscription mTimerDisposable;
 
     private TextToSpeech textToSpeech;
 
@@ -122,9 +120,9 @@ public class AlarmService extends Service {
                     speak("Yo yo check now，最商家收款35289元，好嗨哟,禤靐龘");
                     Observable.timer(300, TimeUnit.MILLISECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<Long>() {
+                            .subscribe(new Action1<Long>() {
                                 @Override
-                                public void accept(Long aLong) throws Exception {
+                                public void call(Long aLong) {
                                     speak("哈哈哈哈");
                                 }
                             });
@@ -158,56 +156,6 @@ public class AlarmService extends Service {
         }
     }
 
-    private void startTimer(){
-        Observable.interval(0,5000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subject<Long>() {
-                    @Override
-                    public boolean hasObservers() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasThrowable() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasComplete() {
-                        return false;
-                    }
-
-                    @Override
-                    public Throwable getThrowable() {
-                        return null;
-                    }
-
-                    @Override
-                    protected void subscribeActual(Observer<? super Long> observer) {
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mTimerDisposable = d;
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        Log.e(TAG, "aLong = "+aLong);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
 
     /**
      * 关闭服务

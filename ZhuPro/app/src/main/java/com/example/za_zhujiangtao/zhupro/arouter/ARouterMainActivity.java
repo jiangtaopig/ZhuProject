@@ -10,15 +10,29 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.za_zhujiangtao.zhupro.R;
+import com.example.za_zhujiangtao.zhupro.api.ApiComponent;
+import com.example.za_zhujiangtao.zhupro.api.ApiModule;
+import com.example.za_zhujiangtao.zhupro.api.ApplicationComponent;
+import com.example.za_zhujiangtao.zhupro.api.ApplicationModule;
+import com.example.za_zhujiangtao.zhupro.api.DaggerApiComponent;
+import com.example.za_zhujiangtao.zhupro.api.DaggerApplicationComponent;
+import com.example.za_zhujiangtao.zhupro.api.DataBase;
+import com.example.za_zhujiangtao.zhupro.api.MyApi;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class ARouterMainActivity extends AppCompatActivity {
-
 
     private final static String TAG = "ARouterMainActivity";
 
@@ -28,19 +42,61 @@ public class ARouterMainActivity extends AppCompatActivity {
     @BindView(R.id.url_jump_btn)
     Button mUrlJump;
 
+    @Inject
+    MyApi myApi;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_router_layout);
         ButterKnife.bind(this);
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+
+        ApiComponent component = DaggerApiComponent.builder()
+                .apiModule(new ApiModule())
+                .applicationComponent(applicationComponent)
+                .build();
+        component.inject(this);
+
+        getData();
+
+    }
+
+    private void getData() {
+        myApi.getMyData(4, 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<DataBase>() {
+                    @Override
+                    public void call(DataBase dataBase) {
+                        if (dataBase != null) {
+                            Log.e("ARouterMainActivity", "size = " + dataBase.getData().size());
+                        }
+                    }
+                });
     }
 
 
+    private void testInterval(){
+
+        Observable.timer(0, 3000, TimeUnit.MILLISECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .take(2)
+                .subscribe(aLong -> {
+                    Log.e("ARouterMainActivity", "testInterval , aLong = " + aLong);
+                });
+
+    }
+
     @OnClick(R.id.url_jump_btn)
     protected void urlJump(){
-        ARouter.getInstance().build("/test/webview")
-                .withString("url", "file:///android_asset/test.html")
-                .navigation();
+//        ARouter.getInstance().build("/test/webview")
+//                .withString("url", "file:///android_asset/test.html")
+//                .navigation();
+
+        testInterval();
     }
 
     @OnClick(R.id.jump_btn)

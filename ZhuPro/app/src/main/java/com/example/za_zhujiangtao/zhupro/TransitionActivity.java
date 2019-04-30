@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class TransitionActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class TransitionActivity extends AppCompatActivity {
     ImageView mImageView;
 
     private boolean mIsImageVisible = true;
-    private Disposable mDisposable;
+    private Subscription mDisposable;
     private MyHandler myHandler;
 
     @Override
@@ -89,7 +89,7 @@ public class TransitionActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDisposable.dispose();
+        mDisposable.unsubscribe();
     }
 
 
