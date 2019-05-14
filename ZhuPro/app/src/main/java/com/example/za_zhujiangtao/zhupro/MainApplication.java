@@ -1,5 +1,6 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +9,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+
+import java.util.List;
 
 /**
  * Created by za-zhujiangtao on 2019/3/12.
@@ -21,9 +24,19 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e("MainApplication", ".............onCreate...............");
         mContext = getApplicationContext();
         initCloudChannel(this);
         initARouter();
+
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> infoList = activityManager.getRunningAppProcesses();
+
+        if (infoList != null && infoList.size() >0){
+            for (ActivityManager.RunningAppProcessInfo info : infoList){
+                Log.e("MainApplication", "processName = "+info.processName);
+            }
+        }
     }
 
     /**

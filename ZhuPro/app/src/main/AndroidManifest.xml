@@ -46,7 +46,7 @@
         <meta-data android:name="com.alibaba.app.appkey" android:value="25820455"/>
         <meta-data android:name="com.alibaba.app.appsecret" android:value="d2f915f756e7c1a5701b152c09e7424f"/>
         <activity
-            android:name=".arouter.ARouterMainActivity"
+            android:name=".IPCActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>
@@ -73,6 +73,17 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
+
+        <service android:name=".MessengerService"
+            android:process=":remote"/>
+        <service android:name=".BookManagerService"
+            android:process=":remote2"/>
+        <provider
+            android:authorities="com.example.za_zhujiangtao.zhupro.book.provider"
+            android:name=".BookProvider"
+            android:process=":provider"
+            android:permission="com.example.za_zhujiangtao.PROVIDER"
+            />
 
         <!--<activity android:name=".appbar_test.TestAppBarActivity"-->
             <!--android:screenOrientation="portrait"-->
