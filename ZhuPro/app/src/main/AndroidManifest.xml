@@ -78,6 +78,8 @@
             android:process=":remote"/>
         <service android:name=".BookManagerService"
             android:process=":remote2"/>
+        <service android:name=".BinderPoolService"
+            android:process=":remote3"/>
         <provider
             android:authorities="com.example.za_zhujiangtao.zhupro.book.provider"
             android:name=".BookProvider"

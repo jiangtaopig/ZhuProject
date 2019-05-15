@@ -19,11 +19,17 @@ import android.util.Log;
 import android.widget.Button;
 
 
+import com.example.za_zhujiangtao.zhupro.iml.ComputeImpl;
+import com.example.za_zhujiangtao.zhupro.iml.SecurityCenterImpl;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 public class IPCActivity extends AppCompatActivity {
     private final static String TAG = "IPCActivity";
@@ -34,8 +40,8 @@ public class IPCActivity extends AppCompatActivity {
     @BindView(R.id.send_aidl_msg)
     Button mSendAidlMsg;
 
-    @BindView(R.id.provider_ipc)
-    Button mProviderIpc;
+    @BindView(R.id.binder_pool)
+    Button mBinderPool;
 
     private Messenger mMessenger;
     private IBookManager mBookManager;
@@ -59,9 +65,36 @@ public class IPCActivity extends AppCompatActivity {
             bindService(intent, mAidlConnect, Context.BIND_AUTO_CREATE);
         });
 
-        mProviderIpc.setOnClickListener(v -> {
-            Uri uri = Uri.parse(URI);
-//            getContentResolver().query(uri, null, null, null, null);
+        mBinderPool.setOnClickListener(v -> {
+            doWork();
+        });
+    }
+
+    private void doWork(){
+        Schedulers.computation().createWorker().schedule( () ->{
+            BinderPool binderPool = BinderPool.getInstance(IPCActivity.this);
+            IBinder securityBinder = binderPool.queryBinder(BinderPool.BINDER_SECURITY_CENTER);
+            if (securityBinder != null){
+                ISecurityCenter securityCenter = SecurityCenterImpl.asInterface(securityBinder);
+                try {
+                    String s = securityCenter.decrypt("安卓");
+                    Log.e(TAG, "......."+s);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            IBinder computeBinder = binderPool.queryBinder(BinderPool.BINDER_COMPUTE);
+            if (computeBinder != null){
+                ICompute iCompute = ComputeImpl.asInterface(computeBinder);
+                try {
+                    int sum = iCompute.add(3, 5);
+                    Log.e(TAG, ".......sum = "+sum);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
     }
 

@@ -21,10 +21,10 @@
         />
 
     <Button
-        android:id="@+id/provider_ipc"
+        android:id="@+id/binder_pool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Provider IPC"
+        android:text="Binder Pool"
         android:layout_margin="10dp"
         />
 
