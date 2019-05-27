@@ -1,6 +1,7 @@
 package com.example.za_zhujiangtao.zhupro;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
@@ -30,6 +31,7 @@ public class MyAliyunMessageReceiver extends MessageReceiver {
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
         Log.e("MyAliyunMessageReceiver", "onNotificationOpened, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap);
+        jump(context);
     }
 
     @Override
@@ -45,5 +47,10 @@ public class MyAliyunMessageReceiver extends MessageReceiver {
     @Override
     protected void onNotificationRemoved(Context context, String messageId) {
         Log.e("MyAliyunMessageReceiver", "onNotificationRemoved");
+    }
+
+    private void jump(Context context){
+        Intent intent = new Intent(context, TransitionActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -18,4 +18,12 @@
         android:text="url jump"
         android:textSize="24sp" />
 
+    <Button
+        android:id="@+id/test_intent_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test IntentService"
+        android:textSize="24sp" />
+
+
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.za_zhujiangtao.zhupro.arouter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.za_zhujiangtao.zhupro.MyIntentService;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.api.ApiComponent;
 import com.example.za_zhujiangtao.zhupro.api.ApiModule;
@@ -79,6 +81,13 @@ public class ARouterMainActivity extends AppCompatActivity {
                 });
     }
 
+    @OnClick(R.id.test_intent_service)
+    protected void onJumpIntentService(){
+        Intent intent = new Intent(this, MyIntentService.class);
+        intent.putExtra("NAME","ZZZZ");
+        startService(intent);
+
+    }
 
     private void testInterval(){
 
@@ -93,11 +102,11 @@ public class ARouterMainActivity extends AppCompatActivity {
 
     @OnClick(R.id.url_jump_btn)
     protected void urlJump(){
-//        ARouter.getInstance().build("/test/webview")
-//                .withString("url", "file:///android_asset/test.html")
-//                .navigation();
+        ARouter.getInstance().build("/test/webview")
+                .withString("url", "file:///android_asset/test.html")
+                .navigation();
 
-        testInterval();
+//        testInterval();
     }
 
     @OnClick(R.id.jump_btn)
