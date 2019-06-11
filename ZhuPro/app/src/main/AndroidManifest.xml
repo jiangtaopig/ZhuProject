@@ -47,7 +47,7 @@
         <meta-data android:name="com.alibaba.app.appkey" android:value="25820455"/>
         <meta-data android:name="com.alibaba.app.appsecret" android:value="d2f915f756e7c1a5701b152c09e7424f"/>
         <activity
-            android:name=".arouter.ARouterMainActivity"
+            android:name=".TransitionActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>
@@ -56,7 +56,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TransitionActivity"/>
+        <!--<activity android:name=".TransitionActivity"/>-->
 
         <activity android:name=".arouter.RouterActivity1"/>
 

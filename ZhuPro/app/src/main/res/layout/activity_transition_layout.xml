@@ -2,20 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Test Transition"
-        android:textSize="32sp"/>
 
     <Button
         android:id="@+id/click_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="start animation"
+        android:layout_marginTop="15dp"
         />
 
     <LinearLayout
@@ -48,5 +44,47 @@
             android:layout_marginTop="4dp"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/root2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="111"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="#00ff00"/>
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="222"
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:background="#ff0000"/>
+
+    </LinearLayout>
+
+    <com.jungly.gridpasswordview.GridPasswordView
+        android:id="@+id/pswView"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+
+        app:gpvTextColor="#2196F3"
+        app:gpvTextSize="25sp"
+        app:gpvLineColor="#2196F3"
+        app:gpvLineWidth="1dp"
+        app:gpvGridColor="#ffffff"
+        app:gpvPasswordLength="6"
+        app:gpvPasswordTransformation="$"
+        app:gpvPasswordType="numberPassword"/>
 
 </LinearLayout>

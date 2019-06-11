@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.transitionseverywhere.TransitionManager;
 
@@ -33,6 +35,15 @@ public class TransitionActivity extends AppCompatActivity {
 
     @BindView(R.id.image_view)
     ImageView mImageView;
+
+    @BindView(R.id.root2)
+    LinearLayout mRoot2;
+
+    @BindView(R.id.tv1)
+    TextView mTv1;
+
+    @BindView(R.id.tv2)
+    TextView mTv2;
 
     private boolean mIsImageVisible = true;
     private Subscription mDisposable;
@@ -74,6 +85,22 @@ public class TransitionActivity extends AppCompatActivity {
             mImageView.setVisibility(View.VISIBLE);
         }
         mIsImageVisible = !mIsImageVisible;
+    }
+
+    @OnClick(R.id.tv1)
+    protected void horizontalTransition(){
+        com.transitionseverywhere.Slide slide = new com.transitionseverywhere.Slide(Gravity.RIGHT);
+        TransitionManager.beginDelayedTransition(mRoot2, slide);
+        mTv1.setVisibility(View.GONE);
+        mTv2.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.tv2)
+    protected void horizontalTransition2(){
+        com.transitionseverywhere.Slide slide = new com.transitionseverywhere.Slide(Gravity.RIGHT);
+        TransitionManager.beginDelayedTransition(mRoot2, slide);
+        mTv1.setVisibility(View.VISIBLE);
+        mTv2.setVisibility(View.GONE);
     }
 
     private void testMemoryLeak() {
