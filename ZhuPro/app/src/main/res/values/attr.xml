@@ -13,4 +13,19 @@
         <attr name="wrongColor" />
         <attr name="lineWidth" />
     </declare-styleable>
+
+    <declare-styleable name="PasswordView">
+        <attr name="passwordVisible" format="boolean" />
+        <attr name="passwordLength" format="integer" />
+        <attr name="passwordBackground" format="reference" />
+        <attr name="passwordSpacing" format="dimension" />
+        <attr name="passwordWidth" format="dimension" />
+        <attr name="passwordHeight" format="dimension" />
+        <attr name="passwordAppearance" format="reference" />
+        <attr name="passwordInputType" format="enum">
+            <enum name="text" value="0" />
+            <enum name="number" value="1" />
+        </attr>
+    </declare-styleable>
+
 </resources>

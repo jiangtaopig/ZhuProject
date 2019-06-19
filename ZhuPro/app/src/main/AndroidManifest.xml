@@ -46,8 +46,12 @@
         <!--阿里云推送的appkey和appsecret-->
         <meta-data android:name="com.alibaba.app.appkey" android:value="25820455"/>
         <meta-data android:name="com.alibaba.app.appsecret" android:value="d2f915f756e7c1a5701b152c09e7424f"/>
+
+        <!--Android 9.0开始如果想继续使用apache http的话，根据谷歌官方说明文档，需要在AndroidManifest.xml文件中application节点下添加配置说明-->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
-            android:name=".TransitionActivity"
+            android:name=".DefineViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>

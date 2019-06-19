@@ -12,6 +12,10 @@ android {
         versionName cfg.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        packagingOptions {
+            exclude 'META-INF/rxjava.properties'
+        }
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -85,4 +89,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.4'
 
     implementation 'com.jungly:gridPasswordView:0.3'
+
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 }

@@ -82,20 +82,44 @@ public class TestMain2 {
         Calendar calendar = Calendar.getInstance(Locale.CHINESE);
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
 
         System.out.println("year = "+year+", month = "+month+", day = "+day+", hour = "+hour+", minutes = "+minutes);
 
-        calendar.set(year, month, day, 16, 30,45);
+        calendar.set(year, month, day, 16, 30,0);
          year = calendar.get(Calendar.YEAR);
-         month = calendar.get(Calendar.MONTH);
+         int month1 = calendar.get(Calendar.MONTH);
          day = calendar.get(Calendar.DAY_OF_MONTH);
          hour = calendar.get(Calendar.HOUR_OF_DAY);
          minutes = calendar.get(Calendar.MINUTE);
-        System.out.println("year = "+year+", month = "+month+", day = "+day+", hour = "+hour+", minutes = "+minutes);
+        System.out.println("year = "+year+", month = "+month1+", day = "+day+", hour = "+hour+", minutes = "+minutes);
+        date2String(calendar.getTimeInMillis());
+
+
+        seconds2Date(date, 8*3600);
+    }
+
+    public static Date seconds2Date(Date date, int seconds){
+        int hour = getHour(seconds);
+        int minutes = getMinutes(seconds);
+        Calendar calendar =  Calendar.getInstance(Locale.CHINESE);
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(year, month, day, hour, minutes,0);
+        return calendar.getTime();
+    }
+
+    public static int getHour(int time){
+        return time / 3600;
+    }
+
+    public static int getMinutes(int time){
+        return time % 3600 / 60;
     }
 
 }
