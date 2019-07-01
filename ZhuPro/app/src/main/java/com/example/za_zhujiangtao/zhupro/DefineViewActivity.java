@@ -8,7 +8,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import butterknife.BindView;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DefineViewActivity extends BaseActivity {
 
@@ -27,7 +32,24 @@ public class DefineViewActivity extends BaseActivity {
     protected void onInitLogic() {
         mTv.setOnClickListener(v -> {
             performAnimation(mTv, mTv.getWidth(), 600);
-            displayInputDialog();
+//            displayInputDialog();
+            OkHttpClient client = new OkHttpClient();
+            new Thread(){
+                @Override
+                public void run() {
+                    Request request = new Request.Builder()
+                            .url("https://www.imooc.com/api/teacher?type=4&num=1")
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        Log.e("xxx", "response = "+response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
+
         });
     }
 

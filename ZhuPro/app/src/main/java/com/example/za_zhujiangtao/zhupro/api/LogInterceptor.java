@@ -20,12 +20,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.internal.Platform;
-import okhttp3.internal.http.HttpEngine;
+import okhttp3.internal.http.HttpHeaders;
+import okhttp3.internal.platform.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
 
-import static okhttp3.internal.Platform.INFO;
+import static okhttp3.internal.platform.Platform.INFO;
 
 /**
  * Created by za-zhujiangtao on 2018/8/7.
@@ -250,7 +250,7 @@ public class LogInterceptor implements Interceptor {
                 bean.setResponseHeaders(response_Headers);
             }
 
-            if (!logBody || !HttpEngine.hasBody(response)) {
+            if (!logBody || !HttpHeaders.hasBody(response)) {
                 logger.log("<-- END HTTP");
             } else if (bodyEncoded(response.headers())) {
                 logger.log("<-- END HTTP (encoded body omitted)");

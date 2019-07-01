@@ -41,8 +41,7 @@ public class TimeSelectActivity extends AppCompatActivity {
 
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(GridAdapter.ROW_NUMBER, StaggeredGridLayoutManager.HORIZONTAL);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mGridAdapter = new GridAdapter(9, 23, gridLayoutManager);
-//        mGridAdapter.setSelectedTime(time2Long("2019.06.04-10:15:00"), time2Long("2019.06.04-14:45:00"));
+        mGridAdapter = new GridAdapter(0, 23, gridLayoutManager);
         List<SelectTimeBean> selectTimeBeans = new ArrayList<>();
         SelectTimeBean bean1 = new SelectTimeBean(time2Long("2019.06.04-10:15:00"), time2Long("2019.06.04-11:30:00"));
         SelectTimeBean bean2 = new SelectTimeBean(time2Long("2019.06.04-12:00:00"), time2Long("2019.06.04-14:45:00"));
@@ -51,6 +50,9 @@ public class TimeSelectActivity extends AppCompatActivity {
         mGridAdapter.setSelectTimeBeanList(selectTimeBeans);
 
         mRecyclerView.setAdapter(mGridAdapter);
+
+        //滚动到指定位置，一定要是5的倍数，因为我们一列数据有5条
+        ((StaggeredGridLayoutManager)mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(80, 0);
     }
 
     private long time2Long(String time) {
