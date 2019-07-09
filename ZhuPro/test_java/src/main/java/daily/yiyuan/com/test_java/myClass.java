@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util.println;
 
 public class myClass {
 
@@ -23,7 +22,6 @@ public class myClass {
         int val = 197400;
         double vv = val / 100.0;
         System.out.println("vv = " + vv);
-        println("hello ,world");
 
         String s1 = "hello";
         String s2 = "hello";

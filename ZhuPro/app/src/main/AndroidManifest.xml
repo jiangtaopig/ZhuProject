@@ -51,7 +51,7 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
-            android:name=".TimeSelectActivity"
+            android:name=".DefineViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>

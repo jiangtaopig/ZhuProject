@@ -1,6 +1,8 @@
 package daily.yiyuan.com.test_java.leet_code;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +54,55 @@ public class TestMain {
             r = r.next;
         }
 
-        int [] a3 = {1, 3, 4, 7,9};
-        int index = binarySearch(a3,9);
-        System.out.println("index = "+index);
+        int[] a3 = {1, 3, 4, 7, 9};
+        int index = binarySearch(a3, 9);
+        System.out.println("index = " + index);
 
-        int [] a4 = {1,3};
-        int [] ss = searchRange(a4, 1);
-        System.out.println("ss[0]="+ss[0]+", ss[1] = "+ss[1]);
+        int[] a4 = {1, 3};
+        int[] ss = searchRange(a4, 1);
+        System.out.println("ss[0]=" + ss[0] + ", ss[1] = " + ss[1]);
 
+        heapSort();
 
-        int [] A = {3, 7, 2, 11, 3, 4, 9, 2, 18, 0};
+        findSubStr();
+
+        findMinFullSubString();
+
+        int[] arrs = {7, 2, 4, 7, 6, 8, 1};
+        listNodeInsertSort(arrs);
+        int[] arrs2 = {-1, -3, 1, 2, 3, 5};
+        int sum = largestSumAfterKNegations(arrs2, 1);
+
+        partitionLabels("tabcqbdcmnj");
+
+    }
+
+    private static void listNodeInsertSort(int[] arrs) {
+        ListNode listNode = initListNodeWithoutHead(arrs);
+        ListNode head = insertSort(listNode);
+        ListNode s = head;
+        while (s != null) {
+            System.out.println("---" + s.val + "---");
+            s = s.next;
+        }
+    }
+
+    private static void findMinFullSubString() {
+        String s = "a";
+        String t = "aa";
+        String minString = minWindow(s, t);
+        System.out.println("minString = " + minString);
+    }
+
+    private static void findSubStr() {
+        String s = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+        String[] words = {"fooo", "barr", "wing", "ding", "wing"};
+        List<Integer> integerList = findSubstring(s, words);
+        System.out.println("substring index = " + integerList);
+    }
+
+    private static void heapSort() {
+        int[] A = {3, 7, 2, 11, 3, 4, 9, 2, 18, 0};
         HeapSort heapSort = new HeapSort();
         heapSort.buildMaxHeap(A);
         heapSort.heapSort();
@@ -139,36 +180,62 @@ public class TestMain {
      */
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        boolean isAdded = false;
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        List<Integer> tmp = new ArrayList<>();
-                        tmp.add(nums[i]);
-                        tmp.add(nums[j]);
-                        tmp.add(nums[k]);
-                        if (nums[i] == 0 && nums[j] == 0) {
-                            if (!isAdded) {
-                                isAdded = true;
-                                res.add(tmp);
-                            }
-                        } else {
-                            if (res.size() > 0) {
-                                for (int t = res.size() - 1; t >= 0; t--) {
-                                    List<Integer> list = res.get(t);
-                                    if (list.contains(tmp.get(0)) && list.contains(tmp.get(1)) && list.contains(tmp.get(2))) {
-                                        break;
-                                    } else if (t == 0) {
-                                        res.add(tmp);
-                                    }
-                                }
-                            } else {
-                                res.add(tmp);
-                            }
-                        }
-                    }
+        Arrays.sort(nums);
+
+        for (int k = 0; k< nums.length -2; k++){
+            if (nums[k] > 0)
+                break;
+            if (k > 0 && nums[k] == nums[k-1])//说明这个数在上一次已经查找了，避免重复
+                continue;
+            int i = k+1;
+            int j = nums.length - 1;
+            while (i < j){
+                int sum = nums[k] + nums[i] + nums[j];
+                if (sum > 0){
+                    while (i<j && nums[j] == nums[--j]){}
+                }else if (sum < 0){
+                    while (i<j && nums[i] == nums[++i]){}
+                }else {
+                    List<Integer> tmpList = new ArrayList<>();
+                    tmpList.add(nums[k]);
+                    tmpList.add(nums[i]);
+                    tmpList.add(nums[j]);
+                    res.add(tmpList);
+                    while (i < j && nums[i] == nums[++i]){}
+                    while (i<j && nums[j] == nums[--j]){}
                 }
+            }
+        }
+        return res;
+    }
+
+    /**
+     *  最接近的3数之和 ---- 例如，给定数组 nums = [-1，2，1，-4], 和 target = 1； 与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int threeSumClosest(int[] nums, int target) {
+        int sum = Integer.MAX_VALUE;
+        int res = Integer.MIN_VALUE;
+        Arrays.sort(nums);
+        for (int k = 0; k < nums.length -2; k++){
+            int i = k+1;
+            int j = nums.length -1;
+            while (i < j){
+                int tmp = nums[k] + nums[i] + nums[j];
+                int diff = Math.abs(tmp - target);
+                if (diff <= sum){
+                    sum = diff;
+                    res = tmp;
+                }
+               if (tmp > target){
+                   j--;
+               }else if (tmp < target){
+                   i++;
+               }else {
+                   return tmp;
+               }
             }
         }
         return res;
@@ -264,9 +331,9 @@ public class TestMain {
     //.................................................................3、无重复字符的最长子串.................................
 
     public static int lengthOfLongestSubstring(String s) {
-        int n = s.length(), ans = 0;
+        int n = s.length(), ans = 0, start = 0;
         Map<Character, Integer> map = new HashMap<>();
-        for (int end = 0, start = 0; end < n; end++) {
+        for (int end = 0; end < n; end++) {
             char alpha = s.charAt(end);
             if (map.containsKey(alpha)) {
                 start = Math.max(map.get(alpha), start);//找到不重复数据的开始index
@@ -664,50 +731,400 @@ public class TestMain {
         return prehead.next;
     }
 
-    //...............................................13、在排序数组中查找元素的第一个和最后一个位置.....................................
+    //...............................................13、在排序数组中查找相同元素的第一个和最后一个位置.....................................
+    //[1, 2, 3, 3,3, 5] ，3 结果是[2, 4]
 
-    public static int[] searchRange(int[] nums, int target){
-        int [] res = {-1, -1};
-        if (nums.length < 1){
+    public static int[] searchRange(int[] nums, int target) {
+        int[] res = {-1, -1};
+        if (nums.length < 1) {
             return res;
         }
         int index = binarySearch(nums, target);
         int tmp = index;
         int start = -1, end = -1;
-        if (index == -1){
+        if (index == -1) {
             return res;
         }
-        while (index < nums.length-1){
-            if (nums[++index] != target){
+        while (index < nums.length - 1) {
+            if (nums[++index] != target) {
                 break;
-            }else {
+            } else {
                 end = index;
             }
         }
 
-        while (index > 0){
-            if (nums[--index] != target){
+        while (index > 0) {
+            if (nums[--index] != target) {
                 break;
-            }else {
+            } else {
                 start = index;
             }
         }
-      if (start != -1 && end != -1){
-          res[0] = start;
-          res[1] = end;
-      }else if (start != -1){
-          res[0] = start;
-          res[1] = tmp;
-      }else if (end != -1){
-          res[0] = tmp;
-          res[1] = end;
-      }else {
-          res[0] = tmp;
-          res[1] = tmp;
-      }
-      return res;
+        if (start != -1 && end != -1) {
+            res[0] = start;
+            res[1] = end;
+        } else if (start != -1) {
+            res[0] = start;
+            res[1] = tmp;
+        } else if (end != -1) {
+            res[0] = tmp;
+            res[1] = end;
+        } else {
+            res[0] = tmp;
+            res[1] = tmp;
+        }
+        return res;
+    }
+
+    //.................................................................14.字符串相乘................
+
+    public static String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0"))
+            return String.valueOf(0);
+        int n = num1.length() + num2.length();
+        //使用一个数组保存结果的每一位，索引0确定m*n结果是m+n还是m+n-1位
+        int[] result = new int[n];
+        for (int i = 0; i < num1.length(); i++) {
+            int a = num1.charAt(i) - 48;
+            ;
+            for (int j = 0; j < num2.length(); j++) {
+                int m = a * (num2.charAt(j) - 48);
+                if (m < 10)
+                    result[i + j + 1] += m;
+                else {
+                    result[i + j + 1] += m % 10;
+                    result[i + j] += m / 10;
+                    int k = i + j;
+                    //先对i+j索引确定是否依次进位
+                    while (k > 0 && result[k] >= 10) {
+                        result[k] -= 10;
+                        result[k - 1]++;
+                        k--;
+                    }
+                }
+                //再看i+j+1索引是否产生进位
+                if (result[i + j + 1] >= 10) {
+                    int k = i + j + 1;
+                    while (k > 0 && result[k] >= 10) {
+                        result[k] -= 10;
+                        result[k - 1]++;
+                        k--;
+                    }
+                }
+            }
+        }
+        String res = "";
+        //判断m*n位是否是m+n位
+        if (result[0] == 0) {
+            for (int i = 1; i < result.length; i++) {
+                res += result[i];
+            }
+        } else {
+            for (int i = 0; i < result.length; i++) {
+                res += result[i];
+            }
+        }
+        return res;
+    }
+
+    //...........................................15.串联所有单词的子串...........................这一题的思想非常好.....................................................
+    //给定一个字符串 s 和一些长度相同的单词 words。找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。
+    //输入 s = "barfoothefoobarman",words = ["foo","bar"] 从索引 0 和 9 开始的子串分别是 "barfoor" 和 "foobar" 。
+    //输出的顺序不重要, [9,0] 也是有效答案。
+
+    /**
+     * 怎么判断子串是否符合？这也是这个题的难点了，由于子串包含的单词顺序并不需要固定，
+     * 如果是两个单词 A，B，我们只需要判断子串是否是 AB 或者 BA 即可。如果是三个单词 A，B，C 也还好，
+     * 只需要判断子串是否是 ABC，或者 ACB，BAC，BCA，CAB，CBA 就可以了，但如果更多单词呢？那就崩溃了。
+     * 用两个 HashMap 来解决。首先，我们把所有的单词存到 HashMap 里，key 直接存单词，value 存单词出现的个数（因为给出的单词可能会有重复的，所以可能是 1 或 2 或者其他）。
+     * 然后扫描字符串的单词，如果当前扫描的单词在之前的 HashMap 中，就把该单词存到新的 HashMap 中，并判断新的 HashMap 中该单词的 value 是不是大于之前的 HashMap 该单词的 value ，
+     * 如果大了，就代表该子串不是我们要找的，接着判断下一个子串就可以了。如果不大于，那么我们接着判断下一个单词的情况。字符串扫描结束，如果子串的全部单词都符合，那么该子串就是我们找的其中一个。
+     *
+     * @param s
+     * @param words
+     * @return
+     */
+    public static List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> integerList = new ArrayList<>();
+        int wordsNum = words.length;
+        if (words == null || words.length < 1) {
+            return integerList;
+        }
+        int wordLen = words[0].length();
+
+        Map<String, Integer> wordsMap = new HashMap<>();//将单词存到map中，key为单词，value为单词的次数
+        for (String val : words) {
+            wordsMap.put(val, wordsMap.getOrDefault(val, 0) + 1);
+        }
+
+        for (int i = 0; i < s.length() - wordLen * wordsNum + 1; i++) {
+            int cnt = 0;
+            Map<String, Integer> map = new HashMap<>();
+            while (cnt < wordsNum) {
+                String tmp = s.substring(i + cnt * wordLen, i + wordLen * (cnt + 1));
+                if (wordsMap.containsKey(tmp)) {
+                    map.put(tmp, map.getOrDefault(tmp, 0) + 1);
+                    if (map.get(tmp) <= wordsMap.get(tmp)) {
+                        cnt++;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            if (cnt == wordsNum) {
+                integerList.add(i);
+            }
+        }
+        return integerList;
+    }
+
+    //.....................................................16.最小覆盖子串...........最小滑动窗口方法.......................................................................................................................
+    //比如： s="ACESDBDCA" t = "ACB"; 最小覆盖子串就是 BDCA；
+
+    public static String minWindow(String s, String t) {
+        if (s.length() == 0 || t.length() == 0) {
+            return "";
+        }
+        int left = 0, right = 0;
+        int match = 0;
+        int start = 0, end = 0;//记录覆盖最小子串的起始位置
+        int minLen = -1;
+
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            tMap.put(t.charAt(i), tMap.getOrDefault(t.charAt(i), 0) + 1);
+        }
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (tMap.containsKey(c)) {
+                sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+                if (sMap.get(c).intValue() == tMap.get(c).intValue()) {
+                    match++;
+                }
+            }
+
+            //right - left + 1 表示覆盖子串的长度
+            while (match == tMap.size()) {
+                if (minLen == -1 || right - left + 1 < minLen) {
+                    start = left;
+                    end = right;
+                    minLen = right - left + 1;
+                }
+                char c2 = s.charAt(left);
+                if (sMap.containsKey(c2)) {
+                    sMap.put(c2, sMap.get(c2) - 1);
+                    if (sMap.get(c2).intValue() < tMap.get(c2).intValue()) {
+                        match--;
+                    }
+                }
+                left++;
+            }
+            right++;
+        }
+        return minLen == -1 ? "" : s.substring(start, end + 1);
+    }
+
+    public static String minWindow2(String s, String t) {
+        if (s.length() == 0 || t.length() == 0) {
+            return "";
+        }
+
+        Map<Character, Integer> dictT = new HashMap<Character, Integer>();
+        for (int i = 0; i < t.length(); i++) {
+            int count = dictT.getOrDefault(t.charAt(i), 0);
+            dictT.put(t.charAt(i), count + 1);
+        }
+
+        int required = dictT.size();
+
+        int l = 0, r = 0;
+        int formed = 0;
+        Map<Character, Integer> windowCounts = new HashMap<Character, Integer>();
+
+        int[] ans = {-1, 0, 0};
+
+        while (r < s.length()) {
+            char c = s.charAt(r);
+            int count = windowCounts.getOrDefault(c, 0);
+            windowCounts.put(c, count + 1);
+
+            if (dictT.containsKey(c) && windowCounts.get(c).intValue() == dictT.get(c).intValue()) {
+                formed++;
+            }
+
+            while (l <= r && formed == required) {
+                c = s.charAt(l);
+                if (ans[0] == -1 || r - l + 1 < ans[0]) {
+                    ans[0] = r - l + 1;
+                    ans[1] = l;
+                    ans[2] = r;
+                }
+
+                windowCounts.put(c, windowCounts.get(c) - 1);
+                if (dictT.containsKey(c) && windowCounts.get(c).intValue() < dictT.get(c).intValue()) {
+                    formed--;
+                }
+                l++;
+            }
+            r++;
+        }
+        return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
+    }
+
+    //...................................................................17. 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次--simple......................................
+    public static ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode p = head.next;
+        ListNode q = head;
+        while (p != null) {
+            if (p.val == q.val) {
+                p = p.next;
+                q.next = p;
+            } else {
+                p = p.next;
+                q = q.next;
+            }
+        }
+        return head;
+    }
+
+    //...................................................................18. 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次--simple......................................
+    // [1, 2, 2 ,4, 4, 5] => 1, 5和上面不同
+    public static ListNode deleteDuplicates2(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode L = new ListNode(-1);
+        L.next = head;
+        ListNode left = L;
+        ListNode right = L.next;
+        while (right != null) {
+            while (right.next != null && right.val == right.next.val)
+                right = right.next;
+            if (left.next == right) {
+                left = left.next;
+            } else {
+                left.next = right.next;
+            }
+            right = right.next;
+        }
+        return L.next;
     }
 
 
+    //..............................................................19.链表的冒泡排序............................
+    public static ListNode maopaoSort(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode p = head;
+        ListNode q;
+        int tmp;
+        while (p != null) {
+            q = p.next;
+            while (q != null) {
+                if (p.val > q.val) {
+                    tmp = p.val;
+                    p.val = q.val;
+                    q.val = tmp;
+                }
+                q = q.next;
+            }
+            p = p.next;
+        }
+        return head;
+    }
 
+    //........................................................20.链表的插入排序.....................................................
+    //通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应的位置并插入
+    public static ListNode insertSort(ListNode head) {
+        if (head == null)
+            return head;
+        ListNode L = new ListNode(-1);
+        ListNode pre = head;
+        ListNode cur = head.next;//从第二个结点开始比较
+        L.next = head;
+        while (cur != null) {
+            if (cur.val < pre.val) {
+                ListNode r = L.next;
+                ListNode p = L;
+                while (r != null) {
+                    if (r.val > cur.val) {//找到大于当前的值，，然后把当前的结点插入结点p的后面r的前面，
+                        pre.next = cur.next;//先把当前结点前面的一个结点指向当前结点的后面结点
+                        p.next = cur;//然后把当前的结点插入结点p的后面r的前面，
+                        cur.next = r;
+                        cur = pre.next;//让当前结点指向pre结点的后面结点
+                        break;
+                    } else {
+                        p = p.next;
+                        r = r.next;
+                    }
+                }
+            } else {
+                pre = pre.next;
+                cur = cur.next;
+            }
+        }
+        return L.next;
+    }
+
+    //..................................................21.将数组中的元素翻转(翻转的意思就是取反，2 翻转为-2)K次使得数组和最大.......................
+    public static int largestSumAfterKNegations(int[] A, int K) {
+        int res = 0;
+        Arrays.sort(A);
+        if (A[0] >= 0)
+            A[0] = K % 2 == 0 ? A[0] : -A[0];
+        else {
+            for (int i = 0; i < A.length; i++) {
+                if (A[i] >= 0) {
+                    if ((K - i) % 2 == 0)
+                        break;
+                    else if (A[i] > A[i - 1])
+                        A[i - 1] = -A[i - 1];
+                    else
+                        A[i] = -A[i];
+                    break;
+                } else {
+                    A[i] = -A[i];
+                }
+            }
+        }
+        for (int i = 0; i < A.length; i++) {
+            System.out.println("......A[" + i + "] = " + A[i]);
+            res += A[i];
+        }
+        return res;
+    }
+
+    //........................................22.划分字母区间............................................
+    //字符串 S 由小写字母组成。我们要把这个字符串划分为尽可能多的片段，同一个字母只会出现在其中的一个片段。返回一个表示每个字符串片段的长度的列表。
+    //输入 S = "ababcbacadefegdehijhklij" 输出 [9,7,8] 解释：划分结果为 "ababcbaca", "defegde", "hijhklij"。
+    //从第一个字符开始遍历，每获取一个字符就寻找该字符下一次出现的位置索引，并将其定为当前片段的最后位置，
+    // 在达到该位置之前， 继续寻找更靠后的最后位置，若达到最后位置之前都没有发现更靠后的最后位置，则将当前最后位置作为一个片段的末尾， 前个片段的末尾后一位是该片段的开头。
+    // 实际上是贪心算法思想的一次运用，在每一步中得到截止目前为止的局部最优解，后一个最优解总是比前一个最优解“更优”， 由此推进到结束时，便可得到全局最优解。
+    //
+    public static List<Integer> partitionLabels(String S) {
+        List<Integer> list = new ArrayList<>();
+        int end = 0;
+        int start = 0;
+        for (int i = 0; i< S.length(); i++){
+            char c = S.charAt(i);
+            int index = S.indexOf(c, i+1);
+            if (index == -1 && i >= end){
+                list.add(i - start +1);
+                start = i+1;
+            }else if (index > end){
+                end = index;
+            }
+        }
+        return list;
+    }
 }
+
+
+

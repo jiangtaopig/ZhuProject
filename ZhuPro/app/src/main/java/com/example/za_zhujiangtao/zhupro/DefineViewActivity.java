@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.za_zhujiangtao.zhupro.factory.Shape;
+import com.example.za_zhujiangtao.zhupro.factory.ShapeFactory;
+
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -48,9 +51,11 @@ public class DefineViewActivity extends BaseActivity {
                     }
                 }
             }.start();
-
-
         });
+
+        ShapeFactory shapeFactory = new ShapeFactory();
+        Shape shape = shapeFactory.create("Rectangle");
+        shape.draw();
     }
 
     private  void displayInputDialog() {

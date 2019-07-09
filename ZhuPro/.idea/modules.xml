@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZhuPro.iml" filepath="$PROJECT_DIR$/ZhuPro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/annotation_my/annotation_my.iml" filepath="$PROJECT_DIR$/annotation_my/annotation_my.iml" />
+      <module fileurl="file://$PROJECT_DIR$/annotation_processor/annotation_processor.iml" filepath="$PROJECT_DIR$/annotation_processor/annotation_processor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/test_java/test_java.iml" filepath="$PROJECT_DIR$/test_java/test_java.iml" />
       <module fileurl="file://$PROJECT_DIR$/wheelLibrary/wheelLibrary.iml" filepath="$PROJECT_DIR$/wheelLibrary/wheelLibrary.iml" />

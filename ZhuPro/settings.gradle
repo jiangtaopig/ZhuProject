@@ -1,1 +1,1 @@
-include ':app', ':wheelLibrary', ':test_java'
+include ':app', ':wheelLibrary', ':test_java', ':annotation_processor', ':annotation_my'
