@@ -75,6 +75,9 @@ public class TestMain {
 
         partitionLabels("tabcqbdcmnj");
 
+        int [] arr3 = {3, 1, 3, 3};
+        singleNumber(arr3);
+
     }
 
     private static void listNodeInsertSort(int[] arrs) {
@@ -1124,6 +1127,88 @@ public class TestMain {
         }
         return list;
     }
+
+    //.......................................23. 所有的数都出现3次，只有一个数出现1次，找出这个数......................
+    //将所有的数按位操作加起来，然后对3取模，如[4, 4, 4,2] = 0100+0100+0100+0010 = 0310 每一位都对3取模 = 0010 = 2
+    public static int singleNumber(int[] nums) {
+        int ones = 0, twos = 0, threes = 0;
+        for(int num : nums){
+            twos |= ones & num;
+            ones ^= num;
+            threes = ones & twos;
+            ones &= ~threes;
+            twos &= ~threes;
+        }
+        return ones;
+    }
+
+    //.....................................24.删除结点......................simple............................
+    //从链表里删除一个节点 node, 且只给这个待删除的node，且该结点不是最后一个结点
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    //...............................25.判断一个链表是否为回文....................
+    public static boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null){
+            return true;
+        }
+
+        ListNode p = head;
+        ListNode L = new ListNode(-1);
+        ListNode r = L;
+        while (p != null){
+            ListNode t = new ListNode(p.val);
+            t.next = r.next;
+            r.next = t;
+            p = p.next;
+        }
+        p = head;
+        r = L.next;
+        while (p != null){
+            if (p.val != r.val){
+                return false;
+            }else {
+                p = p.next;
+                r = r.next;
+            }
+        }
+        return true;
+    }
+
+    //..........................26链表反转............................
+    public static ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode p = head;
+        ListNode L = new ListNode(-1);
+        ListNode r = L;
+        while (p != null){
+            ListNode t = new ListNode(p.val);
+            t.next = r.next;
+            r.next = t;
+            p = p.next;
+        }
+        return L.next;
+    }
+
+    //...........................27.删除链表的特定元素.............................................
+    public static ListNode removeElements(ListNode head, int val) {
+        ListNode L = new ListNode(-1);//增加头结点，用来删除第一个元素就相等
+        L.next = head;
+        ListNode pre = L;
+        while (pre.next != null){
+            if (pre.next.val == val){
+                pre.next = pre.next.next;
+            }else {
+                pre = pre.next;
+            }
+        }
+        return L.next;
+    }
+
 }
 
 

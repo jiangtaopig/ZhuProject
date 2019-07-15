@@ -44,6 +44,8 @@ public class FactoryGroupedClasses {
         PackageElement pkg = elementUtils.getPackageOf(superClassName);
         String packageName = pkg.isUnnamed() ? null : pkg.getQualifiedName().toString();
 
+        System.out.println("......superClassName "+superClassName+", factoryClassName = "+factoryClassName);
+
         MethodSpec.Builder method = MethodSpec.methodBuilder("create")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, "id")

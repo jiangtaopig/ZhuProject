@@ -143,16 +143,16 @@ public class FactoryProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
         try {
-            // Scan classes
+            // 遍历所有被注解了@Factory的元素, Element 可以是类、方法或者变量
             for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Factory.class)) {
 
-                // Check if a class has been annotated with @Factory
+                // 检查被注解为@Factory的元素是否是一个类
                 if (annotatedElement.getKind() != ElementKind.CLASS) {
                     throw new ProcessingException(annotatedElement, "Only classes can be annotated with @%s",
                             Factory.class.getSimpleName());
                 }
 
-                // We can cast it, because we know that it of ElementKind.CLASS
+                // 因为我们已经知道它是ElementKind.CLASS类型，所以可以直接强制转换
                 TypeElement typeElement = (TypeElement) annotatedElement;
 
                 FactoryAnnotatedClass annotatedClass = new FactoryAnnotatedClass(typeElement);
@@ -163,6 +163,7 @@ public class FactoryProcessor extends AbstractProcessor {
                 FactoryGroupedClasses factoryClass = factoryClasses.get(annotatedClass.getQualifiedFactoryGroupName());
                 if (factoryClass == null) {
                     String qualifiedGroupName = annotatedClass.getQualifiedFactoryGroupName();
+                    info("qualifiedGroupName is %s", qualifiedGroupName);
                     factoryClass = new FactoryGroupedClasses(qualifiedGroupName);
                     factoryClasses.put(qualifiedGroupName, factoryClass);
                 }
