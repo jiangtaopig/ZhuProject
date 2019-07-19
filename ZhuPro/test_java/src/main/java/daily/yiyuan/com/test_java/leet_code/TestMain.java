@@ -2,13 +2,12 @@ package daily.yiyuan.com.test_java.leet_code;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import daily.yiyuan.com.test_java.data_structure.HeapSort;
-import daily.yiyuan.com.test_java.data_structure.SearchUtils;
 
 import static daily.yiyuan.com.test_java.data_structure.SearchUtils.binarySearch;
 
@@ -21,7 +20,7 @@ public class TestMain {
         int[] nums = {2, 7, 4, 9};
         int[] nums2 = {9, 7, 6};
 //        int target = 26;
-//        int [] res = twoSum(nums, target);
+//        int [] res = twoSum(nums, tar 1get);
 //        System.out.println("res = ["+res[0]+", "+res[1]+"]");
 //
 //        int [] nums2 = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0, 0};
@@ -70,14 +69,68 @@ public class TestMain {
 
         int[] arrs = {7, 2, 4, 7, 6, 8, 1};
         listNodeInsertSort(arrs);
-        int[] arrs2 = {-1, -3, 1, 2, 3, 5};
+        int[] arrs2 = {-1, -3, 1, 2, 3, 5, 6};
         int sum = largestSumAfterKNegations(arrs2, 1);
-
         partitionLabels("tabcqbdcmnj");
+        singleNumber();
 
-        int [] arr3 = {3, 1, 3, 3};
+
+        int[] B = {2};
+        ListNode hA = initListNodeWithoutHead(B);
+        ListNode h = middleNode(hA);
+        ListNode P = h;
+        while (P != null) {
+            System.out.println(".................." + P.val + "........");
+            P = P.next;
+        }
+
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.addAtHead(4);
+        myLinkedList.addAtIndex(1, 7);
+        myLinkedList.addAtTail(9);
+        myLinkedList.traverse();
+        myLinkedList.deleteAtIndex(2);
+        myLinkedList.traverse();
+
+        int[] A = {1, 2, 3, 4, 5, 6, 7};
+        ListNode head = initListNodeWithoutHead(A);
+        reorderList(head);
+
+
+        Map<String, String> map = new HashMap<>();
+        String key1 = "3";
+        String key2 = "1";
+        String key3 = "17";
+        System.out.println("h1 = "+hash(key1)+", h2 = "+hash(key2)+", h3 = "+hash(key3)+", h4 = "+hash("51"));
+        System.out.println("h1 = "+(hash(key1)&15)+", h2 = "+(hash(key2)&15)+", h3 = "+(hash(key3)&15)+", h4 = "+(hash("51")&15));
+        map.put("3", "3");
+        map.put("1", "1");
+        map.put("17", "17");
+        map.put("51", "51");
+
+       Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+       while (iterator.hasNext()){
+           Map.Entry<String, String> entry = iterator.next();
+           System.out.println("key = "+entry.getKey()+", value = "+entry.getValue());
+       }
+
+       for (int i = 10; i< 100000000; i++){
+           if (hash(i+"") == 51){
+               System.out.println(i+",,,");
+               break;
+           }
+       }
+
+    }
+
+    static final int hash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    }
+
+    private static void singleNumber() {
+        int[] arr3 = {3, 1, 3, 3};
         singleNumber(arr3);
-
     }
 
     private static void listNodeInsertSort(int[] arrs) {
@@ -185,27 +238,31 @@ public class TestMain {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
 
-        for (int k = 0; k< nums.length -2; k++){
+        for (int k = 0; k < nums.length - 2; k++) {
             if (nums[k] > 0)
                 break;
-            if (k > 0 && nums[k] == nums[k-1])//说明这个数在上一次已经查找了，避免重复
+            if (k > 0 && nums[k] == nums[k - 1])//说明这个数在上一次已经查找了，避免重复
                 continue;
-            int i = k+1;
+            int i = k + 1;
             int j = nums.length - 1;
-            while (i < j){
+            while (i < j) {
                 int sum = nums[k] + nums[i] + nums[j];
-                if (sum > 0){
-                    while (i<j && nums[j] == nums[--j]){}
-                }else if (sum < 0){
-                    while (i<j && nums[i] == nums[++i]){}
-                }else {
+                if (sum > 0) {
+                    while (i < j && nums[j] == nums[--j]) {
+                    }
+                } else if (sum < 0) {
+                    while (i < j && nums[i] == nums[++i]) {
+                    }
+                } else {
                     List<Integer> tmpList = new ArrayList<>();
                     tmpList.add(nums[k]);
                     tmpList.add(nums[i]);
                     tmpList.add(nums[j]);
                     res.add(tmpList);
-                    while (i < j && nums[i] == nums[++i]){}
-                    while (i<j && nums[j] == nums[--j]){}
+                    while (i < j && nums[i] == nums[++i]) {
+                    }
+                    while (i < j && nums[j] == nums[--j]) {
+                    }
                 }
             }
         }
@@ -213,7 +270,8 @@ public class TestMain {
     }
 
     /**
-     *  最接近的3数之和 ---- 例如，给定数组 nums = [-1，2，1，-4], 和 target = 1； 与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
+     * 最接近的3数之和 ---- 例如，给定数组 nums = [-1，2，1，-4], 和 target = 1； 与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
+     *
      * @param nums
      * @param target
      * @return
@@ -222,23 +280,23 @@ public class TestMain {
         int sum = Integer.MAX_VALUE;
         int res = Integer.MIN_VALUE;
         Arrays.sort(nums);
-        for (int k = 0; k < nums.length -2; k++){
-            int i = k+1;
-            int j = nums.length -1;
-            while (i < j){
+        for (int k = 0; k < nums.length - 2; k++) {
+            int i = k + 1;
+            int j = nums.length - 1;
+            while (i < j) {
                 int tmp = nums[k] + nums[i] + nums[j];
                 int diff = Math.abs(tmp - target);
-                if (diff <= sum){
+                if (diff <= sum) {
                     sum = diff;
                     res = tmp;
                 }
-               if (tmp > target){
-                   j--;
-               }else if (tmp < target){
-                   i++;
-               }else {
-                   return tmp;
-               }
+                if (tmp > target) {
+                    j--;
+                } else if (tmp < target) {
+                    i++;
+                } else {
+                    return tmp;
+                }
             }
         }
         return res;
@@ -1115,13 +1173,13 @@ public class TestMain {
         List<Integer> list = new ArrayList<>();
         int end = 0;
         int start = 0;
-        for (int i = 0; i< S.length(); i++){
+        for (int i = 0; i < S.length(); i++) {
             char c = S.charAt(i);
-            int index = S.indexOf(c, i+1);
-            if (index == -1 && i >= end){
-                list.add(i - start +1);
-                start = i+1;
-            }else if (index > end){
+            int index = S.indexOf(c, i + 1);
+            if (index == -1 && i >= end) {
+                list.add(i - start + 1);
+                start = i + 1;
+            } else if (index > end) {
                 end = index;
             }
         }
@@ -1132,7 +1190,7 @@ public class TestMain {
     //将所有的数按位操作加起来，然后对3取模，如[4, 4, 4,2] = 0100+0100+0100+0010 = 0310 每一位都对3取模 = 0010 = 2
     public static int singleNumber(int[] nums) {
         int ones = 0, twos = 0, threes = 0;
-        for(int num : nums){
+        for (int num : nums) {
             twos |= ones & num;
             ones ^= num;
             threes = ones & twos;
@@ -1151,14 +1209,14 @@ public class TestMain {
 
     //...............................25.判断一个链表是否为回文....................
     public static boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null){
+        if (head == null || head.next == null) {
             return true;
         }
 
         ListNode p = head;
         ListNode L = new ListNode(-1);
         ListNode r = L;
-        while (p != null){
+        while (p != null) {
             ListNode t = new ListNode(p.val);
             t.next = r.next;
             r.next = t;
@@ -1166,10 +1224,10 @@ public class TestMain {
         }
         p = head;
         r = L.next;
-        while (p != null){
-            if (p.val != r.val){
+        while (p != null) {
+            if (p.val != r.val) {
                 return false;
-            }else {
+            } else {
                 p = p.next;
                 r = r.next;
             }
@@ -1179,13 +1237,13 @@ public class TestMain {
 
     //..........................26链表反转............................
     public static ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null){
+        if (head == null || head.next == null) {
             return head;
         }
         ListNode p = head;
         ListNode L = new ListNode(-1);
         ListNode r = L;
-        while (p != null){
+        while (p != null) {
             ListNode t = new ListNode(p.val);
             t.next = r.next;
             r.next = t;
@@ -1199,15 +1257,243 @@ public class TestMain {
         ListNode L = new ListNode(-1);//增加头结点，用来删除第一个元素就相等
         L.next = head;
         ListNode pre = L;
-        while (pre.next != null){
-            if (pre.next.val == val){
+        while (pre.next != null) {
+            if (pre.next.val == val) {
                 pre.next = pre.next.next;
-            }else {
+            } else {
                 pre = pre.next;
             }
         }
         return L.next;
     }
+
+    //...........................28.相交链表..........................................................................
+    //我们需要做的事情是，让两个链表从同距离末尾同等距离的位置开始遍历。这个位置只能是较短链表的头结点位置。 为此，我们必须消除两个链表的长度差
+    //指针 pA 指向 A 链表，指针 pB 指向 B 链表，依次往后遍历
+    //如果 pA 到了末尾，则 pA = headB 继续遍历
+    //如果 pB 到了末尾，则 pB = headA 继续遍历
+    //比较长的链表指针指向较短链表head时，长度差就消除了
+    //如此，只需要将最短链表遍历两次即可找到位置
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode pA = headA, pB = headB;
+        while (pA != pB) {
+            pA = pA != null ? pA.next : headB;
+            pB = pB != null ? pB.next : headA;
+        }
+        return pA;
+    }
+
+    //...........................29.找到链表中间节点开始的链表..........................................................................
+    // [1, 2, 3] return [2, 3], input [1, 2, 3, 4] return [3, 4];
+    //采用双指针的方法，快指针每次走2步，慢指针每次走一步
+    public static ListNode middleNode(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast.next == null) {
+            return slow;
+        } else if (fast.next.next == null) {
+            return slow.next;
+        }
+        return null;
+    }
+
+    //......................................................30.判断链表是否含有环..................................
+//采用双指针的方法，快指针每次走2步，慢指针每次走一步
+    public static boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+
+    //.................................................31.旋转链表.............................................
+    //给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
+    //算法思想：1、将链表变成环形链表，tail指向尾结点，tail的next指向头结点，然后tail结点向后遍历 size - k%size
+    public static ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        int size = 1;//用来表示链表的长度，
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+            size++;
+        }
+        if (k == size){//如果旋转的次数等于链表的长度，那么就相当于不需要旋转
+            return head;
+        }
+        tail.next = head;
+        int diff = size - k % size; // k % size是避免K>
+        while (diff > 0){
+            tail = tail.next;
+            diff--;
+        }
+        head = tail.next;
+        tail.next = null;
+
+        return head;
+    }
+//.............................................32. 分割链表1.................................................................................................
+//给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前, 你应当保留两个分区中每个节点的初始相对位置
+    // 1->5->3->4->2 x= 3 输出 1->2->3->5->4
+    //我的解题思想是用一个包含头结点的链表指向结点值为x；然后小于x的放在这个结点的前面，大于的在后面
+    public static ListNode partition(ListNode head, int x) {
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode L = new ListNode(-1);
+        ListNode p = head;
+        ListNode xHead = new ListNode(x);
+        L.next = xHead;
+        ListNode r = L, tmp , tail = xHead;
+        while (p != null){
+            tmp = p;
+            if (p.val > x){
+                p = p.next;
+                tmp.next = null;
+                tail.next = tmp;
+                tail = tmp;
+            }else if (p.val < x){
+                p = p.next;
+                tmp.next = r.next;
+                r.next = tmp;
+                r = tmp;
+            }else {
+                p = p.next;
+                tmp.next = xHead.next;
+                xHead.next = tmp;
+            }
+        }
+        r.next = xHead.next;
+        return L.next;
+    }
+
+    //链表分割2 ，和之前不同的是， 1->5->3->4->2 x= 3 输出 1->2->5->3->4，只是把小于x的放到前面
+    public static ListNode partition2(ListNode head, int x){
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode L = new ListNode(-1);
+        L.next = head;
+        ListNode r = L;
+        ListNode p = head;
+        ListNode pre = L;
+        while (p != null){
+            if (p.val < x){
+                if (r != pre){
+                    pre.next = p.next;
+                    p.next = r.next;
+                    r.next = p;
+                    r = p;
+                    p = pre.next;
+                }else {//表示包括当前的结点都是小于x的
+                    p = p.next;
+                    pre = pre.next;
+                    r = r.next;
+                }
+            }else {
+                p = p.next;
+                pre = pre.next;
+            }
+        }
+        return L.next;
+    }
+
+//...............................................33.反转链表2..................................
+    //反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
+    //输入: 1->2->3->4->5->NULL, m = 2, n = 4
+    //输出: 1->4->3->2->5->NULL
+    //解法就是双指针，pre和p， pre指向开始反转之前的结点，遍历p直到p指向第一个开始反转的位置，然后把p后面的结点插入到pre结点的后面
+    public static ListNode reverseBetween(ListNode head, int m, int n) {
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode L = new ListNode(-1);
+        L.next = head;
+        ListNode tmp ;
+        ListNode p = head;
+        ListNode pre = L;
+        int cnt = 1;
+        while (p != null && cnt < n){
+            if (cnt >= m){
+                tmp = p.next;
+                p.next = tmp.next;
+                tmp.next = pre.next;
+                pre.next = tmp;
+            }else {
+                pre = pre.next;
+                p = p.next;
+            }
+            cnt++;
+        }
+        return L.next;
+    }
+
+    public static void reorderList(ListNode head) {
+        if (head == null || head.next == null || head.next.next == null){
+            return ;
+        }
+        ListNode p1 = head;
+        ListNode p2 = head;
+        //步骤1：找到链表的中间结点
+        while (p2.next != null && p2.next.next != null){
+            p1 = p1.next;
+            p2 = p2.next.next;
+        }
+
+        //步骤2： 从中间结点开始分为2个链表
+        p2 = p1.next;
+        p1.next = null;
+        p1 = head;
+
+        //步骤3：将p2链表逆序
+        ListNode head2 = p2;
+        ListNode r;
+        while (p2.next != null){
+            r = p2.next;
+            p2.next = r.next;
+            r.next = head2;
+            head2 = r;
+        }
+
+        p2 = head2;
+        //步骤4: 合并两个链表
+
+        ListNode L = new ListNode(-1);
+        r = L;
+        while (p1 != null && p2 != null){
+            r.next = p1;
+            r = p1;
+            p1 = p1.next;
+            r.next = p2;
+            r = p2;
+            p2 = p2.next;
+        }
+        //因为p1的个数大于等于p2, 链表为偶数时，p1 等于p2的长度，为奇数时，p1的长度大于p2
+        if (p1 != null){
+            r.next = p1;
+        }
+
+        head = L.next;
+    }
+
 
 }
 

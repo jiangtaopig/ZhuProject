@@ -11,4 +11,9 @@ public class ListNode {
     public ListNode(int val) {
         this.val = val;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }
