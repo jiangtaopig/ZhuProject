@@ -45,7 +45,7 @@ public class RetrofitServiceManager {
         private static final RetrofitServiceManager INSTANCE = new RetrofitServiceManager();
     }
 
-    public  RetrofitServiceManager getInstance(){
+    public static RetrofitServiceManager getInstance(){
         return SingletonHolder.INSTANCE;
     }
 

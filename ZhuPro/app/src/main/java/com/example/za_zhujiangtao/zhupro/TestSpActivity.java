@@ -1,6 +1,7 @@
 package com.example.za_zhujiangtao.zhupro;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +17,8 @@ import com.example.za_zhujiangtao.zhupro.utils.SharePreferenceUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,6 +57,15 @@ public class TestSpActivity extends AppCompatActivity {
                 parseJson();
 
                 testMerge();
+
+            }
+
+        });
+
+        Observable.create(new Observable.OnSubscribe<String>(){
+
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
 
             }
         });

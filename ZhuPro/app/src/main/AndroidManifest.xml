@@ -53,7 +53,7 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
-            android:name=".retrofit_rxjava.RetrofitDemoActivity"
+            android:name=".DefineViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>

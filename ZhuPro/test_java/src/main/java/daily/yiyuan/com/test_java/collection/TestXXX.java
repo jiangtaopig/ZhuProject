@@ -11,10 +11,10 @@ public class TestXXX {
         lruCache.put("2", "2");
         lruCache.put("3", "3");
 
-//        lruCache.traverse();
-//        lruCache.get("2");
-//        lruCache.traverse();
-//        lruCache.put("4", "4");
-//        lruCache.traverse();
+        lruCache.traverse();
+        lruCache.get("2");
+        lruCache.traverse();
+        lruCache.put("4", "4");
+        lruCache.traverse();
     }
 }
