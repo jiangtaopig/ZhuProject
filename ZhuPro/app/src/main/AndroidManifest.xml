@@ -62,6 +62,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".launch_mode.AActivity"
+           />
+        <activity android:name=".launch_mode.BActivity"
+            android:taskAffinity="com.zjt.xxx"
+            />
+
         <!--<activity android:name=".TransitionActivity"/>-->
 
         <activity android:name=".arouter.RouterActivity1"/>
@@ -95,6 +101,7 @@
             />
 
         <service android:name=".MyIntentService"/>
+        <service android:name=".MyService"/>
 
         <!--<activity android:name=".appbar_test.TestAppBarActivity"-->
             <!--android:screenOrientation="portrait"-->

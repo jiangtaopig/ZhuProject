@@ -2,30 +2,30 @@ package com.example.za_zhujiangtao.zhupro;
 
 import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.os.Environment;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.za_zhujiangtao.zhupro.arouter.provider.UserProvider;
 import com.example.za_zhujiangtao.zhupro.factory.Shape;
 import com.example.za_zhujiangtao.zhupro.factory.ShapeFactory;
+import com.example.za_zhujiangtao.zhupro.launch_mode.AActivity;
+import com.example.za_zhujiangtao.zhupro.utils.CatchUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.OkHttpClient;
@@ -45,45 +45,131 @@ public class DefineViewActivity extends BaseActivity {
      */
     private DiskLruCache mDiskLruCache;
 
+    //通过ARouter 注解来获取变量，不需要new出来， 但是要 ARouter.getInstance().inject(this);
+    @Autowired
+    UserProvider userProvider;
+
+    @BindView(R.id.start_service)
+    Button startService;
+
+    @BindView(R.id.stop_service)
+    Button stopService;
+
+    @BindView(R.id.service_jump_activity)
+    Button serviceJump2AActivity;
+
+    @BindView(R.id.service_jump_b_activity)
+    Button serviceJump2BActivity;
+
+    @BindView(R.id.test_okhttp)
+    Button testOkHttp;
+
+    @BindView(R.id.put_2_cache)
+    Button put2Cache;
+
+    @BindView(R.id.get_from_cache)
+    Button getFromCache;
+
+    private MyService.MyBinder myBinder;
+
     @Override
     protected int layoutId() {
         return R.layout.activity_define_view_layout;
     }
 
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (MyService.MyBinder) service;
+        }
+    };
+
+
     @Override
     protected void onInitLogic() {
-        mTv.setOnClickListener(v -> {
-//            performAnimation(mTv, mTv.getWidth(), 600);
-////            displayInputDialog();
-//            OkHttpClient client = new OkHttpClient.Builder()
-//                    .addInterceptor(new HttpLoggingInterceptor(msg -> {
-//                        Log.e("zjt test okhttp ", "msg >>> "+msg);
-//                    }).setLevel(HttpLoggingInterceptor.Level.BODY))
-//                    .build();
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    Request request = new Request.Builder()
-//                            .url("https://www.imooc.com/api/teacher?type=4&num=1")
-//                            .build();
-//                    try {
-//                        Response response = client.newCall(request).execute();
-//                        Log.e("xxx", "response = " + response.body().string());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }.start();
 
-            putBitmapCacheToSDCard("json", "我是中国人，i love china");
-            String data = getCacheData("json");
-        });
-
+        ARouter.getInstance().inject(this);
+        //测试编译时注解
         ShapeFactory shapeFactory = new ShapeFactory();
         Shape shape = shapeFactory.create("Rectangle");
         shape.draw();
 
-        initCache();
+        String name = userProvider.getName();
+        Log.e("xxx", name);
+
+        testOkHttp.setOnClickListener(v -> {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(new HttpLoggingInterceptor(msg -> {
+                        Log.e("zjt test okhttp ", "msg >>> " + msg);
+                    }).setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .build();
+            new Thread() {
+                @Override
+                public void run() {
+                    Request request = new Request.Builder()
+                            .url("https://www.imooc.com/api/teacher?type=4&num=1")
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        Log.e("xxx", "response = " + response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        });
+        mTv.setOnClickListener(v -> {
+//            performAnimation(mTv, mTv.getWidth(), 600);
+////            displayInputDialog();
+
+            Intent intent = new Intent(this, AActivity.class);
+            //如果AActivity属于当前的任务栈，则清空当前的任务栈，然后新建AActivity作为该任务栈的根Activity；
+            //如果AActivity不属于当前的任务栈，即AActivity设置了taskAffinity="com.zjt.A"，那么会新建一个任务栈然后new AActivity作为根Activity
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+
+        put2Cache.setOnClickListener(v -> {
+            TestCache testCache = new TestCache("zhujiangtao", "i am good man", 33, new Stu("zhongan", 1));
+            TestCache testCache2 = new TestCache("zhujiangtao2", "i am good man 2", 34, new Stu("zhongan2", 2));
+            TestCache testCache3 = new TestCache("zhujiangtao3", "i am good man 3", 35, new Stu("zhongan3", 3));
+
+            List<TestCache> data = new ArrayList<>();
+            data.add(testCache);
+            data.add(testCache2);
+            data.add(testCache3);
+
+            CatchUtils.getInstance(DefineViewActivity.this).putList2Cache("zcy", data);
+        });
+
+        getFromCache.setOnClickListener(v -> {
+            List<TestCache> data = CatchUtils.getInstance(DefineViewActivity.this).getListFromCache("zcy", TestCache.class);
+            for (TestCache cache : data){
+                Log.e("xxxxxx", "cache = "+cache.toString());
+            }
+        });
+
+        startService.setOnClickListener(v -> {
+            Intent bindIntent = new Intent(this, MyService.class);
+            bindService(bindIntent, connection, BIND_AUTO_CREATE);
+        });
+
+        stopService.setOnClickListener(v -> {
+            unbindService(connection);
+        });
+
+        serviceJump2AActivity.setOnClickListener(v -> {
+            myBinder.jump2AActivity();
+        });
+
+        serviceJump2BActivity.setOnClickListener(v -> {
+            myBinder.jump2BActivity();
+        });
     }
 
     private void displayInputDialog() {
@@ -129,95 +215,38 @@ public class DefineViewActivity extends BaseActivity {
         animator.start();
     }
 
-    public static File dir = new File(Environment.getExternalStorageDirectory() + "/.Imageloader/json/");
+    public static class TestCache{
+        private String name;
+        private String content;
+        private int size;
+        private Stu stu;
 
-    public void saveToSDCard(Activity mActivity, String filename, String content) {
-        String en = Environment.getExternalStorageState();
-        //获取SDCard状态,如果SDCard插入了手机且为非写保护状态
-        if (en.equals(Environment.MEDIA_MOUNTED)) {
-            try {
-                dir.mkdirs(); //create folders where write files
-                File file = new File(dir, filename);
+        public TestCache(String name, String content, int size , Stu stu){
+            this.name = name;
+            this.content = content;
+            this.size = size;
+            this.stu = stu;
+        }
 
-                OutputStream out = new FileOutputStream(file);
-                out.write(content.getBytes());
-                out.close();
-                Toast.makeText(DefineViewActivity.this, "保存成功", Toast.LENGTH_LONG).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(DefineViewActivity.this, "保存失败", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            //提示用户SDCard不存在或者为写保护状态
-            Toast.makeText(DefineViewActivity.this, "SDCard不存在或者为写保护状态", Toast.LENGTH_LONG).show();
+        @Override
+        public String toString() {
+            return "name : "+name+", content = "+content+", size = "+size+", stu = "+stu.toString();
         }
     }
 
-    /**
-     * 把bitmap写入sd卡，由diskLruCache管理
-     *
-     * @param key
-     */
-    private void putBitmapCacheToSDCard(String key, String content) {
-        try {
-            DiskLruCache.Editor editor = mDiskLruCache.edit(key);
-            if (editor != null) {
-                OutputStream outputStream = editor.newOutputStream(0);
-                outputStream.write(content.getBytes());
-                editor.commit();
-            }
-            mDiskLruCache.flush();
-        } catch (Exception e) {
+    public static class Stu{
+        private String name;
+        private int age;
+
+        public Stu(String name, int age){
+            this.name = name;
+            this.age = age;
+        }
+
+        @Override
+        public String toString() {
+            return ">> stu name "+name+", age = "+age;
         }
     }
 
-    private void initCache() {
-        try {
-            File cacheDir = getDiskCacheDir(this, "zzjjtt");
-            if (!cacheDir.exists()) {
-                cacheDir.mkdirs();
-            }
-            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(this), 1, 100 * 1024 * 1024);
-        } catch (Exception e) {
-        }
-    }
-
-    public File getDiskCacheDir(Context context, String uniqueName) {
-        String cachePath;
-        if (context.getExternalCacheDir() != null) {
-            cachePath = context.getExternalCacheDir().getPath();
-        } else {
-            cachePath = context.getCacheDir().getPath();
-        }
-        return new File(cachePath + File.separator + uniqueName);
-    }
-
-    public int getAppVersion(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-        return 1;
-    }
-
-    private String getCacheData(String key) {
-        DiskLruCache.Snapshot snapshot = null;
-        String res = "";
-        try {
-            snapshot = mDiskLruCache.get(key);
-            InputStream inputStream = snapshot.getInputStream(0);
-            StringBuilder sb = new StringBuilder();
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-            res = sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
 }

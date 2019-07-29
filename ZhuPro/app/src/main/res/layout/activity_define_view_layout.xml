@@ -1,33 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#999999">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <com.example.za_zhujiangtao.zhupro.widget.CircleView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:background="#603476"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/animation_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:padding="10dp"
-        android:text="china"
-        android:background="#603475"
-        android:layout_margin="10dp"/>
-
-    <com.example.za_zhujiangtao.zhupro.widget.ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00a40e"
-        android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-</LinearLayout>
+            <com.example.za_zhujiangtao.zhupro.widget.CircleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#603476"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/animation_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#603475"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="china"
+                android:textSize="24sp" />
+
+            <com.example.za_zhujiangtao.zhupro.widget.ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00a40e"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/test_okhttp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="Test Okhttp" />
+
+            <Button
+                android:id="@+id/start_service"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="StartService" />
+
+            <Button
+                android:id="@+id/stop_service"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="StopService" />
+
+            <Button
+                android:id="@+id/service_jump_activity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="ServiceJump2AActivity" />
+
+            <Button
+                android:id="@+id/service_jump_b_activity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="ServiceJump2BActivity" />
+
+            <Button
+                android:id="@+id/put_2_cache"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="Put in Cache" />
+
+            <Button
+                android:id="@+id/get_from_cache"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80dp"
+                android:text="Get From Cache" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
