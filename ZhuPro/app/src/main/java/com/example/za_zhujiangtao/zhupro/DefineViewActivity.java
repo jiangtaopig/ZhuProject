@@ -135,9 +135,9 @@ public class DefineViewActivity extends BaseActivity {
         });
 
         put2Cache.setOnClickListener(v -> {
-            TestCache testCache = new TestCache("zhujiangtao", "i am good man", 33, new Stu("zhongan", 1));
-            TestCache testCache2 = new TestCache("zhujiangtao2", "i am good man 2", 34, new Stu("zhongan2", 2));
-            TestCache testCache3 = new TestCache("zhujiangtao3", "i am good man 3", 35, new Stu("zhongan3", 3));
+            TestCache testCache = new TestCache("zhujiangtao", "i am good man", 33, new Stu("HHH", 1));
+            TestCache testCache2 = new TestCache("zhujiangtao2", "i am good man 2", 34, new Stu("HHH", 2));
+            TestCache testCache3 = new TestCache("zhujiangtao3", "i am good man 3", 35, new Stu("HHH", 3));
 
             List<TestCache> data = new ArrayList<>();
             data.add(testCache);
