@@ -5,6 +5,11 @@ import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
@@ -24,8 +29,10 @@ import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import okhttp3.OkHttpClient;
@@ -93,6 +100,25 @@ public class DefineViewActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
+        if (Build.VERSION.SDK_INT >= 25) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            Intent intent = new Intent(this, AActivity.class);
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.putExtra("msg", "我的对话");
+            List<ShortcutInfo> list = new ArrayList<>();
+
+            for (int i = 0; i<5; i++){
+                ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "111"+i)
+                        .setShortLabel("段")
+                        .setLongLabel("联系人:"+i )
+                        .setIcon(Icon.createWithResource(this, R.drawable.meet_pwd_error))
+                        .setIntent(intent)
+                        .build();
+                list.add(shortcutInfo);
+            }
+            shortcutManager.setDynamicShortcuts(list);
+        }
+
         ARouter.getInstance().inject(this);
         //测试编译时注解
         ShapeFactory shapeFactory = new ShapeFactory();
@@ -127,11 +153,17 @@ public class DefineViewActivity extends BaseActivity {
 //            performAnimation(mTv, mTv.getWidth(), 600);
 ////            displayInputDialog();
 
+            Uri uri = Uri.parse("https://h.zuifuli.com/test/_deeplinks/sda?redirect=icare://zoom/meeting/action/show/home");
+            String path =uri.getPath();
+            if (Pattern.matches("/.*/_deeplinks/.*", path)){
+                String jumpUrl = uri.getQueryParameter("redirect");
+            }
+
             Intent intent = new Intent(this, AActivity.class);
             //如果AActivity属于当前的任务栈，则清空当前的任务栈，然后新建AActivity作为该任务栈的根Activity；
             //如果AActivity不属于当前的任务栈，即AActivity设置了taskAffinity="com.zjt.A"，那么会新建一个任务栈然后new AActivity作为根Activity
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+//            startActivity(intent);
         });
 
         put2Cache.setOnClickListener(v -> {
@@ -170,6 +202,10 @@ public class DefineViewActivity extends BaseActivity {
         serviceJump2BActivity.setOnClickListener(v -> {
             myBinder.jump2BActivity();
         });
+
+
+
+
     }
 
     private void displayInputDialog() {

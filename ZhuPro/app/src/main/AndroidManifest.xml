@@ -26,8 +26,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
     <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
     <uses-permission
@@ -53,13 +53,17 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
-            android:name=".DefineViewActivity"
+            android:name=".float_window.FloatActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!--android:name="android.app.shortcuts"是固定写法-->
+            <!--<meta-data android:name="android.app.shortcuts"-->
+                <!--android:resource="@xml/shortcuts">-->
+            <!--</meta-data>-->
         </activity>
 
         <activity android:name=".launch_mode.AActivity"
@@ -67,6 +71,10 @@
         <activity android:name=".launch_mode.BActivity"
             android:taskAffinity="com.zjt.xxx"
             />
+        <activity android:name=".swipe_back.app.TestSwipeBackActivity"
+            android:theme="@style/MyAppTheme">
+
+        </activity>
 
         <!--<activity android:name=".TransitionActivity"/>-->
 
@@ -238,6 +246,35 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </receiver>
+
+
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.taobao.taobao" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
+            android:exported="false" />
+        <service
+            android:name="com.alibaba.sdk.android.push.AgooFirebaseInstanceIDService"
+            android:exported="true" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.alibaba.sdk.android.push.AgooFirebaseMessagingService"
+            android:exported="true" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
 
     </application>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <Button
+        android:id="@+id/show_float_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="show float window"/>
+
+    <Button
+        android:id="@+id/dismiss_float_window"
+        android:layout_below="@id/show_float_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dismiss float window"/>
+
+    <Button
+        android:id="@+id/show_float_view"
+        android:layout_below="@id/dismiss_float_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hide FloatView"/>
+
+    <Button
+        android:id="@+id/dismiss_float_view"
+        android:layout_below="@id/show_float_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show FloatView"/>
+
+    <Button
+        android:id="@+id/to_swipe_back"
+        android:layout_below="@id/dismiss_float_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To SwipeBack"/>
+
+    <!--<com.example.za_zhujiangtao.zhupro.float_window.JoinFloatView-->
+        <!--android:id="@+id/float_view"-->
+        <!--android:layout_width="@dimen/dimen_200dp"-->
+        <!--android:layout_height="@dimen/dimen_200dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginTop="@dimen/dimen_100dp"-->
+        <!--android:layout_marginLeft="@dimen/dimen_100dp"-->
+        <!--android:background="#aaff77"/>-->
+
+    <ImageView
+        android:id="@+id/my_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/my"/>
+
+
+
+</RelativeLayout>

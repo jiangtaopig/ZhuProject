@@ -31,6 +31,7 @@
         <item name="colorPrimary">@color/color_249fe6</item>
         <item name="colorPrimaryDark">@color/light_gray</item>
         <item name="colorAccent">@color/color_249fe6</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
     <style name="font_15dp_black">
@@ -244,5 +245,27 @@
         <item name="android:windowEnterAnimation">@anim/hw_push_up_in</item>
         <item name="android:windowExitAnimation">@anim/hw_push_up_out</item>
     </style>
+
+    <!-- 侧滑返回 -->
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="MyAppTheme" parent="@style/AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <declare-styleable name="CustomCancelView">
+        <attr name="view_radius" format="dimension" />
+        <attr name="view_color" format="color" />
+    </declare-styleable>
 
 </resources>

@@ -21,7 +21,9 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                arguments = [AROUTER_MODULE_NAME: project.getName(), "room.schemaLocation":"$projectDir/schemas".toString(),
+                                                                     "room.incremental":"true",
+                                                                     "room.expandProjection":"true"]
             }
         }
 
@@ -42,6 +44,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
@@ -102,4 +110,18 @@ dependencies {
     implementation project(':annotation_my')
     //DiskLruCache
     api 'com.jakewharton:disklrucache:2.0.2'
+
+    //阿里云推送的辅助通道
+    implementation(name: 'alicloud-android-third-push-3.0.6', ext: 'aar')
+//    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.6@aar'
+    implementation ('com.google.firebase:firebase-messaging:9.6.1')
+
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    implementation 'com.jack.frdialog:FRDialog:1.0.3'
+
+    //google room database
+    def room_version = "2.2.0-alpha02"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

@@ -14,6 +14,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.alibaba.sdk.android.push.register.GcmRegister;
+import com.alibaba.sdk.android.push.register.HuaWeiRegister;
 
 import java.util.List;
 
@@ -37,11 +39,20 @@ public class MainApplication extends Application {
         ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infoList = activityManager.getRunningAppProcesses();
 
-        if (infoList != null && infoList.size() >0){
-            for (ActivityManager.RunningAppProcessInfo info : infoList){
-                Log.e("MainApplication", "processName = "+info.processName);
+        if (infoList != null && infoList.size() > 0) {
+            for (ActivityManager.RunningAppProcessInfo info : infoList) {
+                Log.e("MainApplication", "processName = " + info.processName);
             }
         }
+
+        // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
+        HuaWeiRegister.register(this);
+        //GCM/FCM辅助通道注册
+        GcmRegister.register(this, "775137713200", "1:775137713200:android:913d54526211277d");
+    }
+
+    public static Context getInstance(){
+        return mContext;
     }
 
     /**
@@ -90,13 +101,13 @@ public class MainApplication extends Application {
         }
     }
 
-    private void initARouter(){
+    private void initARouter() {
         ARouter.openLog();     // 打印日志
         ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-        ARouter.init( this ); // 尽可能早，推荐在Application中初始化
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return mContext;
     }
 
