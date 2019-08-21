@@ -1,5 +1,6 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -7,6 +8,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -16,6 +18,7 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
+import com.example.za_zhujiangtao.zhupro.float_window.WindowUtil;
 
 import java.util.List;
 
@@ -23,10 +26,11 @@ import java.util.List;
  * Created by za-zhujiangtao on 2019/3/12.
  */
 
-public class MainApplication extends Application {
+public class MainApplication extends Application implements Application.ActivityLifecycleCallbacks{
 
     private static final String TAG = "MainApplication";
     private static Context mContext;
+    private int activityCount;
 
     @Override
     public void onCreate() {
@@ -35,6 +39,8 @@ public class MainApplication extends Application {
         mContext = getApplicationContext();
         initCloudChannel(this);
         initARouter();
+
+        registerActivityLifecycleCallbacks(this);
 
         ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> infoList = activityManager.getRunningAppProcesses();
@@ -115,5 +121,45 @@ public class MainApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        Log.e("MMMMMM", "........onActivityStarted.........");
+        activityCount++;
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        activityCount--;
+        if (activityCount == 0) {
+            Log.e("MMMMMM", ".........activityCount........"+activityCount);
+            WindowUtil.getInstance().dismissWindow();
+        }
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+
     }
 }

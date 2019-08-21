@@ -18,4 +18,6 @@ public class User {
 
     @ColumnInfo(name = "last_name")
     public String lastName;
+
+    public String sex;
 }

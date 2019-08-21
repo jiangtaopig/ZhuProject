@@ -28,4 +28,10 @@
         android:layout_height="@dimen/dimen_60dp"
         android:text="Delete A Data"/>
 
+    <Button
+        android:id="@+id/alert_table"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="Add A Data After Alert Table"/>
+
 </LinearLayout>

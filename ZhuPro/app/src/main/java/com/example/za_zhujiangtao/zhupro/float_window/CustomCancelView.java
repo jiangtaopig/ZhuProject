@@ -101,7 +101,7 @@ public class CustomCancelView extends View {
                         mState = STATE_NORMAL | (isOpen ? OPEN_MASK : CLOSE_MASK);
                     }
                 })
-                .setStartDelay(500)
+                .setStartDelay(200)
                 .start();
     }
 

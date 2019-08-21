@@ -4,6 +4,8 @@ import android.util.Log;
 import android.widget.Button;
 
 import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
@@ -34,6 +36,9 @@ public class TestRoomActivity extends BaseActivity {
     @BindView(R.id.delete)
     Button mDeleteUser;
 
+    @BindView(R.id.alert_table)
+    Button mAddUserAfterAlertAble;
+
     private UserDataBase mUserDataBase;
 
     private User mUser;
@@ -45,7 +50,16 @@ public class TestRoomActivity extends BaseActivity {
 
     @Override
     protected void onInitLogic() {
-        mUserDataBase = Room.databaseBuilder(getApplicationContext(), UserDataBase.class, "contact").build();
+        //数据库从版本1升级为版本2，增加一个字段 sex
+         Migration MIGRATION_1_2 = new Migration(1, 2) {
+            @Override
+            public void migrate(SupportSQLiteDatabase database) {
+                database.execSQL("ALTER TABLE users "
+                        + " ADD COLUMN sex TEXT");
+            }
+        };
+        mUserDataBase = Room.databaseBuilder(getApplicationContext(), UserDataBase.class, "contact").
+                addMigrations(MIGRATION_1_2).build();
 
         mUser = new User();
         mUser.firstName = "zhu";
@@ -125,6 +139,24 @@ public class TestRoomActivity extends BaseActivity {
                             }
 
                         }
+                    });
+        });
+
+        mAddUserAfterAlertAble.setOnClickListener(v -> {
+            Observable.just(1)
+                    .map(integer -> {
+                       User user = new User();
+                       user.sex = "female";
+                       user.uid = 10;
+                       user.lastName = "hello";
+                       user.firstName = "world";
+                       mUserDataBase.userDao().insertAll(user);
+                       return true;
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(aBoolean -> {
+
                     });
         });
     }
