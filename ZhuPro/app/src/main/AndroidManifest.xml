@@ -53,7 +53,7 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
-            android:name=".room_data_base.TestRoomActivity"
+            android:name=".swipe_back.app.TestSwipeBackActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
            >
             <intent-filter>
@@ -71,7 +71,7 @@
         <activity android:name=".launch_mode.BActivity"
             android:taskAffinity="com.zjt.xxx"
             />
-        <activity android:name=".swipe_back.app.TestSwipeBackActivity"
+        <activity android:name=".DefineViewActivity"
             android:theme="@style/MyAppTheme">
 
         </activity>
