@@ -16,10 +16,12 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.example.za_zhujiangtao.zhupro.arouter.provider.UserProvider;
 import com.example.za_zhujiangtao.zhupro.factory.Shape;
 import com.example.za_zhujiangtao.zhupro.factory.ShapeFactory;
@@ -77,6 +79,9 @@ public class DefineViewActivity extends BaseActivity {
     @BindView(R.id.get_from_cache)
     Button getFromCache;
 
+    @BindView(R.id.iamgeview)
+    ImageView imageView;
+
     private MyService.MyBinder myBinder;
 
     @Override
@@ -127,6 +132,8 @@ public class DefineViewActivity extends BaseActivity {
 
         String name = userProvider.getName();
         Log.e("xxx", name);
+
+        Glide.with(this).load("").into(imageView);
 
         testOkHttp.setOnClickListener(v -> {
             OkHttpClient client = new OkHttpClient.Builder()

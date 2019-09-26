@@ -2,6 +2,9 @@ package com.example.za_zhujiangtao.zhupro;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.SparseArray;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Book implements Parcelable {
     private String bookName;
@@ -10,6 +13,8 @@ public class Book implements Parcelable {
     public Book(String name, String author){
         this.bookName = name;
         this.author = author;
+        CopyOnWriteArrayList list = new CopyOnWriteArrayList();
+        list.add("1");
     }
 
     public String getBookName() {

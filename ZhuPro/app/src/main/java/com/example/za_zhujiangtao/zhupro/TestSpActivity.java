@@ -1,10 +1,10 @@
 package com.example.za_zhujiangtao.zhupro;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,18 +13,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.example.za_zhujiangtao.zhupro.bean.ResultBean;
+import com.example.za_zhujiangtao.zhupro.utils.NavigatorUtils;
 import com.example.za_zhujiangtao.zhupro.utils.SharePreferenceUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by za-zhujiangtao on 2019/1/4.
@@ -34,6 +36,11 @@ public class TestSpActivity extends AppCompatActivity {
 
     @BindView(R.id.add)
     Button mAdd;
+
+    @BindView(R.id.stop_task)
+    Button mStopTask;
+
+    private Subscription mSubscription;
 
     private List<String> mList = new ArrayList<>();
 
@@ -53,29 +60,49 @@ public class TestSpActivity extends AppCompatActivity {
 
                 String spV = SharePreferenceUtils.getString(TestSpActivity.this, "nna");
                 SharePreferenceUtils.putString(TestSpActivity.this, "nna", vv);
+//                parseJson();
+//                testMerge();
 
-                parseJson();
-
-                testMerge();
-
-            }
-
-        });
-
-        Observable.create(new Observable.OnSubscribe<String>(){
-
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-
+                boolean isShow = NavigatorUtils.checkNavigationBarShow(TestSpActivity.this);
+                doTask();
             }
         });
 
+        mStopTask.setOnClickListener(v -> {
+            boolean isUnsubscribed = mSubscription.isUnsubscribed();
+            Log.e("zjt", "isUnsubscribed = " + isUnsubscribed);
+            if (!isUnsubscribed) {
+                //取消任务
+                mSubscription.unsubscribe();
+            }
+        });
 
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"iSvsHxbYXGNQ4Iiv9cFAmiIt");
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "iSvsHxbYXGNQ4Iiv9cFAmiIt");
+    }
+
+    private void doTask() {
+        Log.e("zjt", "doTask" );
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+            mSubscription.unsubscribe();
+        }
+        mSubscription = Observable.just("1")
+                .map(s -> {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return "耗时的工作";
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    Log.e("zjt", "s = " + s);
+                });
     }
 
 
-    private void testMerge(){
+    private void testMerge() {
         List<String> list1 = new ArrayList<>();
         list1.add("1");
         list1.add("2");
@@ -101,7 +128,7 @@ public class TestSpActivity extends AppCompatActivity {
                     @Override
                     public void onNext(String s) {
 
-                        Log.e("xxx", "onNext s = "+s);
+                        Log.e("xxx", "onNext s = " + s);
                     }
                 });
 
@@ -130,16 +157,16 @@ public class TestSpActivity extends AppCompatActivity {
         resultBean.setmRecommendBeanList(recommendBean);
 
         Observable.merge(Observable.from(resultBean.getmDetailBeanList()), Observable.from(resultBean.getmRecommendBeanList()))
-                .map(detailbean ->{
+                .map(detailbean -> {
                     detailbean.setPhone("123");
                     return detailbean;
                 }).count()
                 .map(integer -> {
                     return resultBean;
                 }).subscribe(resultBean1 -> {
-                    if (resultBean1 != null){
-                        resultBean1.getmDetailBeanList();
-                    }
+            if (resultBean1 != null) {
+                resultBean1.getmDetailBeanList();
+            }
         });
 
         Observable.from(list1)
@@ -165,7 +192,7 @@ public class TestSpActivity extends AppCompatActivity {
 
     }
 
-    private void parseJson(){
+    private void parseJson() {
         String jsonStr = "{ \"code\": \"0\", \"result\": { \"sessionId\": \"BrXu71oB7SZh\", \"msgId\": \"m3f24703c6c3942fd9c429b33a4f59d00\", \"date\": 1547195554623, \"type\": \"INTENT\", \"intent\": { \"id\": 7083, \"name\": \"ATTENDANCE\" }, \"entities\": [], \"conversation\": { \"source\": \"我要打卡\", \"status\": \"END\", \"cards\": [ { \"cardType\": \"TEXT_IMAGE_LIST\", \"content\": { \"list\": [ { \"banner\": \"\", \"title\": \"食堂\", \"subTitle\": \"加班餐\", \"keyDescription\": \"食堂\", \"description\": \"\", \"url\": \"\" }, { \"banner\": \"\", \"title\": \"滴滴出行\", \"subTitle\": \"打车\", \"keyDescription\": \"约车\", \"description\": \"\", \"url\": \"\" } ] } }, { \"cardType\": \"TEXT\", \"content\": { \"text\": \"fdsfdsfds\" } } ], \"context\": { \"params\": { \"latitude\": \"12341234123\", \"daka\": \"true\" } } } } }";
 
         Gson gson = new Gson();
@@ -209,10 +236,10 @@ public class TestSpActivity extends AppCompatActivity {
 
         Bean2 bean2 = gson.fromJson(json2, Bean2.class);
         List<Bean2.Card> cards = bean2.cards;
-        for (Bean2.Card card : cards){
-            if (card.cardType.equals("TEXT_IMAGE_LIST")){
+        for (Bean2.Card card : cards) {
+            if (card.cardType.equals("TEXT_IMAGE_LIST")) {
                 JSONObject object = card.content;
-                if (object != null){
+                if (object != null) {
                     JSONArray array = object.getJSONArray("list");
                     JSONObject object1 = array.getJSONObject(0);
                     String str = object1.toJSONString();
@@ -223,22 +250,22 @@ public class TestSpActivity extends AppCompatActivity {
         }
     }
 
-    class Bean{
+    class Bean {
         String code;
         JSONObject result;
     }
 
-    class Bean2{
+    class Bean2 {
         String source;
         List<Card> cards;
 
-        class Card{
+        class Card {
             String cardType;
             JSONObject content;
         }
     }
 
-    public static class ImageAndText{
+    public static class ImageAndText {
         String banner;
         String title;
         String subTitle;

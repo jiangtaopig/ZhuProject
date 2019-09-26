@@ -11,4 +11,11 @@
         android:text="add data"
         android:textSize="20sp"/>
 
+    <Button
+        android:id="@+id/stop_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop task"
+        android:textSize="20sp"/>
+
 </LinearLayout>

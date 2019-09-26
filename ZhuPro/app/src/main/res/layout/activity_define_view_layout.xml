@@ -81,6 +81,11 @@
                 android:layout_height="@dimen/dimen_80dp"
                 android:text="Get From Cache" />
 
+            <ImageView
+                android:id="@+id/iamgeview"
+                android:layout_width="@dimen/dimen_400dp"
+                android:layout_height="@dimen/dimen_400dp"/>
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 测试集合
@@ -40,6 +41,9 @@ public class TestCollection {
         List<String> subList = list.subList(0, list.size());
         subList.add("c++");
 
+        MyArrayList myArrayList = new MyArrayList();
+        myArrayList.add("java");
+        myArrayList.add("android");
 
         String[] ELEMENTS = new String[0];
         System.out.println("size = "+ ELEMENTS.length);
@@ -57,6 +61,9 @@ public class TestCollection {
         queue.offer(1);
         queue.offer(2);
 
+        int lo = 0;
+        System.out.println("xxx ... "+~lo);
+
 
 //        while (iterator.hasNext()){
 //            System.out.println(" 元素: "+iterator.next());
@@ -72,6 +79,33 @@ public class TestCollection {
         Vector<String> vector = new Vector<>();
         vector.add("1");
 
+        int [] arr = new int[5];
+        arr[0] = 5;
+
+        int ss = binarySearch(arr, 1, 2);
+        System.out.println("ss = "+ss);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuffer stringBuffer = new StringBuffer();
+
+    }
+    static int binarySearch(int[] array, int size, int value) {
+        int lo = 0;
+        int hi = size - 1;
+
+        while (lo <= hi) {
+            final int mid = (lo + hi) >>> 1;
+            final int midVal = array[mid];
+
+            if (midVal < value) {
+                lo = mid + 1;
+            } else if (midVal > value) {
+                hi = mid - 1;
+            } else {
+                return mid;  // value found
+            }
+        }
+        return ~lo;  // value not present
     }
 
     private static void testConcurrentModificationException() {
