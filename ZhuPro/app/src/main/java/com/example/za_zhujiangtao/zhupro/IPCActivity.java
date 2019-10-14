@@ -1,5 +1,6 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,6 +24,7 @@ import com.example.za_zhujiangtao.zhupro.iml.ComputeImpl;
 import com.example.za_zhujiangtao.zhupro.iml.SecurityCenterImpl;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,7 @@ public class IPCActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger_layout);
         ButterKnife.bind(this);
@@ -66,8 +69,12 @@ public class IPCActivity extends AppCompatActivity {
         });
 
         mBinderPool.setOnClickListener(v -> {
-            doWork();
+//            doWork();
+            CopyOnWriteArrayList<String> strings = new CopyOnWriteArrayList<>();
+            strings.add("123");
+            Handler handler = new Handler();
         });
+
     }
 
     private void doWork(){

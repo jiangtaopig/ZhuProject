@@ -120,7 +120,9 @@ public class MainApplication extends Application implements Application.Activity
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        Log.e("zjt", "attachBaseContext  MultiDex.install start time >>> "+System.currentTimeMillis());
         MultiDex.install(this);
+        Log.e("zjt", "attachBaseContext  MultiDex.install end time >>> "+System.currentTimeMillis());
     }
 
     @Override

@@ -13,8 +13,6 @@ public class Book implements Parcelable {
     public Book(String name, String author){
         this.bookName = name;
         this.author = author;
-        CopyOnWriteArrayList list = new CopyOnWriteArrayList();
-        list.add("1");
     }
 
     public String getBookName() {

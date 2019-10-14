@@ -1,6 +1,7 @@
 package daily.yiyuan.com.test_java.multi_thread.lock.reentrant_lock;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.Condition;
@@ -13,33 +14,60 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestReentrantLock {
     public static void main(String[] args) {
 
+        LinkedList<String> linkedList = new LinkedList<>();
+        linkedList.add("1");
+        linkedList.remove();
+
+
         System.out.println("★☆");
         final MyService service = new MyService();
-        new Thread() {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                int i = 0;
+//                while (i < 10){
+//                    service.producer();
+//                    i++;
+//                }
+//            }
+//        }.start();
+//
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                int i = 0;
+//                while (i < 10){
+//                    service.consumer();
+//                    i++;
+//                }
+//            }
+//        }.start();
+
+        new Thread(){
             @Override
             public void run() {
-                int i = 0;
-                while (i < 10){
-                    service.producer();
-                    i++;
-                }
+                super.run();
+                service.testConditionWait();
             }
         }.start();
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        new Thread() {
+        new Thread(){
             @Override
             public void run() {
-                int i = 0;
-                while (i < 10){
-                    service.consumer();
-                    i++;
-                }
+                super.run();
+                service.testConditionSignal();
             }
         }.start();
     }
@@ -94,18 +122,20 @@ class MyService {
     }
 
     public void testConditionSignal() {
-        for (int i = 0; i < 5; i++) {
+//        for (int i = 0; i < 5; i++) {
             try {
                 lock.lock();
                 System.out.println("testConditionSignal thread >> " + Thread.currentThread().getName() + " start >>> " + System.currentTimeMillis());
                 condition.signal();
+                Thread.sleep(2000);
                 System.out.println("testConditionSignal thread >> " + Thread.currentThread().getName() + " end >>> " + System.currentTimeMillis());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 lock.unlock();
+                System.out.println("testConditionSignal thread >> " + "unlock");
             }
-        }
+//        }
 
     }
 
