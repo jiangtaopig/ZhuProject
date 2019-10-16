@@ -11,7 +11,7 @@
 
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.example.za_zhujiangtao.zhupro.launch_mode.BActivity"
+            android:targetClass="com.example.za_zhujiangtao.zhupro.launch_mode.B1Activity"
             android:targetPackage="com.example.za_zhujiangtao.zhupro" /><!--应用的报名-->
         <categories android:name="android.shortcut.conversation" />
     </shortcut>

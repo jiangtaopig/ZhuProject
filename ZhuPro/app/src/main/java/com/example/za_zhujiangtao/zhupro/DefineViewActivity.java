@@ -25,14 +25,12 @@ import com.bumptech.glide.Glide;
 import com.example.za_zhujiangtao.zhupro.arouter.provider.UserProvider;
 import com.example.za_zhujiangtao.zhupro.factory.Shape;
 import com.example.za_zhujiangtao.zhupro.factory.ShapeFactory;
-import com.example.za_zhujiangtao.zhupro.launch_mode.AActivity;
+import com.example.za_zhujiangtao.zhupro.launch_mode.A1Activity;
 import com.example.za_zhujiangtao.zhupro.utils.CatchUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -107,7 +105,7 @@ public class DefineViewActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= 25) {
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-            Intent intent = new Intent(this, AActivity.class);
+            Intent intent = new Intent(this, A1Activity.class);
             intent.setAction(Intent.ACTION_VIEW);
             intent.putExtra("msg", "我的对话");
             List<ShortcutInfo> list = new ArrayList<>();
@@ -166,7 +164,7 @@ public class DefineViewActivity extends BaseActivity {
                 String jumpUrl = uri.getQueryParameter("redirect");
             }
 
-            Intent intent = new Intent(this, AActivity.class);
+            Intent intent = new Intent(this, A1Activity.class);
             //如果AActivity属于当前的任务栈，则清空当前的任务栈，然后新建AActivity作为该任务栈的根Activity；
             //如果AActivity不属于当前的任务栈，即AActivity设置了taskAffinity="com.zjt.A"，那么会新建一个任务栈然后new AActivity作为根Activity
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

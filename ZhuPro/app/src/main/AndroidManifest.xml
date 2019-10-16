@@ -24,15 +24,15 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
     <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
-    <uses-permission
-        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.za_zhujiangtao.zhupro" />
-    <permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.za_zhujiangtao.zhupro"
+    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.za_zhujiangtao.zhupro" />
+    <permission
+        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.za_zhujiangtao.zhupro"
         android:protectionLevel="normal" />
 
     <!--android 9.0 网络需要加上 android:networkSecurityConfig="@xml/network_security_config"-->
@@ -41,85 +41,101 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppThemeWelcome">
         <!--阿里云推送的appkey和appsecret-->
-        <meta-data android:name="com.alibaba.app.appkey" android:value="25820455"/>
-        <meta-data android:name="com.alibaba.app.appsecret" android:value="d2f915f756e7c1a5701b152c09e7424f"/>
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="25820455" />
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="d2f915f756e7c1a5701b152c09e7424f" />
 
         <!--Android 9.0开始如果想继续使用apache http的话，根据谷歌官方说明文档，需要在AndroidManifest.xml文件中application节点下添加配置说明-->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
-            android:name=".IPCActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-           >
+            android:name=".launch_mode.TestLaunchModeActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!--android:name="android.app.shortcuts"是固定写法-->
             <!--<meta-data android:name="android.app.shortcuts"-->
-                <!--android:resource="@xml/shortcuts">-->
+            <!--android:resource="@xml/shortcuts">-->
             <!--</meta-data>-->
         </activity>
 
-        <activity android:name=".launch_mode.AActivity"
-           />
-        <activity android:name=".launch_mode.BActivity"
-            android:taskAffinity="com.zjt.xxx"
-            />
-<!--        <activity android:name=".DefineViewActivity"-->
-<!--            android:theme="@style/MyAppTheme">-->
+        <activity android:name=".launch_mode.A1Activity" />
+        <activity android:name=".launch_mode.A2Activity" />
+        <activity
+            android:name=".launch_mode.B1Activity"
+            android:taskAffinity="com.zjt.b" />
+        <activity
+            android:name=".DefineViewActivity"
+            android:theme="@style/MyAppTheme">
 
-<!--        </activity>-->
+        </activity>
 
-        <!--<activity android:name=".TransitionActivity"/>-->
+        <activity android:name=".TransitionActivity" />
 
-        <activity android:name=".arouter.RouterActivity1"/>
+        <activity android:name=".arouter.RouterActivity1" />
 
-        <activity android:name=".arouter.ARouterWebActivity"/>
+        <activity android:name=".arouter.ARouterWebActivity" />
 
-        <activity android:name=".arouter.ARouterUrlActivity"/>
+        <activity android:name=".arouter.ARouterUrlActivity" />
+
+        <service android:name=".launch_mode.MyBindService"/>
 
         <activity android:name=".arouter.URLReceiverActivity">
             <intent-filter>
                 <data
                     android:host="zhujiangtao"
-                    android:scheme="arouter"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                    android:scheme="arouter" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 
-        <service android:name=".MessengerService"
-            android:process=":remote"/>
-        <service android:name=".BookManagerService"
-            android:process=":remote2"/>
-        <service android:name=".BinderPoolService"
-            android:process=":remote3"/>
-        <provider
-            android:authorities="com.example.za_zhujiangtao.zhupro.book.provider"
-            android:name=".BookProvider"
-            android:process=":provider"
-            android:permission="com.example.za_zhujiangtao.PROVIDER"
-            />
+        <service
+            android:name=".MessengerService"
+            android:process=":remote" />
+        <service
+            android:name=".BookManagerService"
+            android:process=":remote2" />
+        <service
+            android:name=".BinderPoolService"
+            android:process=":remote3" />
 
-        <service android:name=".MyIntentService"/>
-        <service android:name=".MyService"/>
+        <provider
+            android:name=".BookProvider"
+            android:authorities="com.example.za_zhujiangtao.zhupro.book.provider"
+            android:permission="com.example.za_zhujiangtao.PROVIDER"
+            android:process=":provider" />
+
+        <service android:name=".MyIntentService" />
+        <service android:name=".MyService" />
 
         <!--<activity android:name=".appbar_test.TestAppBarActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="adjustPan"/>-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="adjustPan"/>-->
 
         <!-- push富媒体，使用富媒体推送必须声明 -->
-        <activity android:name="com.baidu.android.pushservice.richmedia.MediaViewActivity"
-            android:configChanges="orientation|keyboardHidden" android:label="MediaViewActivity" />
-        <activity android:name="com.baidu.android.pushservice.richmedia.MediaListActivity"
-            android:configChanges="orientation|keyboardHidden" android:label="MediaListActivity"
+        <activity
+            android:name="com.baidu.android.pushservice.richmedia.MediaViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="MediaViewActivity" />
+        <activity
+            android:name="com.baidu.android.pushservice.richmedia.MediaListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="MediaListActivity"
             android:launchMode="singleTask" />
         <!-- push富媒体结束 -->
 
@@ -136,7 +152,8 @@
         </receiver>
 
         <!-- push必须的receviver和service声明 -->
-        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
+        <receiver
+            android:name="com.baidu.android.pushservice.PushServiceReceiver"
             android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -150,7 +167,8 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
+        <receiver
+            android:name="com.baidu.android.pushservice.RegistrationReceiver"
             android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="com.baidu.android.pushservice.action.METHOD" />
@@ -163,23 +181,30 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.baidu.android.pushservice.PushService" android:exported="true"
+        <service
+            android:name="com.baidu.android.pushservice.PushService"
+            android:exported="true"
             android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
             </intent-filter>
         </service>
-        <service android:name="com.baidu.android.pushservice.CommandService"
+        <service
+            android:name="com.baidu.android.pushservice.CommandService"
             android:exported="true" />
 
         <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名-->
-        <provider android:name="com.baidu.android.pushservice.PushInfoProvider"
-            android:authorities="com.example.za_zhujiangtao.zhupro.bdpush" android:exported="true"
+        <provider
+            android:name="com.baidu.android.pushservice.PushInfoProvider"
+            android:authorities="com.example.za_zhujiangtao.zhupro.bdpush"
+            android:exported="true"
             android:protectionLevel="signature"
             android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.za_zhujiangtao.zhupro" />
 
         <!-- 在百度开发者中心查询应用的API Key -->
-        <meta-data android:name="api_key" android:value="iSvsHxbYXGNQ4Iiv9cFAmiIt" />
+        <meta-data
+            android:name="api_key"
+            android:value="iSvsHxbYXGNQ4Iiv9cFAmiIt" />
 
         <!--&lt;!&ndash; UfoSDK &ndash;&gt;-->
         <!--<activity android:name="com.baidu.ufosdk.ui.FeedbackListActivity" />-->
@@ -188,7 +213,8 @@
         <!--<activity android:name="com.baidu.ufosdk.ui.FeedbackInputActivity" />-->
         <!--<activity android:name="com.baidu.ufosdk.ui.FeedbackHotActivity" />-->
 
-        <service android:name=".AlarmService"
+        <service
+            android:name=".AlarmService"
             android:enabled="true"
             android:exported="false"
             android:process=":zzjjtt">
@@ -196,7 +222,7 @@
             <intent-filter>
                 <action android:name="com.example.za_zhujiangtao.zhupro.action.on" />
                 <action android:name="com.example.za_zhujiangtao.zhupro.action.off" />
-                <action android:name="com.example.za_zhujiangtao.zhupro.action.push"/>
+                <action android:name="com.example.za_zhujiangtao.zhupro.action.push" />
             </intent-filter>
 
         </service>
@@ -206,17 +232,19 @@
         <service
             android:name="com.taobao.accs.internal.AccsJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":channel"/>
+            android:process=":channel" />
         <!-- V3.0.7及以上版本需配置 -->
-        <service android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
+        <service
+            android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:process=":channel" />
-        <receiver android:name="com.alibaba.sdk.android.push.SystemEventReceiver"
+        <receiver
+            android:name="com.alibaba.sdk.android.push.SystemEventReceiver"
             android:process=":channel">
             <intent-filter>
-                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
         <!-- V3.0.9及以上版本需配置 -->
@@ -227,10 +255,8 @@
             android:exported="false"
             android:finishOnTaskLaunch="false"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:process=":channel"
-            >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
@@ -251,34 +277,35 @@
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="com.taobao.taobao" />
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
             android:exported="false" />
+
         <service
             android:name="com.alibaba.sdk.android.push.AgooFirebaseInstanceIDService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
             android:name="com.alibaba.sdk.android.push.AgooFirebaseMessagingService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
 
     </application>
-
 
 
 </manifest>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
@@ -15,33 +16,37 @@ import butterknife.BindView;
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/7/25
  */
-public class BActivity extends BaseActivity {
+public class A2Activity extends BaseActivity {
 
-    @BindView(R.id.jump_2_c)
-    Button jump2C;
+    @BindView(R.id.a2_jump)
+    Button mJumpBtn;
+
+    @BindView(R.id.a2_txt)
+    TextView mTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("BActivity", "B onCreate");
+        Log.e("A2Activity", "A onCreate");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("BActivity", "B onNewIntent");
+        Log.e("A2Activity", "A onNewIntent");
     }
 
     @Override
     protected int layoutId() {
-        return R.layout.activity_b;
+        return R.layout.activity_a2;
     }
 
     @Override
     protected void onInitLogic() {
-        jump2C.setOnClickListener(v -> {
-            Intent intent = new Intent(BActivity.this, AActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        mTxt.setText("I am A2 Activity");
+        mJumpBtn.setText("jump 2 B1Activity");
+        mJumpBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(A2Activity.this, B1Activity.class);
             startActivity(intent);
         });
     }

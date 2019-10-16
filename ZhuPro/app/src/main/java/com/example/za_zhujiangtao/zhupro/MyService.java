@@ -6,11 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.za_zhujiangtao.zhupro.launch_mode.AActivity;
-import com.example.za_zhujiangtao.zhupro.launch_mode.BActivity;
+import com.example.za_zhujiangtao.zhupro.launch_mode.A1Activity;
+import com.example.za_zhujiangtao.zhupro.launch_mode.B1Activity;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -51,7 +50,7 @@ public class MyService extends Service {
             Log.d(TAG, "jump2AActivity() executed");
             Context context = getApplicationContext();
            boolean activity = context instanceof Activity;
-            Intent intent = new Intent(context, AActivity.class);
+            Intent intent = new Intent(context, A1Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -59,7 +58,7 @@ public class MyService extends Service {
         public void jump2BActivity(){
             Log.d(TAG, "jump2BActivity() executed");
             Context context = getApplicationContext();
-            Intent intent = new Intent(context, BActivity.class);
+            Intent intent = new Intent(context, B1Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
