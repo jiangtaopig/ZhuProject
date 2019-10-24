@@ -88,6 +88,24 @@ public class TestCollection {
         StringBuilder stringBuilder = new StringBuilder();
         StringBuffer stringBuffer = new StringBuffer();
 
+        LinkedList<String> linkedList = new LinkedList<>();
+
+        linkedList.add("1");
+        linkedList.add("2");
+        linkedList.add("3");
+
+        System.out.println(" val = "+linkedList.poll()+", size = "+linkedList.size());
+
+        List<String> strings = new ArrayList<>();
+        strings.add("a");
+        strings.add("b");
+        strings.add("c");
+        linkedList.addAll(1, strings);
+
+        for (String ssr : linkedList){
+            System.out.println("v = "+ssr);
+        }
+
     }
     static int binarySearch(int[] array, int size, int value) {
         int lo = 0;

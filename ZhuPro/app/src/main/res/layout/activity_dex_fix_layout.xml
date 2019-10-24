@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:gravity="center"
+        android:background="@color/color_cccccc"
+        android:textColor="@color/album_White"
+        android:text="show result"
+        android:textSize="@dimen/dimen_20sp"/>
+
+    <Button
+        android:id="@+id/div"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="calculate"/>
+
+    <Button
+        android:id="@+id/fix"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="fix by dex"/>
+
+
+</LinearLayout>

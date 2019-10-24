@@ -59,8 +59,8 @@
             android:required="false" />
 
         <activity
-            android:name=".launch_mode.TestLaunchModeActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:name=".TestEditActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

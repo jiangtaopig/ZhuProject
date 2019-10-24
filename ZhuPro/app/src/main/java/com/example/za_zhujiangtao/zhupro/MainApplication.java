@@ -19,6 +19,8 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
 import com.example.za_zhujiangtao.zhupro.float_window.WindowUtil;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class MainApplication extends Application implements Application.Activity
     private static final String TAG = "MainApplication";
     private static Context mContext;
     private int activityCount;
+    private RefWatcher mRefWatcher;
 
     @Override
     public void onCreate() {
@@ -55,6 +58,17 @@ public class MainApplication extends Application implements Application.Activity
         HuaWeiRegister.register(this);
         //GCM/FCM辅助通道注册
         GcmRegister.register(this, "775137713200", "1:775137713200:android:913d54526211277d");
+
+        if (LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+
+        mRefWatcher = LeakCanary.install(this);
+    }
+
+    public static RefWatcher getRefWatcher(Context context){
+        MainApplication application = (MainApplication) context.getApplicationContext();
+        return application.mRefWatcher;
     }
 
     public static Context getInstance(){
@@ -117,6 +131,7 @@ public class MainApplication extends Application implements Application.Activity
         return mContext;
     }
 
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -124,6 +139,8 @@ public class MainApplication extends Application implements Application.Activity
         MultiDex.install(this);
         Log.e("zjt", "attachBaseContext  MultiDex.install end time >>> "+System.currentTimeMillis());
     }
+
+
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
