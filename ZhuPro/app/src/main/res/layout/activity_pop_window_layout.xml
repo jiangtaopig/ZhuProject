@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/start_pop"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_80dp"
+        android:layout_marginLeft="@dimen/dimen_20dp"
+        android:text="show_pop" />
+
+    <Button
+        android:id="@+id/start_anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="start anim"
+        android:textSize="26sp" />
+
+    <LinearLayout
+        android:id="@+id/anim_root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="在真实的线上环境我们发现，即使IP和后台服务均有效，仍有一部分用户的网络连接会出现失败。
+            而此时单纯从IP地址已经分析不出原因，很有可能是该用户的网络链路上存在问题导致连接失败
+在真实的线上环境我们发现，即使IP和后台服务均有效，仍有一部分用户的网络连接会出现失败。
+而此时单纯从IP地址已经分析不出原因，很有可能是该用户的网络链路上存在问题导致连接失败"
+            android:textSize="@dimen/dimen_24sp"
+            android:textColor="#ff0000"
+            android:background="#ffffff"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

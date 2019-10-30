@@ -59,7 +59,7 @@
             android:required="false" />
 
         <activity
-            android:name=".TestEditActivity"
+            android:name=".TestPopWindowActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

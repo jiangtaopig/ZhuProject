@@ -406,7 +406,7 @@ public class TestMain {
 
     }
 
-    //......................................4、找最大的会问子串.........................................................
+    //......................................4、找最大的回文子串.........................................................
     public static String maxHuiwenString(String s) {
         int len = s.length();
         int diff = 0;
@@ -493,7 +493,7 @@ public class TestMain {
 
 
     /**
-     * 方法2：位运算异或操作来实现：任何数异或自己都等于0，任何数异或0都等于他自己，
+     * 方法2：位运算异或操作来实现：任何数异或自己都等于0，任何数异或0都等于本身，
      *
      * @param arrs
      * @param n
@@ -668,7 +668,7 @@ public class TestMain {
 
     /**
      * @param nums
-     * @return 返回不重复数组中的长度
+     * @return 返回已排序数组中不重复数字的长度
      */
     public static int removeDuplicates(int[] nums) {
         if (nums.length == 0) return 0;
@@ -890,7 +890,7 @@ public class TestMain {
 
     //...........................................15.串联所有单词的子串...........................这一题的思想非常好.....................................................
     //给定一个字符串 s 和一些长度相同的单词 words。找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。
-    //输入 s = "barfoothefoobarman",words = ["foo","bar"] 从索引 0 和 9 开始的子串分别是 "barfoor" 和 "foobar" 。
+    //输入 s = "barfoothefoobarman",words = ["foo","bar"] 从索引 0 和 9 开始的子串分别是 "barfoo" 和 "foobar" 。
     //输出的顺序不重要, [9,0] 也是有效答案。
 
     /**
@@ -1493,6 +1493,70 @@ public class TestMain {
 
         head = L.next;
     }
+
+
+    /**
+     * ...............................................34.找到链表中环形链表的起点............................................................
+     * a->b->c->d->e 然后e指向的是c，那么环形链表的起始位置就是3 即结点c
+     *
+     */
+
+    private ListNode createCircleNode(int [] nums, int circleStartIndex){
+        ListNode head = new ListNode(nums[0]);
+        ListNode r = head;
+        ListNode circleHead = null;
+        for (int i = 1; i<nums.length; i++){
+            ListNode listNode = new ListNode(nums[i]);
+            r.next = listNode;
+            r = listNode;
+            if (i == circleStartIndex -1){
+                circleHead = listNode;
+            }
+            if (i == nums.length -1){
+                r.next = circleHead;
+            }
+        }
+        return head;
+    }
+
+    public static int findCircleNodeBegain(ListNode head){
+        int index = -1;
+        if (head == null || head.next == null){
+            return index;
+        }
+        //步骤一，设置快慢指针都指向链表开头，快指针每次走2步，慢指针每次走一步，直到快慢指针相遇，
+        ListNode low = head;
+        ListNode fast = head;
+        int cnt = 0;
+        while (head.next.next != null){
+            fast = head.next.next;
+            low = head.next;
+            if (fast == low){//直到快慢指针相遇
+                //步骤二：慢指针每次走一步，直到和快指针再次相遇，记录下走了多少步(也就是环形链表的长度)
+                cnt++;
+                low = low.next;
+                while (low != fast){
+                    low = low.next;
+                    cnt++;
+                }
+
+                //步骤三：让快慢指针再次指向链表开头，快指针先走环形链表长度cnt步，然后快慢指针每次都走一步，相遇的结点就是环形链表的起始点
+                low = fast = head;
+                while (cnt > 0){
+                    fast = fast.next;
+                    cnt--;
+                }
+                while (low != fast){
+                    low = low.next;
+                    fast = fast.next;
+                    index++;
+                }
+                break;
+            }
+        }
+        return index;
+    }
+
 
 
 }
