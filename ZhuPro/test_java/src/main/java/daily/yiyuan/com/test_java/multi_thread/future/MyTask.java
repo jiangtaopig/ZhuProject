@@ -1,5 +1,6 @@
 package daily.yiyuan.com.test_java.multi_thread.future;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -13,22 +14,23 @@ import java.util.concurrent.FutureTask;
 public class MyTask {
 
     public static void main(String[] args) {
-//        testFuture();
+        testFuture();
 
 //        stopThread1();
 
-        MyThread2 myThread2 = new MyThread2();
-        myThread2.start();
+//        MyThread2 myThread2 = new MyThread2();
+//        myThread2.start();
+//
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("开始中断");
+//        myThread2.interrupt();
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("开始中断");
-        myThread2.interrupt();
-
+//        testFutrueTask2();
 
     }
 
@@ -46,11 +48,32 @@ public class MyTask {
         myThread.setStop();
     }
 
+    private static void testFutrueTask2(){
+        FutureTask<Integer> futureTask = new FutureTask<>(new Worker());
+//        new Thread(futureTask)
+//                .start();
+        try {
+            System.out.println(".............................");
+            Field field = futureTask.getClass().getDeclaredField("runner");
+            field.setAccessible(true);
+            field.set(futureTask, new Thread("zz"));
+            new Thread(futureTask)
+                    .start();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void testFuture() {
         FutureTask<Integer> futureTask = new FutureTask<>(new Worker());
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.submit(futureTask);
         executorService.shutdown();
+
+//        new Thread(futureTask)
+//                .start();
 
         try {
             Thread.sleep(1000);
@@ -88,6 +111,7 @@ class Worker implements Callable<Integer> {
         for (int i = 0; i < 100; i++) {
             sum += i;
         }
+        System.out.println("sum = "+sum);
         return sum;
     }
 }

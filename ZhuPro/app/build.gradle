@@ -29,7 +29,7 @@ android {
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'x86'
+            abiFilters 'armeabi', 'x86',"armeabi-v7a"
         }
 
 
@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.andkulikov:transitionseverywhere:1.6.9'
     implementation project(':wheelLibrary')
+    implementation project(':citypicker')
     //butterknife
     implementation 'com.jakewharton:butterknife:9.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0'
@@ -127,4 +128,7 @@ dependencies {
 
     //leakCanary
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+
+    //腾讯音视频
+    implementation(name: 'LiteAVSDK_TRTC_6.7.7754', ext: 'aar')
 }

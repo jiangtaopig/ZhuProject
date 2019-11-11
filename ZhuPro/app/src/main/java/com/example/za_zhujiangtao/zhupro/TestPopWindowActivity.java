@@ -1,6 +1,10 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.app.IntentService;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,8 @@ import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.Slide;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.TransitionSet;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.BindView;
 
@@ -45,8 +51,14 @@ public class TestPopWindowActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
+
+//        concurrentHashMap.put("key2", "bb");
+
         button.setOnClickListener(v -> {
-            showPopWindow();
+//            showPopWindow();
+            ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<>();
+            concurrentHashMap.put("key1", "aa");
+
         });
 
         startAnim.setOnClickListener(v -> {

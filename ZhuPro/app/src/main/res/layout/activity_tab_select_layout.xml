@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f6f6f6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/domestic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color_50e2ff"
+                android:gravity="center"
+                android:text="国内/港澳台"
+                android:textSize="@dimen/dimen_24sp" />
+
+            <TextView
+                android:id="@+id/international"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color_401eb371"
+                android:gravity="center"
+                android:text="国际"
+                android:textSize="@dimen/dimen_24sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/tab_line"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_below="@id/tab_layout"
+            android:layout_width="@dimen/dimen_130dp"
+            android:layout_height="@dimen/dimen_2dp"
+            android:background="@color/color_8f66ff" />
+    </RelativeLayout>
+
+</LinearLayout>
