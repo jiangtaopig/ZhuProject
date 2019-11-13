@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
+import com.example.za_zhujiangtao.zhupro.widget.DoubleSeekBar;
+
+import java.util.Random;
 
 import butterknife.BindView;
 
@@ -36,6 +40,12 @@ public class TestTabSelectActivity extends BaseActivity {
     @BindView(R.id.tab_line)
     View mTabLine;
 
+    @BindView(R.id.double_seekbar)
+    DoubleSeekBar mDoubleSeekBar;
+
+    @BindView(R.id.set_seekbar_val)
+    Button mSeekBarVal;
+
     private int mDomesticW; //mDomesticTv的长度
     private int mDomesticTextW;//mDomesticTv 中文本的长度
     private int mInternationalW;
@@ -57,8 +67,16 @@ public class TestTabSelectActivity extends BaseActivity {
         return (int) width;
     }
 
+
     @Override
     protected void onInitLogic() {
+        initView();
+        mSeekBarVal.setOnClickListener(v -> {
+            int left = new Random().nextInt(50) + 1;
+            int right =  new Random().nextInt(50) +50;
+            mDoubleSeekBar.setSelected(left, right);
+        });
+
         mTabLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -119,5 +137,18 @@ public class TestTabSelectActivity extends BaseActivity {
         mTextDiffX = mDomesticTabLineStartX + (mInternationalW - mInternationalTextW) / 2;
         params.leftMargin = mDomesticTabLineStartX;
         mTabLine.setLayoutParams(params);
+    }
+
+
+    private void initView(){
+        mDoubleSeekBar.setMinValue(0);
+        mDoubleSeekBar.setMaxValue(100);
+
+        mDoubleSeekBar.setOnChanged(new DoubleSeekBar.OnChanged() {
+            @Override
+            public void onChange(int leftValue, int rightValue) {
+                Log.e("xxxx", "leftValue = "+leftValue+", rightValue = "+rightValue);
+            }
+        });
     }
 }

@@ -275,4 +275,13 @@
         <attr name="view_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="BaseTagFlowLayout">
+        <attr name="base_max_select" format="integer"></attr>
+        <attr name="base_tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
 </resources>

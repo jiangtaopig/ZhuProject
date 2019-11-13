@@ -59,7 +59,7 @@
             android:required="false" />
 
         <activity
-            android:name=".TestTabSelectActivity"
+            android:name=".section_recycle.SectionRecycleActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

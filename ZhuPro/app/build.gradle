@@ -131,4 +131,5 @@ dependencies {
 
     //腾讯音视频
     implementation(name: 'LiteAVSDK_TRTC_6.7.7754', ext: 'aar')
+
 }

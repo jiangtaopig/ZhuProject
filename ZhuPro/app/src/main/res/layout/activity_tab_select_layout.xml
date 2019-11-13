@@ -47,4 +47,22 @@
             android:background="@color/color_8f66ff" />
     </RelativeLayout>
 
+    <com.example.za_zhujiangtao.zhupro.widget.DoubleSeekBar
+        android:id="@+id/double_seekbar"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.example.za_zhujiangtao.zhupro.widget.DoubleSeekBar>
+
+    <Button
+        android:id="@+id/set_seekbar_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:textSize="22sp"
+        android:text="set seekBar value">
+
+    </Button>
+
 </LinearLayout>
