@@ -2,9 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/cp_search_view" />
+
+    <com.zaaach.citypicker.view.TabLayout
+        android:id="@+id/select_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:left_title="国内/港澳台"
+        app:left_title_appearance="@style/font_16sp_333333"
+        app:right_title="国际"
+        app:right_title_appearance="@style/font_16sp_999999"
+        >
+
+    </com.zaaach.citypicker.view.TabLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

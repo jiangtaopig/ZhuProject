@@ -59,7 +59,7 @@
             android:required="false" />
 
         <activity
-            android:name=".section_recycle.SectionRecycleActivity"
+            android:name=".city_select.SelectCityActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

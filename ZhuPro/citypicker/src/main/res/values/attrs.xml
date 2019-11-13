@@ -38,4 +38,12 @@
     <attr name="cpOverlayTextSize" format="dimension|reference"/>
     <attr name="cpOverlayTextColor" format="color|reference"/>
     <attr name="cpOverlayBackground" format="color|reference"/>
+
+    <declare-styleable name="TabLayout">
+        <attr name="left_title" format="string"/>
+        <attr name="left_title_appearance" format="reference"/>
+        <attr name="right_title" format="string"/>
+        <attr name="right_title_appearance" format="reference"/>
+    </declare-styleable>
+
 </resources>

@@ -115,8 +115,10 @@ public class SideIndexBar extends View{
             //避免软键盘弹出时挤压
             mHeight = Math.max(getHeight(), oldh);
         }
+        int val = 200;
+        mHeight -= val;
         mItemHeight = mHeight / mIndexItems.size();
-        mTopMargin = (mHeight - mItemHeight * mIndexItems.size()) / 2;
+        mTopMargin = (mHeight - mItemHeight * mIndexItems.size()) / 2 + val/2;
     }
 
     @Override

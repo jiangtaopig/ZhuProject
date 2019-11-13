@@ -58,4 +58,15 @@
         <item name="cpOverlayTextColor">@android:color/white</item>
         <item name="cpOverlayBackground">@drawable/cp_overlay_bg</item>
     </style>
+
+    <style name="font_16sp_333333">
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+    </style>
+
+    <style name="font_16sp_999999">
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+    </style>
+
 </resources>

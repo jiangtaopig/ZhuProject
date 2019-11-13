@@ -80,4 +80,9 @@ public class ScreenUtil {
 
         return (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
     }
+
+    public static int dpToPx(Context context, int dp) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
 }

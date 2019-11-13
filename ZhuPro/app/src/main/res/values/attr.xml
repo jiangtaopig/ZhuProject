@@ -44,4 +44,12 @@
 
     <attr name="SwipeBackLayoutStyle" format="reference" />
 
+
+    <declare-styleable name="TabLayout">
+        <attr name="left_title" format="string"/>
+        <attr name="left_title_appearance" format="reference"/>
+        <attr name="right_title" format="string"/>
+        <attr name="right_title_appearance" format="reference"/>
+    </declare-styleable>
+
 </resources>

@@ -224,6 +224,11 @@
         <item name="android:textSize">@dimen/dimen_14sp</item>
     </style>
 
+    <style name="font_14sp_999999">
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+    </style>
+
     <style name="font_12sp_666666">
         <item name="android:textColor">@color/color_666666</item>
         <item name="android:textSize">@dimen/dimen_12sp</item>

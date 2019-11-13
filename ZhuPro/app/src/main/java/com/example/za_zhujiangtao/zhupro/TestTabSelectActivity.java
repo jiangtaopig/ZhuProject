@@ -12,10 +12,12 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
 import com.example.za_zhujiangtao.zhupro.widget.DoubleSeekBar;
+import com.example.za_zhujiangtao.zhupro.widget.TabLayout;
 
 import java.util.Random;
 
@@ -45,6 +47,9 @@ public class TestTabSelectActivity extends BaseActivity {
 
     @BindView(R.id.set_seekbar_val)
     Button mSeekBarVal;
+
+    @BindView(R.id.city_tab_layout)
+    TabLayout mCityTabLayout;
 
     private int mDomesticW; //mDomesticTv的长度
     private int mDomesticTextW;//mDomesticTv 中文本的长度
@@ -100,15 +105,12 @@ public class TestTabSelectActivity extends BaseActivity {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mTabLine.getLayoutParams();
                 params.width = value;
                 mTabLine.setLayoutParams(params);
-
             });
 
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(translateAnimator, changeTabLengthAnimator);
             animatorSet.setDuration(200);
             animatorSet.start();
-
-
         });
 
         mInternationalTv.setOnClickListener(v -> {
@@ -126,6 +128,10 @@ public class TestTabSelectActivity extends BaseActivity {
             animatorSet.playTogether(translateAnimator, changeTabLengthAnimator);
             animatorSet.setDuration(200);
             animatorSet.start();
+
+        });
+
+        mCityTabLayout.setTabSelectListener(type -> {
 
         });
     }

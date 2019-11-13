@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_f6f6f6"
     android:orientation="vertical">
 
@@ -64,5 +65,16 @@
         android:text="set seekBar value">
 
     </Button>
+
+    <com.example.za_zhujiangtao.zhupro.widget.TabLayout
+        android:id="@+id/city_tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:left_title="国内/港澳台"
+        app:left_title_appearance="@style/font_14sp_333333"
+        app:right_title="国际"
+        app:right_title_appearance="@style/font_14sp_999999">
+
+    </com.example.za_zhujiangtao.zhupro.widget.TabLayout>
 
 </LinearLayout>

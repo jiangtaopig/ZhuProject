@@ -48,6 +48,13 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
         this.locateState = state;
     }
 
+    public void updateData(List<City> data, List<HotCity> hotData, int state){
+        this.mData = data;
+        this.mHotData = hotData;
+        this.locateState = state;
+        notifyDataSetChanged();
+    }
+
     public void autoLocate(boolean auto){
         autoLocate = auto;
     }
