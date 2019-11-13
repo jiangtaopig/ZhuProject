@@ -5,15 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.zaaach.citypicker.CityPickerFragment;
+import com.zaaach.citypicker.adapter.OnPickListener;
+import com.zaaach.citypicker.model.City;
 import com.zaaach.citypicker.model.HotCity;
 import com.zaaach.citypicker.model.LocatedCity;
 
@@ -65,6 +63,23 @@ public class SelectCityActivity extends BaseActivity {
                 domesticFragment.changeTab();
             }
             toFragment(domesticFragment);
+        });
+
+        domesticFragment.setOnPickListener(new OnPickListener() {
+            @Override
+            public void onPick(int position, City data) {
+                Toast.makeText(getBaseContext(), data.getName(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onLocate() {
+
+            }
+
+            @Override
+            public void onCancel() {
+                finish();
+            }
         });
 
         toFragment(domesticFragment);

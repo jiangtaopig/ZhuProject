@@ -4,7 +4,7 @@
     <color name="cp_colorPrimaryDark">#303F9F</color>
     <color name="cp_colorAccent">#3F51B5</color>
 
-    <color name="cp_color_gray_light">#cdcdcd</color>
+    <color name="cp_color_gray_light">#999999</color>
     <color name="cp_color_gray">#999999</color>
     <color name="cp_color_gray_deep">#666666</color>
     <color name="cp_color_gray_dark">#333333</color>

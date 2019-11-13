@@ -4,7 +4,7 @@
     android:id="@+id/cp_search_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/holo_red_light"
+    android:background="#f6f6f6"
     android:gravity="center_vertical"
     android:padding="6dp"
     tools:showIn="@layout/cp_dialog_city_picker">
