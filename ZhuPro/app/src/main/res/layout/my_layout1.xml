@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7f000000"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我是layout1\n在真实的线上环境我们发现，即使IP和后台服务均有效，仍有一部分用户的网络连接会出现失败。
+            而此时单纯从IP地址已经分析不出原因，很有可能是该用户的网络链路上存在问题导致连接失败"
+            android:textColor="#333333"
+            android:textSize="@dimen/dimen_24sp"
+            android:background="#ffffff"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

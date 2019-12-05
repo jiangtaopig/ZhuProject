@@ -2,8 +2,10 @@ package daily.yiyuan.com.test_java;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -41,6 +43,7 @@ public class TestMain2 {
 //        time2Column("2019.06.04-14:45:00");
         boolean flag = Pattern.matches("^/?.*", "z123");//开头是否有下划线?表示可以有或没有，.*表示匹配任意字符
         System.out.println("flag = "+flag);
+
     }
 
     private static void time2Column(String time) {

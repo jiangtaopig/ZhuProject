@@ -93,7 +93,7 @@
         android:layout_height="match_parent"
         android:background="#7f000000"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/text"
@@ -104,7 +104,8 @@
             android:text="在真实的线上环境我们发现，即使IP和后台服务均有效，仍有一部分用户的网络连接会出现失败。
             而此时单纯从IP地址已经分析不出原因，很有可能是该用户的网络链路上存在问题导致连接失败"
             android:textColor="#ff0000"
-            android:textSize="@dimen/dimen_24sp" />
+            android:textSize="@dimen/dimen_24sp"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

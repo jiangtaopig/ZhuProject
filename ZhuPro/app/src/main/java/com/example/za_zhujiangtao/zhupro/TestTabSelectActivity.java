@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Paint;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -51,6 +52,12 @@ public class TestTabSelectActivity extends BaseActivity {
     @BindView(R.id.city_tab_layout)
     TabLayout mCityTabLayout;
 
+    @BindView(R.id.address)
+    TextView addText;
+
+    @BindView(R.id.my_txt)
+    TextView mTxt;
+
     private int mDomesticW; //mDomesticTv的长度
     private int mDomesticTextW;//mDomesticTv 中文本的长度
     private int mInternationalW;
@@ -76,6 +83,7 @@ public class TestTabSelectActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
         initView();
+        mDoubleSeekBar.setSelected(20, 50);
         mSeekBarVal.setOnClickListener(v -> {
             int left = new Random().nextInt(50) + 1;
             int right =  new Random().nextInt(50) +50;
@@ -132,6 +140,36 @@ public class TestTabSelectActivity extends BaseActivity {
         });
 
         mCityTabLayout.setTabSelectListener(type -> {
+
+        });
+
+        addText.setOnClickListener(v -> {
+
+            String agreement = "上海<em>我</em>爱<em>我</em>家民宿";
+            String htmlColorStart = "<font color=\"#E40000\">";
+            String htmlColorEnd = "</font>";
+            String html  =  "<font color=\"#E40000\">"+agreement+"</font>";
+            String res = agreement.replace("<em>", htmlColorStart).replace("</em>", htmlColorEnd);
+
+            addText.setText(Html.fromHtml(res));
+
+        });
+
+        mTxt.setOnClickListener(v -> {
+            int width = getTextWidth(mTxt);
+            int ScreenWidth = DisplayUtil.getScreenWidth(getBaseContext());
+            mTxt.getLineCount();
+
+            int lineWidth = (int) (ScreenWidth - mTxt.getX() - DisplayUtil.dip2px(8));
+
+            Log.e("TestTabSelectActivity", "width = "+width+", ScreenWidth = "+ScreenWidth +", lines = "+mTxt.getLineCount()
+                    +", x = "+mTxt.getX()+", lineWidth = "+lineWidth);
+
+            TextView textView = new TextView(getBaseContext());
+            textView.setText("四星级/高档");
+            textView.setTextSize(getResources().getDimension(R.dimen.dimen_12sp));
+
+            getTextWidth(textView);
 
         });
     }

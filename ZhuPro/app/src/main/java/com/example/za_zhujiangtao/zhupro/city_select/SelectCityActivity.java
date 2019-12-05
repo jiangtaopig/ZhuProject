@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
+import com.example.za_zhujiangtao.zhupro.section_recycle.utils.JsonUtils;
 import com.zaaach.citypicker.CityPickerFragment;
 import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.City;
@@ -43,23 +44,23 @@ public class SelectCityActivity extends BaseActivity {
     protected void onInitLogic() {
         fragmentManager = getSupportFragmentManager();
         domesticFragment = CityPickerFragment.newInstance(false);
-        domesticFragment.setLocatedCity(new LocatedCity("上海", "上海", "101020100"));
+        domesticFragment.setLocatedCity(new LocatedCity("上海", "上海", "310100"));
         List<HotCity> hotCityList = new ArrayList<>();
-        hotCityList.add(new HotCity("北京", "北京", "101010100"));
-        hotCityList.add(new HotCity("上海", "上海", "101020100"));
+        hotCityList.add(new HotCity("北京", "北京", "110100"));
+        hotCityList.add(new HotCity("上海", "上海", "310100"));
         domesticFragment.setHotCities(hotCityList);
+        domesticFragment.setNormalCity(parseCity("domestic_city"));
 
         domesticFragment.setSelectCityTabListener(type -> {
             if (type == 0){
-                domesticFragment.setLocatedCity(new LocatedCity("上海", "上海", "101020100"));
-                List<HotCity> hotCities = new ArrayList<>();
-                hotCities.add(new HotCity("北京", "北京", "101010100"));
-                hotCities.add(new HotCity("上海", "上海", "101020100"));
-                domesticFragment.setHotCities(hotCities);
+                domesticFragment.setLocatedCity(new LocatedCity("上海", "上海", "310100"));
+                domesticFragment.setHotCities(hotCityList);
+                domesticFragment.setNormalCity(parseCity("domestic_city"));
                 domesticFragment.changeTab();
             }else {
-                domesticFragment.setLocatedCity(new LocatedCity("深圳", "广东", "101280601"));
+                domesticFragment.setLocatedCity(new LocatedCity("深圳", "广东", "440300"));
                 domesticFragment.setHotCities(null);
+                domesticFragment.setNormalCity(parseCity("international_city"));
                 domesticFragment.changeTab();
             }
             toFragment(domesticFragment);
@@ -83,7 +84,20 @@ public class SelectCityActivity extends BaseActivity {
         });
 
         toFragment(domesticFragment);
+    }
 
+    private List<City> parseCity(String fileName){
+        CityEntity cityEntity = JsonUtils.parseCityDataFromJson(getBaseContext(), fileName);
+        List<City> cities = new ArrayList<>();
+        if (cityEntity != null && cityEntity.getCitys() != null && cityEntity.getCitys().size() > 0){
+            List<CityEntity.CitysBean> citysBeans = cityEntity.getCitys();
+
+            for (CityEntity.CitysBean citysBean : citysBeans){
+                City city = new City(citysBean.getName(), "", citysBean.getPinYin(), citysBean.getCode());
+                cities.add(city);
+            }
+        }
+        return cities;
     }
 
 

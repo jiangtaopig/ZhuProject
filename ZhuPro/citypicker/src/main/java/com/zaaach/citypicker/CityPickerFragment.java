@@ -68,9 +68,10 @@ public class CityPickerFragment extends Fragment implements TextWatcher,
     private TabLayout mSelectTabLayout;
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
-    private List<City> mAllCities;
+    private List<City> mAllCities = new ArrayList<>();
     private List<HotCity> mHotCities;
     private List<City> mResults;
+    private List<City> mNormalCities = new ArrayList<>();
 
     private DBManager dbManager;
     private boolean enableAnim = false;
@@ -108,6 +109,11 @@ public class CityPickerFragment extends Fragment implements TextWatcher,
 
     public void setHotCities(List<HotCity> data) {
         this.mHotCities = data;
+    }
+
+    public void setNormalCity(List<City> cities){
+        mNormalCities.clear();
+        mNormalCities.addAll(cities);
     }
 
     @SuppressLint("ResourceType")
@@ -187,9 +193,9 @@ public class CityPickerFragment extends Fragment implements TextWatcher,
         //初始化热门城市
         if (mHotCities == null || mHotCities.isEmpty()) {
             mHotCities = new ArrayList<>();
-            mHotCities.add(new HotCity("北京", "北京", "101010100"));
-            mHotCities.add(new HotCity("上海", "上海", "101020100"));
-            mHotCities.add(new HotCity("深圳", "广东", "101280601"));
+            mHotCities.add(new HotCity("北京", "北京", "110100"));
+            mHotCities.add(new HotCity("上海", "上海", "310100"));
+            mHotCities.add(new HotCity("深圳", "广东", "440300"));
         }
         //初始化定位城市，默认为空时会自动回调定位
         if (mLocatedCity == null) {
@@ -198,8 +204,10 @@ public class CityPickerFragment extends Fragment implements TextWatcher,
         } else {
             locateState = LocateState.SUCCESS;
         }
-        dbManager = new DBManager(getActivity());
-        mAllCities = dbManager.getAllCities();
+//        dbManager = new DBManager(getActivity());
+//        mAllCities = dbManager.getAllCities();
+        mAllCities.clear();
+        mAllCities.addAll(mNormalCities);
 
         List<String> letters = getCityFirstLetter();
 

@@ -59,7 +59,7 @@
             android:required="false" />
 
         <activity
-            android:name=".city_select.SelectCityActivity"
+            android:name=".arouter.ARouterMainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

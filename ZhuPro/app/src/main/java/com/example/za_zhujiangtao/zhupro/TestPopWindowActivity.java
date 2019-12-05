@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.za_zhujiangtao.zhupro.widget.MyLayout1;
+import com.example.za_zhujiangtao.zhupro.widget.MyLayout2;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.Slide;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.TransitionSet;
 
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.BindView;
@@ -43,6 +47,8 @@ public class TestPopWindowActivity extends BaseActivity {
     @BindView(R.id.text)
     TextView mTv;
 
+    int  cnt = 0;
+
     @Override
     protected int layoutId() {
         return R.layout.activity_pop_window_layout;
@@ -59,25 +65,61 @@ public class TestPopWindowActivity extends BaseActivity {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<>();
             concurrentHashMap.put("key1", "aa");
 
+
+
         });
 
         startAnim.setOnClickListener(v -> {
+//            doAnim2();
+            View view;
+            int val = new Random().nextInt(10)+1;
+            Log.e("xxxxxxxx", "val = "+val);
+            if (val % 2 == 0){
+                view = new MyLayout1(getBaseContext());
+            }else {
+                view = new MyLayout2(getBaseContext());
+            }
+            view.setVisibility(View.INVISIBLE);
+            mAnimRootLayout.removeAllViews();
+            mAnimRootLayout.addView(view);
+
             TransitionSet transitionSet = new TransitionSet();
             transitionSet
                     .addTransition(new Fade().addTarget(mAnimRootLayout))
                     .addTransition(new ChangeBounds())
-                    .addTransition(new Slide(Gravity.TOP).addTarget(mTv))
-//                    .addTransition(new Fade().addTarget(mTv))
-                    .setInterpolator(new DecelerateInterpolator());
+                    .addTransition(new Slide(Gravity.TOP).addTarget(view))
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(250);
             TransitionManager.beginDelayedTransition((ViewGroup) getWindow().getDecorView(), transitionSet);
 
             if (mAnimRootLayout.getVisibility() == View.VISIBLE) {
                 mAnimRootLayout.setVisibility(View.GONE);
+                view.setVisibility(View.GONE);
             }else {
                 mAnimRootLayout.setVisibility(View.VISIBLE);
+                view.setVisibility(View.VISIBLE);
             }
+
         });
 
+    }
+
+    private void doAnim2() {
+        TransitionSet transitionSet = new TransitionSet();
+        transitionSet
+                .addTransition(new Fade().addTarget(mAnimRootLayout))
+                .addTransition(new ChangeBounds())
+                .addTransition(new Slide(Gravity.TOP).addTarget(mTv))
+                .setInterpolator(new DecelerateInterpolator());
+        TransitionManager.beginDelayedTransition((ViewGroup) getWindow().getDecorView(), transitionSet);
+
+        if (mAnimRootLayout.getVisibility() == View.VISIBLE) {
+            mAnimRootLayout.setVisibility(View.GONE);
+            mTv.setVisibility(View.GONE);
+        }else {
+            mAnimRootLayout.setVisibility(View.VISIBLE);
+            mTv.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showPopWindow() {

@@ -42,6 +42,7 @@ public class RouterActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_router1_layout);
         ButterKnife.bind(this);
+        // 使用了 @Autowired 必须调用 ARouter.getInstance().inject
         ARouter.getInstance().inject(this);
 
 //        Log.e(TAG, "name = " + name + ", mAge = " + mAge+", book = "+bookInfo.book + ", author = " + bookInfo.author);
