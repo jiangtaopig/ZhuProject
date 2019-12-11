@@ -3,6 +3,7 @@ package daily.yiyuan.com.test_java.leet_code;
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/12/3
+ * 每次都选择最有利的选项
  * 贪心算法---背包问题
  * 题目：有N件物品和一个容量为V的背包。第i件物品的重量是w[i]，价值是v[i]。求解将哪些物品装入背包可使这些物品的重量总和不超过背包容量，且价值总和最大
  */

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.example.za_zhujiangtao.zhupro.widget.RangeBar
+        android:id="@+id/rangeBar"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:rangeHeight="3dp"
+        app:rangeColor="#229af5"
+        app:textArray="@array/range_array"
+        app:sliderDrawable="@drawable/seekbar_icon"
+        app:solidBackgroundColor="#eeeeee"
+        android:paddingBottom="10dp"
+        android:background="#f6f6f6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.example.za_zhujiangtao.zhupro.widget.RangeBar>
+
+    <Button
+        android:text="reset"
+        android:onClick="resetClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

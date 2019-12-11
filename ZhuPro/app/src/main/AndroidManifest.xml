@@ -59,7 +59,7 @@
             android:required="false" />
 
         <activity
-            android:name=".arouter.ARouterMainActivity"
+            android:name=".TestRangeBarActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

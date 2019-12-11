@@ -5,7 +5,7 @@ package daily.yiyuan.com.test_java.leet_code;
  * on 2019/10/30
  * 动态规划算法
  */
-public class TestDymatic {
+public class TestDynamic {
     public static void main(String[] args) {
 
         int[] arr = {-2, 11, -4, 13, -5, -2};
@@ -34,7 +34,6 @@ public class TestDymatic {
                 nowSum = 0;
             }
         }
-
         return maxSum;
     }
 
