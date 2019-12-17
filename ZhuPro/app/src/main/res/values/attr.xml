@@ -52,4 +52,9 @@
         <attr name="right_title_appearance" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="TestView">
+        <attr name="android:text"></attr>
+        <attr name="android:textSize"></attr>
+    </declare-styleable>
+
 </resources>

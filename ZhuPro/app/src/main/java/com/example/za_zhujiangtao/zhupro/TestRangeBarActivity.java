@@ -1,12 +1,13 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
 import com.example.za_zhujiangtao.zhupro.widget.RangeBar;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -31,9 +32,24 @@ public class TestRangeBarActivity extends BaseActivity {
 
         int width = DisplayUtil.getScreenWidth(this);
         Log.e("zjt", "width = "+width);
+
+
+
     }
 
     public void resetClick(View view) {
+        Message message = new Message();
+        message.what = 11;
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == 11){
+
+                }
+            }
+        };
+        handler.sendMessage(message);
         mRangeBar.setRange(0, 6);
     }
 }
