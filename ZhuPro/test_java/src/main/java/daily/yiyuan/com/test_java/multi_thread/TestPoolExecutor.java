@@ -12,12 +12,14 @@ public class TestPoolExecutor {
 
     public static void main(String[] args){
         ExecutorService executorService = new ThreadPoolExecutor(2, 4, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<Runnable>());
+        executorService.shutdown();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
 
             }
         });
+
         int COUNT_BITS = Integer.SIZE - 3;
         int RUNNING    = -1 << COUNT_BITS;
         System.out.println("RUNNING = "+RUNNING);

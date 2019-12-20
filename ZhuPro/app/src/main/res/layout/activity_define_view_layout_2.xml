@@ -64,4 +64,11 @@
 
     </com.example.za_zhujiangtao.zhupro.define_view.TestViewGroup>
 
+    <Button
+        android:id="@+id/test_thread_pool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test thread pool"
+        android:textSize="@dimen/dimen_24sp"/>
+
 </LinearLayout>

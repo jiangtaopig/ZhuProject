@@ -23,7 +23,10 @@ public class TestReflection {
             Field field = o.getClass().getDeclaredField("teachers");
             field.setAccessible(true);
 
+            List<String> teas = (List<String>) field.get(o);
+
             field.set(o, data);
+            List<String> teas2 = (List<String>) field.get(o);
             System.out.println(o);
             //获取 public 变量 name 的用法
             Field field2 = c.getField("name");
