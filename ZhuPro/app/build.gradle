@@ -41,6 +41,31 @@ android {
         }
     }
 
+    //多渠道
+    flavorDimensions "default"
+    productFlavors {
+        flavor_default {
+            //默认版本，完全继承defaultConfig中的配置
+            dimension "default"
+            manifestPlaceholders = [
+                    APP_PLATFORM: "ZJT_MAIN",
+                    APP_ICON: "@drawable/ic_launcher"
+            ]
+        }
+
+        flavor_zjt {
+            //渠道包,覆盖了applicationId、添加了versionName后缀
+            dimension "default"
+            applicationId "com.zjt.test"
+            versionCode cfg.version_code
+            versionName cfg.version_name
+            manifestPlaceholders = [
+                    APP_PLATFORM: "ZJT_TEST",
+                    APP_ICON: "@drawable/ic_launcher_2"
+            ]
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -131,5 +156,8 @@ dependencies {
 
     //腾讯音视频
     implementation(name: 'LiteAVSDK_TRTC_6.7.7754', ext: 'aar')
+
+    implementation 'com.ethanhua:skeleton:1.1.2'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 
 }

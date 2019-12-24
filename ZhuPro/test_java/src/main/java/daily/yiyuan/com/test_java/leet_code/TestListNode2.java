@@ -25,14 +25,9 @@ public class TestListNode2 {
 
 //        oddEvenList(initListNodeWithoutHead(new int[]{1, 2, 3, 4, 5, 6}));
 
-//        splitListToParts(initListNodeWithoutHead(new int[]{1, 2, 3, 4, 5, 6, 7}), 3);
-        ThreadLocal<String> local = new ThreadLocal<>();
-        local.set("1");
-        local.set("2");
-        String val = local.get();
-        String val2 = local.get();
+        splitListToParts(initListNodeWithoutHead(new int[]{1, 2, 3, 4}), 5);
 
-        System.out.println("val = "+val+", val2 = "+val2);
+        reverseListNode(initListNodeWithoutHead(new int[]{1, 2, 3, 4}));
     }
 
     private static void mergeKListNodes() {
@@ -219,19 +214,70 @@ public class TestListNode2 {
 
         int count = size / k;//每组都有的固定个数
         int reminder = size % k ; //每组固定个数后还有遗留的，按照遗留的个数分配给 res 数组；
-
-        for (int i = 0; i < k; i++){
-            res[i] = r;
-            for (int j = 0; j < count + (reminder > 0 ? 1 : 0); j++){
-                root = root.next;
+        if (count == 0 || count == 1){
+            for (int i = 0; i < size; i++){
+                res[i] = root;
                 if (root != null){
                     r = root.next;
                 }
+                root.next = null;
+                root = r;
             }
-            root.next = null;
-            root = r;
-            reminder--;
+
+            if (size < k){
+                for (int i = size; i < k; i++){
+                    res[i] = null;
+                }
+            }
+
+        }else {
+            for (int i = 0; i < k; i++){
+                res[i] = r;
+                for (int j = 0; j < count + (reminder > 0 ? 1 : 0) -1; j++){
+                    root = root.next;
+                    if (root != null){
+                        r = root.next;
+                    }
+                }
+                root.next = null;
+                root = r;
+                reminder--;
+            }
         }
+
         return res;
+    }
+
+
+    /**
+     * 给定两个非空链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储单个数字。将这两数相加会返回一个新的链表。
+     * 输入: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+     * 输出: 7 -> 8 -> 0 -> 7
+     */
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        return null;
+    }
+
+
+    public static ListNode reverseListNode(ListNode head){
+        if (head == null){
+            return null;
+        }
+
+        ListNode tail;
+        ListNode preTail = null; //指向最后一个结点之前的结点
+        tail = head;
+        while (tail.next != null){
+            preTail = tail;
+            tail = tail.next;
+        }
+        if (preTail == null){
+            return head;
+        }
+        tail.next = head;
+        preTail.next = null;
+        head = tail;
+        return head;
     }
 }

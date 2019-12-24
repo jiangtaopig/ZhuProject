@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_4dp"
+    >
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="@dimen/dimen_80dp"
+        android:layout_height="@dimen/dimen_80dp"
+        android:layout_marginRight="@dimen/dimen_16dp"
+        android:background="#CDCDCD"
+      />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="@dimen/dimen_250dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:layout_toRightOf="@id/imageview"
+        android:background="#CDCDCD"
+        android:maxLines="3"
+        />
+    <TextView
+        android:id="@+id/textview2"
+        android:layout_width="@dimen/dimen_266dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:layout_below="@id/textview"
+        android:layout_toRightOf="@id/imageview"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:background="#CDCDCD"
+        android:maxLines="3"
+
+        />
+    <TextView
+        android:id="@+id/textview3"
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="@dimen/dimen_15dp"
+        android:layout_below="@id/textview2"
+        android:layout_toRightOf="@id/imageview"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:background="#CDCDCD"
+        android:maxLines="3"
+        android:layout_marginBottom="10dp" />
+</RelativeLayout>
