@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.za_zhujiangtao.zhupro.view_dispatch.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f6f6f6"
+    android:orientation="vertical">
+
+    <com.example.za_zhujiangtao.zhupro.view_dispatch.MyButton
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="btn click"
+        android:textSize="26sp" />
+
+    <com.example.za_zhujiangtao.zhupro.view_dispatch.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#666666"
+        android:gravity="center"
+        android:text="textview click"
+        android:textColor="@color/white"
+        android:textSize="26sp" />
+
+</com.example.za_zhujiangtao.zhupro.view_dispatch.MyLinearLayout>

@@ -7,6 +7,7 @@ import static daily.yiyuan.com.test_java.leet_code.TestMain.initListNodeWithoutH
  * on 2019/10/24
  */
 public class TestListNode2 {
+    static int flow  = 0;
     public static void main(String[] args) {
 //        int[][] nums = {{1, 2, 3}, {4, 5, 6}};
 //        matrixReshape(nums, 3, 2);
@@ -28,6 +29,9 @@ public class TestListNode2 {
         splitListToParts(initListNodeWithoutHead(new int[]{1, 2, 3, 4}), 5);
 
         reverseListNode(initListNodeWithoutHead(new int[]{1, 2, 3, 4}));
+
+
+        addTwoNumbers(initListNodeWithoutHead(new int[]{2, 4, 3}), initListNodeWithoutHead(new int[]{9, 7, 6, 4}));
     }
 
     private static void mergeKListNodes() {
@@ -102,7 +106,7 @@ public class TestListNode2 {
         int cnt = 1;
 
         if (k == 1) {
-           return head;
+            return head;
         } else {
             while (head != null) {
                 if (cnt % k == 0) {
@@ -138,28 +142,29 @@ public class TestListNode2 {
 
     /**
      * 合并K个有序数组
+     *
      * @param lists
      * @return
      */
     public static ListNode mergeKLists(ListNode[] lists) {
         int size = lists.length;
-        if (size == 0){
+        if (size == 0) {
             return null;
-        } else if (size == 1){
+        } else if (size == 1) {
             return lists[0];
         }
-        int index = size/2;
+        int index = size / 2;
         ListNode[] left = new ListNode[index];
         ListNode[] right = new ListNode[index];
-        for (int i = 0; i < index; i++){
+        for (int i = 0; i < index; i++) {
             left[i] = lists[i];
-            right[i] = lists[index+i];
+            right[i] = lists[index + i];
         }
         ListNode[] res = new ListNode[index];
-        if (size % 2 != 0){//如果数组的大小为奇数，则先把数组的最后一个和left的第一个先合并
-            left[0] = merge2ListNode(left[0], lists[size-1]);
+        if (size % 2 != 0) {//如果数组的大小为奇数，则先把数组的最后一个和left的第一个先合并
+            left[0] = merge2ListNode(left[0], lists[size - 1]);
         }
-        for (int i = 0; i < index; i++){//合并left right
+        for (int i = 0; i < index; i++) {//合并left right
             res[i] = merge2ListNode(left[i], right[i]);
         }
         return mergeKLists(res);//递归调用合并后的
@@ -170,9 +175,9 @@ public class TestListNode2 {
      * 将奇数位的结点和偶数位的结点分别排在一起并保持相对顺序
      * 输入: 2->1->3->5->6->4->7->NULL
      * 输出: 2->3->6->7->1->5->4->NULL
+     *
      * @param head
-     * @return
-     * 解题思路： 就是定义2个 奇、偶 链表分别将奇数和偶数结点 链接上去，最后合并这2个链表
+     * @return 解题思路： 就是定义2个 奇、偶 链表分别将奇数和偶数结点 链接上去，最后合并这2个链表
      */
     public static ListNode oddEvenList(ListNode head) {
         ListNode odd = new ListNode(-1);
@@ -180,11 +185,11 @@ public class TestListNode2 {
         ListNode even = new ListNode(-1);
         ListNode r = even;
         int cnt = 1;
-        while (head != null){
-            if (cnt % 2 == 0){
+        while (head != null) {
+            if (cnt % 2 == 0) {
                 r.next = head;
                 r = head;
-            }else {
+            } else {
                 p.next = head;
                 p = head;
             }
@@ -199,7 +204,7 @@ public class TestListNode2 {
 
 
     public static ListNode[] splitListToParts(ListNode root, int k) {
-        if (root == null){
+        if (root == null) {
             return null;
         }
         ListNode p = root;
@@ -207,35 +212,35 @@ public class TestListNode2 {
 
         ListNode[] res = new ListNode[k];
         int size = 0;
-        while (p != null){
+        while (p != null) {
             size++;
             p = p.next;
         }
 
         int count = size / k;//每组都有的固定个数
-        int reminder = size % k ; //每组固定个数后还有遗留的，按照遗留的个数分配给 res 数组；
-        if (count == 0 || count == 1){
-            for (int i = 0; i < size; i++){
+        int reminder = size % k; //每组固定个数后还有遗留的，按照遗留的个数分配给 res 数组；
+        if (count == 0 || count == 1) {
+            for (int i = 0; i < size; i++) {
                 res[i] = root;
-                if (root != null){
+                if (root != null) {
                     r = root.next;
                 }
                 root.next = null;
                 root = r;
             }
 
-            if (size < k){
-                for (int i = size; i < k; i++){
+            if (size < k) {
+                for (int i = size; i < k; i++) {
                     res[i] = null;
                 }
             }
 
-        }else {
-            for (int i = 0; i < k; i++){
+        } else {
+            for (int i = 0; i < k; i++) {
                 res[i] = r;
-                for (int j = 0; j < count + (reminder > 0 ? 1 : 0) -1; j++){
+                for (int j = 0; j < count + (reminder > 0 ? 1 : 0) - 1; j++) {
                     root = root.next;
-                    if (root != null){
+                    if (root != null) {
                         r = root.next;
                     }
                 }
@@ -255,29 +260,80 @@ public class TestListNode2 {
      * 输出: 7 -> 8 -> 0 -> 7
      */
 
+
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        return null;
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode res1 = l1, res2 = l2;
+        int len1 = 0, len2 = 0;
+        while (l1 != null) {
+            len1++;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            len2++;
+            l2 = l2.next;
+        }
+        ListNode res = len1 >= len2 ? add(res1, res2, len1, len2) : add(res2, res1, len2, len1);//保证add函数的参数1的链表长度大于等于参数2的长度
+        if (flow == 1) {
+            res1 = new ListNode(1);
+            res1.next = res;
+            return res1;
+        }
+
+        return res;
+
     }
 
 
-    public static ListNode reverseListNode(ListNode head){
-        if (head == null){
+    public static ListNode add(ListNode l1, ListNode l2, int len1, int len2) {
+        int temp;
+        if ((len1 == 1) && (len2 == 1)) {
+            temp = l1.val;
+            l1.val = (l1.val + l2.val) % 10;
+            flow = (temp + l2.val) / 10;
+            return l1;
+        }
+        if (len1 > len2) {
+            temp = l1.val;
+            l1.next = add(l1.next, l2, len1 - 1, len2);
+            l1.val = (temp + flow) % 10;
+            flow = (temp + flow) / 10;
+            return l1;
+        }
+        l1.next = add(l1.next, l2.next, len1 - 1, len2 - 1);
+        temp = l1.val;
+        l1.val = (temp + flow + l2.val) % 10;
+        flow = (temp + flow + l2.val) / 10;
+        return l1;
+
+    }
+
+
+    /**
+     * 翻转链表
+     *
+     * @param head
+     * @return
+     */
+    public static ListNode reverseListNode(ListNode head) {
+        if (head == null) {
             return null;
         }
 
-        ListNode tail;
-        ListNode preTail = null; //指向最后一个结点之前的结点
-        tail = head;
-        while (tail.next != null){
-            preTail = tail;
-            tail = tail.next;
+        ListNode L = new ListNode(-1);
+        ListNode r = L;
+        ListNode pre = head;
+
+        while (head != null) {
+            head = head.next;
+            pre.next = r.next;
+            r.next = pre;
+            pre = head;
         }
-        if (preTail == null){
-            return head;
-        }
-        tail.next = head;
-        preTail.next = null;
-        head = tail;
-        return head;
+
+        return L.next;
     }
+
+
 }
