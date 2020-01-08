@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_12dp"
+    android:layout_marginRight="@dimen/dimen_12dp"
+    android:paddingLeft="@dimen/dimen_12dp"
+    android:paddingTop="@dimen/dimen_12dp"
+    android:background="#f5fbff">
+
+
+    <TextView
+        android:id="@+id/property_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_15sp"
+        android:textColor="@color/color_333333"
+        android:text="19平 有早 大床"
+        android:layout_marginBottom="@dimen/dimen_6dp"
+        />
+
+    <TextView
+        android:id="@+id/cancel_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/property_tv"
+        android:textSize="@dimen/dimen_12sp"
+        android:textColor="@color/color_333333"
+        android:text="不可取消"
+        android:layout_marginBottom="@dimen/dimen_6dp"/>
+
+    <LinearLayout
+        android:id="@+id/tag_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cancel_tv"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#17a39a"
+            android:textSize="@dimen/dimen_10sp"
+            android:layout_marginRight="@dimen/dimen_3dp"
+            android:text="协议价"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#17a39a"
+            android:textSize="@dimen/dimen_10sp"
+            android:text="协议价"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/buy_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff6600"
+        android:textSize="@dimen/dimen_10sp"
+        android:text="预定"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_12dp"
+        />
+
+    <View
+        android:id="@+id/horizontal_split_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#eeeeee"
+        android:layout_below="@id/tag_layout"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        />
+
+
+</RelativeLayout>

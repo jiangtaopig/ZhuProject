@@ -33,6 +33,7 @@ public class MyButton extends AppCompatButton {
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.e("view_dispatch", "MyButton dispatchTouchEvent ACTION_MOVE");
+//                getParent().requestDisallowInterceptTouchEvent(true);//true 不允许父布局拦截
                 break;
             case MotionEvent.ACTION_UP:
                 Log.e("view_dispatch", "MyButton dispatchTouchEvent ACTION_UP");

@@ -32,10 +32,11 @@ public class MyLinearLayout extends LinearLayout {
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_MOVE");
-                return true;
-//                break;
+//                return true;
+                break;
             case MotionEvent.ACTION_UP:
                 Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_UP");
+//                return true;
                 break;
             case MotionEvent.ACTION_CANCEL:
                 Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_CANCEL");
