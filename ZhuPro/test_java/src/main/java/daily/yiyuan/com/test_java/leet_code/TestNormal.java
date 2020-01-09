@@ -46,9 +46,11 @@ public class TestNormal {
 
         searchInsert(new int[]{1, 3, 5, 6}, 5);
 
-        String a = "99";
-        String b = "656";
+        String a = "12";
+        String b = "676";
         multiply(a, b);
+
+        groupAnagrams(new String[]{"ab", "ac", "bc", "ba", "ca", "sard", "sdfqeff"});
     }
 
     /**
@@ -805,44 +807,66 @@ public class TestNormal {
         }
         int len1 = num1.length();
         int len2 = num2.length();
-
-        if (len1 < len2) {
-            String tmp = num2;
-            num2 = num1;
-            num1 = tmp;
-            len1 = num1.length();
-            len2 = num2.length();
-        }
-        List<String> list = new ArrayList<>();
-        int [] result = new int[len1 + len2];
+        // 位数为 len1 和 位数为 len2 的2个数相乘的最大位数位 len1 + len2
+        int[] result = new int[len1 + len2];
         int mul1 = 0;
         int mul2 = 0;
-        String sum = "";
-       int val; //向高位进位的数
-        for (int i = len2 - 1; i > -1; i--) {
-            val = 0;
-            mul1 = num2.charAt(i) - '0';
-            for (int j = len1 - 1; j > -1; j--) {
-                mul2 = num1.charAt(j) - '0';
+        int sum = 0;
+        for (int i = len1 - 1; i > -1; i--) {
+            mul1 = num1.charAt(i) - '0';
+            for (int j = len2 - 1; j > -1; j--) {
+                mul2 = num2.charAt(j) - '0';
                 int v = mul1 * mul2;
-                v += val;
-                if (v >= 10) {
-                    val = v / 10;
-                } else {
-                    val = 0;
-                }
-                if (j != 0) {
-                    v = v % 10;
-                }
-                result[i+j+1] = v;
-                sum = v +sum;
+                sum = result[i + j + 1] + v;
+                result[i + j + 1] = sum % 10;
+                result[i + j] += sum / 10;
             }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < result.length; i++) {
+            if (i == 0 && result[i] == 0)//去掉首位为0
+                continue;
+            sb.append(result[i]);
+        }
+        return sb.toString();
+    }
 
 
+    /**
+     * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+     * <p>
+     * 输入: ["eat", "tea", "tan", "ate", "nat", "bat"],
+     * 输出:
+     * [
+     * ["ate","eat","tea"],
+     * ["nat","tan"],
+     * ["bat"]
+     * ]
+     */
+    public static List<List<String>> groupAnagrams(String[] strs) {
+        //每个字母对应一个质数,字符串的各个字符对应的质数的乘积相等，即 是相同字符组合
+        int[] prime = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103};
+        Map<Integer, List<String>> listMap = new HashMap<>();
+        for (String str : strs) {
+            int m = 1;
+            for (char c : str.toCharArray()) {
+                m *= prime[c - 'a'];
+            }
+            if (!listMap.containsKey(m)) {
+                List<String> strings = new ArrayList<>();
+                strings.add(str);
+                listMap.put(m, strings);
+            } else {
+                listMap.get(m).add(str);
+            }
         }
 
 
-        return String.valueOf("");
+        List<List<String>> res = new ArrayList<>();
+        for (List<String> stringList : listMap.values()) {
+            res.add(stringList);
+        }
+        return res;
     }
 
 

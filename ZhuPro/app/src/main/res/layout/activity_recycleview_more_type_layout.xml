@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f5f5f5"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/more_type_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_10dp"/>
+
+    <TextView
+        android:id="@+id/tt_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:textSize="@dimen/dimen_20sp"
+        android:text="移动的控件"
+        android:gravity="center"
+        android:background="#ff0000"/>
+
+</RelativeLayout>
