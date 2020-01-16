@@ -1,11 +1,13 @@
 package com.example.za_zhujiangtao.zhupro.section_recycle;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.section_recycle.adapter.HotelEntityAdapter;
+import com.example.za_zhujiangtao.zhupro.section_recycle.adapter.SectionedSpanSizeLookup;
 import com.example.za_zhujiangtao.zhupro.section_recycle.entity.HotelEntity;
 import com.example.za_zhujiangtao.zhupro.section_recycle.entity.RoomTypeEntity;
 import com.example.za_zhujiangtao.zhupro.section_recycle.utils.JsonUtils;
@@ -32,6 +34,12 @@ public class SectionRecycleActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        setDetail();
+
+//        showHotelList();
+    }
+
+    private void setDetail() {
         //设置header
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
@@ -107,16 +115,22 @@ public class SectionRecycleActivity extends BaseActivity {
         roomTypeList.add(roomType2);
 
         hotelDetailAdapter.setRoomTypeList(roomTypeList);
-
-//        showHotelList();
     }
 
     private void showHotelList() {
         myHotelAdapter = new MyHotelAdapter(this);
-//        GridLayoutManager manager = new GridLayoutManager(this,4);
-//        manager.setSpanSizeLookup(new SectionedSpanSizeLookup(mAdapter,manager));
-        mRecyclerView.setAdapter(myHotelAdapter);
+        GridLayoutManager manager = new GridLayoutManager(this,4);
+        mAdapter = new HotelEntityAdapter(this);
+        manager.setSpanSizeLookup(new SectionedSpanSizeLookup(mAdapter, manager));
+
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.setLayoutManager(manager);
+//        mRecyclerView.setAdapter(myHotelAdapter);
         HotelEntity entity = JsonUtils.analysisJsonFile(this,"json");
+
+        mAdapter.setData(entity.allTagsList);
 
         HotelEntity.TagsEntity historyTags = new HotelEntity.TagsEntity();
         historyTags.tagsName = "历史记录";
@@ -129,6 +143,6 @@ public class SectionRecycleActivity extends BaseActivity {
         historyTags.tagInfoList = tagInfoList;
         entity.allTagsList.add(0, historyTags);
 
-        myHotelAdapter.setData(entity.allTagsList);
+//        myHotelAdapter.setData(entity.allTagsList);
     }
 }

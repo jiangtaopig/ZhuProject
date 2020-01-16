@@ -67,6 +67,9 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
+                Log.e("RecycleViewMoreType", "firstVisiblePosition = "+firstVisiblePosition);
                 if (mMoreTypeAdapter.getItemCount() > 0) {
                     RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(2);
                     if (holder instanceof MoreTypeAdapter.NormalHolder) {
@@ -86,6 +89,13 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
                 }
             }
         });
+
+
+        mTv.setOnClickListener(v -> {
+           LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+            linearLayoutManager.scrollToPositionWithOffset(3, 0);
+        });
+
     }
 
     private void initData() {
@@ -138,15 +148,14 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         typeBaseDataList.add(imageTypeData2);
         typeBaseDataList.add(normalTypeData1);
         typeBaseDataList.add(normalTypeData2);
-
-        typeBaseDataList.add(imageTypeData1);
-        typeBaseDataList.add(normalTypeData1);
-        typeBaseDataList.add(normalTypeData2);
-
-        typeBaseDataList.add(imageTypeData2);
-        typeBaseDataList.add(normalTypeData2);
-        typeBaseDataList.add(normalTypeData1);
-
+//
+//        typeBaseDataList.add(imageTypeData1);
+//        typeBaseDataList.add(normalTypeData1);
+//        typeBaseDataList.add(normalTypeData2);
+//
+//        typeBaseDataList.add(imageTypeData2);
+//        typeBaseDataList.add(normalTypeData2);
+//        typeBaseDataList.add(normalTypeData1);
 
         mMoreTypeAdapter.setMoreTypeBaseDataList(typeBaseDataList);
     }

@@ -51,6 +51,16 @@ public class TestNormal {
         multiply(a, b);
 
         groupAnagrams(new String[]{"ab", "ac", "bc", "ba", "ca", "sard", "sdfqeff"});
+        myPow(2.000000, -2);
+
+        addBinary("1", "111");
+
+        char[][] arrs = new char[][]{{'a', 'b'}, {'c', 'd'}};
+        String word = "abcd";
+        System.out.println("is exist = " + exist(arrs, word));
+
+        merge3(new int[]{2, 0}, 1, new int[]{1}, 1);
+        mySqrt(16);
     }
 
     /**
@@ -860,8 +870,6 @@ public class TestNormal {
                 listMap.get(m).add(str);
             }
         }
-
-
         List<List<String>> res = new ArrayList<>();
         for (List<String> stringList : listMap.values()) {
             res.add(stringList);
@@ -870,4 +878,235 @@ public class TestNormal {
     }
 
 
+    //.........................................pow(x,n)------------------------------------------
+    public static double myPow(double x, int n) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n == 1) {
+            return x;
+        }
+        if (n == -1) {
+            return 1 / x;
+        }
+        double half = myPow(x, n / 2);
+        double rest = myPow(x, n % 2);
+        return rest * half * half;
+    }
+
+    public static String addBinary(String a, String b) {
+        int len1 = a.length();
+        int len2 = b.length();
+        int diff = 0;
+        String smallStr = "";
+        if (len1 > len2) {
+            diff = len1 - len2;
+            smallStr = b;
+        } else {
+            diff = len2 - len1;
+            smallStr = a;
+            a = b;
+        }
+
+        while (diff > 0) {
+            smallStr = "0" + smallStr;
+            diff--;
+        }
+        int size = smallStr.length();
+        int val = 0;
+        String res = "";
+        for (int i = size - 1; i > -1; i--) {
+            int v1 = a.charAt(i) - '0';
+            int v2 = smallStr.charAt(i) - '0';
+            res = (v1 + v2 + val) % 2 + res;
+            val = (v1 + v2 + val) / 2;
+        }
+
+        if (val == 1) {
+            res = 1 + res;
+        }
+        return res;
+    }
+
+    public static String addBinary2(String a, String b) {
+        int len1 = a.length();
+        int len2 = b.length();
+
+        int res = 0;
+        String result = "";
+        for (int i = len1 - 1, j = len2 - 1; i >= 0 || j >= 0; i--, j--) {
+            int v1 = i >= 0 ? a.charAt(i) - '0' : 0;
+            int v2 = j >= 0 ? b.charAt(j) - '0' : 0;
+            result = (v1 + v2 + res) % 2 + result;
+            res = (v1 + v2 + res) / 2;
+        }
+        if (res == 1) {
+            result = 1 + result;
+        }
+        return result;
+    }
+
+    //---------------------------------------------------子序列和的最大值------------------------------------------------------------
+    public int maxSubArray(int[] nums) {
+        int sum = nums[0];
+        int res = sum;
+        for (int i = 1; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum > res) {
+                res = sum;
+            }
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+        return res;
+    }
+
+
+    //-------------------------------------------------------------单词搜索------------------------------------------------------------------------------
+    public static boolean exist(char[][] board, String word) {
+        Map<Character, Integer> sourceMap = new HashMap<>();
+        Map<Character, Integer> wordMap = new HashMap<>();
+
+        int row = board.length;
+        int column = board[0].length;
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                sourceMap.put(board[i][j], sourceMap.getOrDefault(board[i][j], 0) + 1);
+            }
+        }
+        int index = 0;
+        int wordLen = word.length();
+        while (index < wordLen) {
+            char ch = word.charAt(index);
+            wordMap.put(ch, wordMap.getOrDefault(ch, 0) + 1);
+            if (sourceMap.get(ch) == null || wordMap.get(ch).intValue() > sourceMap.get(ch).intValue()) {
+                return false;
+            }
+            index++;
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------合并2个有序数组--------------------------------------------------------------------
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        if (m == 0){
+            for (int i = 0; i < n; i++){
+                nums1[i] = nums2[i];
+            }
+            return;
+        }
+        if (n == 0){
+            return;
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            list.add(nums1[i]);
+        }
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            index = findFitIndex(list, index, nums2[i]);
+            list.add(index, nums2[i]);
+        }
+
+       for (int i = 0; i < list.size(); i++){
+           nums1[i] = list.get(i);
+       }
+    }
+
+    private static int findFitIndex(List<Integer> list, int start, int target) {
+        int end = list.size() - 1;
+        while (start <= end) {
+            if (target <= list.get(start)) {
+                return start;
+            }
+            start++;
+        }
+        return end + 1;
+    }
+
+    public static void merge2(int[] nums1, int m, int[] nums2, int n) {
+        if (m == 0) {
+            for (int i = 0; i < n; i++) {
+                nums1[i] = nums2[i];
+            }
+            return;
+        }
+        if (n == 0) {
+            return;
+        }
+
+        for (int i = 0, j = m; i < n; i++, j++){
+            nums1[j] = nums2[i];
+        }
+        Arrays.sort(nums1);
+    }
+
+    public static void merge3(int[] nums1, int m, int[] nums2, int n){
+        int i = m - 1;
+        int j = n - 1;
+        int len = nums1.length;
+        while (i >= 0 && j >= 0){
+            if (nums1[i] > nums2[j]){
+                nums1[len - 1] = nums1[i];
+                i--;
+            }else {
+                nums1[len - 1] = nums2[j];
+                j--;
+            }
+            len --;
+        }
+        //将nums2中未比较的数放入nums1
+        System.arraycopy(nums2, 0, nums1, 0, j + 1);
+    }
+
+
+    //----------------------------------------------------x的平方根-------------------------------------------------------------------
+    public static int mySqrt(int x) {
+        if (x == 1 || x == 0) {
+            return x;
+        }
+        int start = 1;
+        int end = x / 4 + 1;
+        int mid = 0;
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            //防止越界
+            if (mid <= x / mid && (mid + 1) > x / (mid + 1)) {
+                return mid;
+            }
+            if (mid > x / mid) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return mid;
+    }
+
+    /**
+     * 给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。
+     * 如果不存在最后一个单词，请返回 0 。
+     * 输入: "Hello Worlds"
+     * 输出: 6
+     */
+    //从右向左遍历，从第一个不是空格的字符开始计数，一旦开始计数，再遇到空格就结束了
+    public static int lengthOfLastWord(String s) {
+
+        if(s == null || s.length() == 0) return 0;
+        int count = 0;
+        for(int i = s.length()-1; i >= 0; i--){
+            if(s.charAt(i) == ' '){
+                if(count == 0) continue;
+                break;
+            }
+            count++;
+        }
+        return count;
+
+    }
+
+
 }
+

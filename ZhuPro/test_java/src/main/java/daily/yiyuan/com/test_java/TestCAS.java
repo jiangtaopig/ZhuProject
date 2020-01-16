@@ -11,7 +11,7 @@ import sun.misc.Unsafe;
 public class TestCAS {
     public static void main(String[] args) {
 //        Node node = new Node(4);
-//        boolean flag = node.casNext(null, new Node(5));
+//        boolean flag = node.casNext(node, new Node(5));
 //        System.out.println(flag + ", val = " + node.next.value);
 
         Node[] nodes = new Node[5];
@@ -30,12 +30,31 @@ public class TestCAS {
         Node node1 = new Node(4);
         node1.defaultVal = 2;
         boolean flag = node1.casDefaultVal(5);
-        System.out.println("flag = "+flag+", defaultVal = "+node1.defaultVal);
+        System.out.println("flag = " + flag + ", defaultVal = " + node1.defaultVal);
+
+        System.out.println("----------------------------------------------------测试MyInfo的偏移量----------------------------------------------------------------");
+        testMyInfo();
+
+    }
+
+    private static void testMyInfo() {
+        Unsafe unsafe = UnSafeUtils.getUnsafe();
+        for (Field field : MyInfo.class.getDeclaredFields()) {
+            System.out.println(field.getName() + "---" + field.getType() + ", offset = " + unsafe.objectFieldOffset(field));
+        }
+
+        /*
+        age---int, offset = 12   由于对象头占12个字节，所以 age 的偏移量等于12， int 占4个字节，所以 weight 的偏移量等于 12+4 = 16； weight是double类型 占 8 个字节，所以 name 的偏移量等于 16+8 = 24
+        name---class java.lang.String, offset = 24
+        weight---double, offset = 16
+         */
+
 
     }
 
     private static class Node {
         int value;
+        String data;
         volatile Node next;
         static final sun.misc.Unsafe UNSAFE;
         static final long nextOffset;
@@ -44,23 +63,29 @@ public class TestCAS {
         int defaultVal;
         private static long DEFAULT_VAL;
 
-        public Node(int val){
+        public Node(int val) {
             value = val;
         }
 
         static {
             try {
-                UNSAFE = getUnsafe();
+                UNSAFE = UnSafeUtils.getUnsafe();
                 Class<?> k = Node.class;
-                nextOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("next")); //Node 对象的变量 next 内存地址
+                nextOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("next")); //Node 对象的变量 next 偏移量
                 DEFAULT_VAL = UNSAFE.objectFieldOffset(k.getDeclaredField("defaultVal"));
                 ABASE = UNSAFE.arrayBaseOffset(Node[].class);//可以获取数组第一个元素的偏移地址
-                //可以获取数组的转换因子，也就是数组中元素的增量地址。将arrayBaseOffset与arrayIndexScale配合使用， 可以定位数组中每个元素在内存中的位置
+                //返回数组中一个元素占用的大小
                 int scale = UNSAFE.arrayIndexScale(Node[].class);
-                System.out.println("ABASE = " + ABASE + ", scale = " + scale);
+
                 if ((scale & (scale - 1)) != 0)
                     throw new Error("array index scale not a power of two");
                 ASHIFT = 31 - Integer.numberOfLeadingZeros(scale);
+
+                System.out.println("ABASE = " + ABASE + ", scale = " + scale + ", ASHIFT = " + ASHIFT);
+                long valOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("value"));
+                System.out.println("valOffset = " + valOffset);//输出 等于12 ，因为对象头占12个字节，所以 变量 value 的偏移量为 12；
+                long dataOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("data"));
+                System.out.println("dataOffset = " + dataOffset);
             } catch (Exception e) {
                 throw new Error(e);
             }
@@ -89,7 +114,7 @@ public class TestCAS {
             return UNSAFE.compareAndSwapObject(this, nextOffset, cmp, val);
         }
 
-        boolean casDefaultVal(int update){
+        boolean casDefaultVal(int update) {
             return UNSAFE.compareAndSwapInt(this, DEFAULT_VAL, defaultVal, update);
         }
 
@@ -97,20 +122,12 @@ public class TestCAS {
             return UNSAFE.compareAndSwapObject(tab, ((long) index << ASHIFT) + ABASE, expect, update);
         }
 
-        /**
-         * 反射获取Unsafe的方法
-         * 获取了以后就可以愉快的使用CAS啦
-         *
-         * @return
-         */
-        public static Unsafe getUnsafe() {
-            try {
-                Field field = Unsafe.class.getDeclaredField("theUnsafe");
-                field.setAccessible(true);
-                return (Unsafe) field.get(null);
-            } catch (Exception e) {
-                return null;
-            }
-        }
+
     }
+}
+
+class MyInfo {
+    int age;
+    String name;
+    double weight;
 }

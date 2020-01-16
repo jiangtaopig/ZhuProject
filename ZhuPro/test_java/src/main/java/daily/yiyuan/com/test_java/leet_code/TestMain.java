@@ -144,8 +144,8 @@ public class TestMain {
     }
 
     private static void findMinFullSubString() {
-        String s = "a";
-        String t = "aa";
+        String s = "ABACBADAB";
+        String t = "ABCB";
         String minString = minWindow(s, t);
         System.out.println("minString = " + minString);
     }
@@ -942,7 +942,7 @@ public class TestMain {
     }
 
     //.....................................................16.最小覆盖子串...........最小滑动窗口方法.......................................................................................................................
-    //比如： s="ACESDBDCA" t = "ACB"; 最小覆盖子串就是 BDCA；
+    //比如： s="ABADCBADAB" t = "ABCB"; 最小覆盖子串就是 BADCB；
 
     public static String minWindow(String s, String t) {
         if (s.length() == 0 || t.length() == 0) {

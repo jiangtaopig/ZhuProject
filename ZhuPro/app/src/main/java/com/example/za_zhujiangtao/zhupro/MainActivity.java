@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        String a = "1234567";
+        a.contains("334");
 
         mCollect.setOnClickListener(new View.OnClickListener() {
             @Override

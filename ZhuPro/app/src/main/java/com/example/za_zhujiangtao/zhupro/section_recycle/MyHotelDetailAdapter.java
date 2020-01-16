@@ -30,6 +30,7 @@ public class MyHotelDetailAdapter extends SectionedRecyclerViewAdapter<MyHotelDe
 
     private List<RoomTypeEntity.RoomType> roomTypeList;
     private SparseBooleanArray mBooleanMap;
+    private boolean mFolderFirstSection;
 
     public MyHotelDetailAdapter(){
         roomTypeList = new ArrayList<>();
@@ -50,11 +51,13 @@ public class MyHotelDetailAdapter extends SectionedRecyclerViewAdapter<MyHotelDe
     @Override
     protected int getItemCountForSection(int section) {
         int cnt = roomTypeList.get(section).roomInfos.size();
+        Log.e("zjt ", "section = "+section+", mFolderFirstSection = "+mFolderFirstSection);
         if (!mBooleanMap.get(section)){
-            //默认 第一类数据显示一条子数据
-//            if (section == 0){
-//                return 1;
-//            }
+            //默认 第一类数据显示 cnt 条子数据
+            if (section == 0 && !mFolderFirstSection){
+                mBooleanMap.put(section, true);
+                return cnt;
+            }
             return 0;
         }else {
             return cnt;
@@ -145,6 +148,9 @@ public class MyHotelDetailAdapter extends SectionedRecyclerViewAdapter<MyHotelDe
 
             showMoreTv.setOnClickListener(v -> {
                 boolean isShowMore = mBooleanMap.get(section);
+                if (section == 0 && isShowMore){
+                    mFolderFirstSection = true;
+                }
                 String val = isShowMore ? "收起" : "￥999起";
                 mBooleanMap.put(section, !isShowMore);
                 showMoreTv.setText(val);
