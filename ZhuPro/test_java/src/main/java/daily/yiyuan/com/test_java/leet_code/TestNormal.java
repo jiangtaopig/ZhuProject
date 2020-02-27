@@ -273,7 +273,7 @@ public class TestNormal {
 
 
     /**
-     * Z 字型变换
+     * Z字型变换
      *
      * @param s
      * @param numRows
@@ -991,13 +991,13 @@ public class TestNormal {
 
     //-------------------------------------------------------合并2个有序数组--------------------------------------------------------------------
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
-        if (m == 0){
-            for (int i = 0; i < n; i++){
+        if (m == 0) {
+            for (int i = 0; i < n; i++) {
                 nums1[i] = nums2[i];
             }
             return;
         }
-        if (n == 0){
+        if (n == 0) {
             return;
         }
         List<Integer> list = new ArrayList<>();
@@ -1010,9 +1010,9 @@ public class TestNormal {
             list.add(index, nums2[i]);
         }
 
-       for (int i = 0; i < list.size(); i++){
-           nums1[i] = list.get(i);
-       }
+        for (int i = 0; i < list.size(); i++) {
+            nums1[i] = list.get(i);
+        }
     }
 
     private static int findFitIndex(List<Integer> list, int start, int target) {
@@ -1037,25 +1037,25 @@ public class TestNormal {
             return;
         }
 
-        for (int i = 0, j = m; i < n; i++, j++){
+        for (int i = 0, j = m; i < n; i++, j++) {
             nums1[j] = nums2[i];
         }
         Arrays.sort(nums1);
     }
 
-    public static void merge3(int[] nums1, int m, int[] nums2, int n){
+    public static void merge3(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1;
         int j = n - 1;
         int len = nums1.length;
-        while (i >= 0 && j >= 0){
-            if (nums1[i] > nums2[j]){
+        while (i >= 0 && j >= 0) {
+            if (nums1[i] > nums2[j]) {
                 nums1[len - 1] = nums1[i];
                 i--;
-            }else {
+            } else {
                 nums1[len - 1] = nums2[j];
                 j--;
             }
-            len --;
+            len--;
         }
         //将nums2中未比较的数放入nums1
         System.arraycopy(nums2, 0, nums1, 0, j + 1);
@@ -1094,17 +1094,43 @@ public class TestNormal {
     //从右向左遍历，从第一个不是空格的字符开始计数，一旦开始计数，再遇到空格就结束了
     public static int lengthOfLastWord(String s) {
 
-        if(s == null || s.length() == 0) return 0;
+        if (s == null || s.length() == 0) return 0;
         int count = 0;
-        for(int i = s.length()-1; i >= 0; i--){
-            if(s.charAt(i) == ' '){
-                if(count == 0) continue;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (count == 0) continue;
                 break;
             }
             count++;
         }
         return count;
 
+    }
+
+    public static int[] plusOne(int[] digits) {
+        if (digits == null || digits.length == 0) {
+            return digits;
+        }
+
+        int len = digits.length;
+        int addNum = 1;
+        for (int i = len - 1; i >= 0; i--) {
+            int tmp = digits[i] + addNum;
+            digits[i] = tmp % 10;
+            addNum = tmp / 10;
+            if (tmp < 10) {
+                break;
+            }
+        }
+        if (addNum == 1){
+            int [] res = new int[len + 1];
+            res[0] = 1;
+            for (int i = 1; i< len+1; i++){
+                res[i] = digits[i-1];
+            }
+            return res;
+        }
+        return  digits;
     }
 
 

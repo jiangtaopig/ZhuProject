@@ -50,6 +50,8 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         mRecyclerView.setAdapter(mMoreTypeAdapter);
         initData();
 
+        "sss".replaceAll("ss", " ");
+
         mTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -117,6 +119,7 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         tags2.add("HOT");
         tags2.add("仅剩一间");
         tags2.add("协议价");
+        tags2.add(0, "xx");
 
         ImageTypeData imageTypeData1 = new ImageTypeData();
         imageTypeData1.tags = tags1;
@@ -149,13 +152,13 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         typeBaseDataList.add(normalTypeData1);
         typeBaseDataList.add(normalTypeData2);
 //
-//        typeBaseDataList.add(imageTypeData1);
-//        typeBaseDataList.add(normalTypeData1);
-//        typeBaseDataList.add(normalTypeData2);
-//
-//        typeBaseDataList.add(imageTypeData2);
-//        typeBaseDataList.add(normalTypeData2);
-//        typeBaseDataList.add(normalTypeData1);
+        typeBaseDataList.add(imageTypeData1);
+        typeBaseDataList.add(normalTypeData1);
+        typeBaseDataList.add(normalTypeData2);
+
+        typeBaseDataList.add(imageTypeData2);
+        typeBaseDataList.add(normalTypeData2);
+        typeBaseDataList.add(normalTypeData1);
 
         mMoreTypeAdapter.setMoreTypeBaseDataList(typeBaseDataList);
     }

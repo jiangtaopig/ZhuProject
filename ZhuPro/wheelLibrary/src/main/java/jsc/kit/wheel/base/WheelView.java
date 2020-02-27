@@ -45,8 +45,8 @@ import jsc.kit.wheel.R;
 public class WheelView extends View implements IWheelViewSetting {
 
     private final String TAG = "WheelView";
-    private static final float DEFAULT_ROTATION_X = 45.0f;
-    private static final int DEFAULT_VELOCITY_UNITS = 600;
+    private static final float DEFAULT_ROTATION_X = 65.0f;
+    private static final int DEFAULT_VELOCITY_UNITS = 400;
     private TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private Camera camera = new Camera();
     private Matrix matrix = new Matrix();
@@ -141,7 +141,7 @@ public class WheelView extends View implements IWheelViewSetting {
         scaledTouchSlop = viewConfiguration.getScaledTouchSlop();
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WheelView, defStyleAttr, 0);
-        float defaultTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, getResources().getDisplayMetrics());
+        float defaultTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
         textColor = a.getColor(R.styleable.WheelView_wheelTextColor, 0xFF333333);
         textSize = a.getDimension(R.styleable.WheelView_wheelTextSize, defaultTextSize);
         showCount = a.getInt(R.styleable.WheelView_wheelShowCount, 5);

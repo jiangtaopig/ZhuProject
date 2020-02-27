@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,21 +34,38 @@ public class TestDatePickDialogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_date_picker_layout);
         ButterKnife.bind(this);
 
-        createDialog(4);
+        createDialog(DateTimeWheelDialog.SHOW_YEAR_MONTH_DAY_HOUR);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     private DateTimeWheelDialog createDialog(int type) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2015);
-        calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        Date startDate = calendar.getTime();
-        calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2020);
-        Date endDate = calendar.getTime();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.YEAR, 2015);
+//        calendar.set(Calendar.MONTH, 0);
+//        calendar.set(Calendar.DAY_OF_MONTH, 1);
+//        calendar.set(Calendar.HOUR_OF_DAY, 0);
+//        calendar.set(Calendar.MINUTE, 0);
+//        Date startDate = calendar.getTime();
+//        calendar = Calendar.getInstance();
+//        calendar.set(Calendar.YEAR, 2030);
+//        Date endDate = calendar.getTime();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        Date endDate = null;
+        Date startDate = null;
+        Date selectedDate = null;
+        try {
+            startDate = format.parse("2015-01-01");
+            endDate = format.parse("2030-12-31");
+
+            Date date = new Date();
+            String time = new SimpleDateFormat("yyyy").format(date);
+            time += "-01-01";
+            selectedDate = format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         DateTimeWheelDialog dialog = new DateTimeWheelDialog(this);
         dialog.show();
@@ -81,7 +100,7 @@ public class TestDatePickDialogActivity extends AppCompatActivity {
             }
         });
         dialog.setDateArea(startDate, endDate, true);
-        dialog.updateSelectedDate(new Date());
+        dialog.updateSelectedDate(selectedDate);
         return dialog;
     }
 }

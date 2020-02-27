@@ -11,17 +11,24 @@ import java.util.function.IntConsumer;
  */
 public class TestSemaphore {
     public static void main(String[] args) {
-//        testSemaphore();
+        System.out.println("----------------------------------测试Semaphore---------------------------------");
+        testSemaphore();
 
 //        testZeroOddEven();
+
 //        testCyclicBarrier();
 //        testH2O();
-        System.out.println("-------------------------------------------------------------------");
 
+//        printCharAndNum();
+
+
+    }
+
+    private static void printCharAndNum() {
         final NumberChar numberChar = new NumberChar();
 
-        final int[] nums = {1, 2};
-        final char [] chars = {'a'};
+        final int[] nums = {1, 2, 3, 4};
+        final char [] chars = {'a', 'b'};
 
         for (int i = 0; i < nums.length; i++){
             final int tmp = i;
@@ -57,8 +64,6 @@ public class TestSemaphore {
                 }
             }.start();
         }
-
-
     }
 
     private static void testH2O() {
@@ -111,11 +116,12 @@ public class TestSemaphore {
     }
 
     private static void testCyclicBarrier() {
+        System.out.println("-------------------------仅测试CyclicBarrier------------------------------------------");
         //其参数 3 表示屏障拦截的线程数量为3，每个线程调用await()方法告诉CyclicBarrier我已经到达了屏障，然后该线程被阻塞。直到达到屏障的数量等于3时，所有的线程才会继续执行下去
         final CyclicBarrier cyclicBarrier = new CyclicBarrier(3, new Runnable() {
             @Override
             public void run() {//最后一个到达的线程会执行下面的方法
-                System.out.println("ThreadName" + Thread.currentThread().getName() + ".... run ........." + System.currentTimeMillis());
+                System.out.println("3个线程都到达了 ThreadName" + Thread.currentThread().getName() + ".... run ........." + System.currentTimeMillis());
             }
         });
 
@@ -172,6 +178,7 @@ public class TestSemaphore {
     }
 
     private static void testSemaphore() {
+
         final ZjtService zjtService = new ZjtService();
 
         new Thread() {

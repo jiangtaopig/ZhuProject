@@ -13,8 +13,8 @@
         android:paddingRight="12dp"
         android:paddingBottom="8dp"
         android:text="@android:string/cancel"
-        android:textColor="@color/wheel_title_bar_cancel_color"
-        android:textSize="@dimen/wheel_title_bar_cancel_size" />
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@id/wheel_id_title_bar_ok"
@@ -26,8 +26,8 @@
         android:paddingRight="12dp"
         android:paddingBottom="8dp"
         android:text="@android:string/ok"
-        android:textColor="@color/wheel_title_bar_ok_color"
-        android:textSize="@dimen/wheel_title_bar_ok_size" />
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@id/wheel_id_title_bar_title"
@@ -39,7 +39,7 @@
         android:paddingTop="8dp"
         android:paddingRight="12dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/wheel_title_bar_title_color"
-        android:textSize="@dimen/wheel_title_bar_title_size" />
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
 </FrameLayout>

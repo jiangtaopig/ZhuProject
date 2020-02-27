@@ -32,6 +32,11 @@ public class TestListNode2 {
 
 
         addTwoNumbers(initListNodeWithoutHead(new int[]{2, 4, 3}), initListNodeWithoutHead(new int[]{9, 7, 6, 4}));
+
+
+
+        ListNode l6 = initListNodeWithoutHead(new int[]{3, 4, 1});
+        insertionSortList(l6);
     }
 
     private static void mergeKListNodes() {
@@ -335,5 +340,43 @@ public class TestListNode2 {
         return L.next;
     }
 
+    public static ListNode insertionSortList(ListNode head) {
+        ListNode L, p, t, r, preT = null;
+        if (head == null){
+            return head;
+        }
+
+        L = head;
+        head = head.next;
+        p = head;
+        t = L;
+        L.next = null;
+
+        while (p != null){
+            r = p.next;
+            while (t != null){
+                if (p.val > t.val){
+                    preT = t;
+                    t = t.next;
+                }else {
+                    p.next = t;
+                    if (preT != null){
+                        preT.next = p;
+                    }else {
+                        L = p;
+                    }
+                    break;
+                }
+            }
+            if (t == null && preT != null){
+                preT.next = p;
+                p.next = null;
+            }
+            preT = null;
+            t = L;
+            p = r;
+        }
+        return L;
+    }
 
 }

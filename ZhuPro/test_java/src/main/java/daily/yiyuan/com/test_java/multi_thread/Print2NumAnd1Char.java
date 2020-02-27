@@ -2,7 +2,7 @@ package daily.yiyuan.com.test_java.multi_thread;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MyWait {
+public class Print2NumAnd1Char {
     public static void main(String [] args){
         AtomicBoolean isNum = new AtomicBoolean(true);
         final String [] number = {"1", "2", "3","4","5","6","7","8"};

@@ -47,7 +47,6 @@ public class SectionRecycleActivity extends BaseActivity {
         mRecyclerView.setAdapter(hotelDetailAdapter);
 
         List<RoomTypeEntity.RoomType> roomTypeList = new ArrayList<>();
-
         List<String> property1 = new ArrayList<>();
         property1.add("19平");
         property1.add("有早");

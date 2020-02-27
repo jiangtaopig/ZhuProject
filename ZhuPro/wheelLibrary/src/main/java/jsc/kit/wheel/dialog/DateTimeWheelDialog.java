@@ -157,9 +157,17 @@ public class DateTimeWheelDialog extends Dialog {
             }
         });
 
-        yearWheelItemView.getWheelMaskView().setLineColor(getContext().getResources().getColor(R.color.wheel_black));
-//        yearWheelItemView.getWheelView().setItemVerticalSpace(90);
-        yearWheelItemView.getWheelView().setTextColor(getContext().getResources().getColor(R.color.wheel_title_bar_cancel_color));
+        yearWheelItemView.getWheelMaskView().setLineColor(Color.parseColor("#eeeeee"));
+        yearWheelItemView.getWheelView().setItemVerticalSpace(70);
+        yearWheelItemView.getWheelView().setTextColor(Color.parseColor("#333333"));
+
+        monthWheelItemView.getWheelMaskView().setLineColor(Color.parseColor("#eeeeee"));
+        monthWheelItemView.getWheelView().setItemVerticalSpace(70);
+        monthWheelItemView.getWheelView().setTextColor(Color.parseColor("#333333"));
+
+        dayWheelItemView.getWheelMaskView().setLineColor(Color.parseColor("#eeeeee"));
+        dayWheelItemView.getWheelView().setItemVerticalSpace(70);
+        dayWheelItemView.getWheelView().setTextColor(Color.parseColor("#333333"));
     }
 
     @Override

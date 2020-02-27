@@ -18,6 +18,10 @@ import android.widget.TextView;
 import com.transitionseverywhere.TransitionManager;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -67,6 +71,14 @@ public class TransitionActivity extends AppCompatActivity {
 
         testMemoryLeak();
 
+        Semaphore semaphore = new Semaphore(3);
+
+        Vector<String> vector = new Vector<>();
+        vector.add("1");
+
+        List<String> list = new ArrayList<>();
+        list.add("1");
+
         myHandler = new MyHandler(TransitionActivity.this);
         myHandler.postDelayed(() -> {
             Message message = myHandler.obtainMessage();
@@ -79,12 +91,11 @@ public class TransitionActivity extends AppCompatActivity {
     @OnClick(R.id.click_btn)
     protected void testTransition() {
         TransitionManager.beginDelayedTransition(mGroupTop);
-        if (mIsImageVisible) {
+        if (mImageView.getVisibility() == View.VISIBLE) {
             mImageView.setVisibility(View.GONE);
         } else {
             mImageView.setVisibility(View.VISIBLE);
         }
-        mIsImageVisible = !mIsImageVisible;
     }
 
     @OnClick(R.id.tv1)

@@ -461,18 +461,6 @@ public class TestMain {
         return R - L - 1;
     }
 
-    //..........................................................5.Z字形变换...........................................
-    public static String convert(String s, int numRows) {
-        String res = "";
-        int len = s.length();
-        int coloum = len % numRows == 0 ? len / numRows : len / numRows + 1;
-        char[][] chars = new char[numRows][coloum];
-        for (int i = 0; i < len; i++) {
-
-        }
-        return res;
-    }
-
     //...............................................6. 1-n个自然数中缺失1个数，找出这个数................................
 
     /**

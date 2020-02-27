@@ -191,4 +191,33 @@
     <color name="color_a3b8cc">#a3b8cc</color>
     <color name="color_0f000000">#0F000000</color>
     <color name="color_dae0e6">#DAE0E6</color>
+
+    <!-- calendar color -->
+
+
+    <color name="cal_text_normal">#4A4A4A</color>
+
+    <color name="cal_text_light">#ababab</color>
+
+    <color name="cal_text_super_light">#c0c0c0</color>
+
+    <color name="cal_blue_light">#8EC5EE</color>
+
+    <color name="cal_blue_dark">#336F9C</color>
+
+    <color name="cal_stroke">#77d4f6</color>
+
+    <color name="cal_days_title">#F5F5F5</color>
+
+    <color name="cal_vertical_line">#E9F6FF</color>
+
+    <color name="cal_line_grey">#9B9B9B</color>
+
+    <color name="cal_color_white">#FFFFFF</color>
+
+    <color name="cal_color_red">#FFE54E36</color>
+
+    <color name="cal_color_green">#FF16A085</color>
+
+    <color name="cal_color_point_blue">#FF1875D1</color>
 </resources>

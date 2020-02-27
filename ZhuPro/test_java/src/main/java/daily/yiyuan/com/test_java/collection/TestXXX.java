@@ -1,5 +1,8 @@
 package daily.yiyuan.com.test_java.collection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/7/19
@@ -16,5 +19,12 @@ public class TestXXX {
         lruCache.traverse();
         lruCache.put("4", "4");
         lruCache.traverse();
+
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add(null);
+
+        System.out.println(list);
+
     }
 }
