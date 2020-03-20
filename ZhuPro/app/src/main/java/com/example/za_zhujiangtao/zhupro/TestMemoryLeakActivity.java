@@ -50,6 +50,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
         testMemoryLeak();
         List<String> strings = new ArrayList<>();
         strings.add("ss");
+
     }
 
     private void testMemoryLeak() {

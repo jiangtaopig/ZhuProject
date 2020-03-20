@@ -149,6 +149,8 @@ dependencies {
     implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation files('libs/joda-time-2.3.jar')
+
+    implementation project(':token_auto_complete')
 }
 repositories {
     mavenCentral()

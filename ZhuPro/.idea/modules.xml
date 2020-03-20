@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/citypicker/citypicker.iml" filepath="$PROJECT_DIR$/citypicker/citypicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/test_java/test_java.iml" filepath="$PROJECT_DIR$/test_java/test_java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/token_auto_complete/token_auto_complete.iml" filepath="$PROJECT_DIR$/token_auto_complete/token_auto_complete.iml" />
       <module fileurl="file://$PROJECT_DIR$/wheelLibrary/wheelLibrary.iml" filepath="$PROJECT_DIR$/wheelLibrary/wheelLibrary.iml" />
     </modules>
   </component>
