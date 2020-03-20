@@ -1,13 +1,17 @@
 package com.example.za_zhujiangtao.zhupro.define_view;
 
 import android.util.Log;
+import android.util.SparseArray;
 import android.widget.Button;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.ThreadPoolExecutor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
@@ -105,6 +109,20 @@ public class TestDefineActivity extends BaseActivity {
 //            });
 //        });
 
+        mTestThreadPool.setOnClickListener(v -> {
+            SparseArray<String> array = new SparseArray<>();
+            array.put(4, "m");
+            array.put(3, "b");
+            array.put(5, "c");
+
+            ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+            map.put("1", "a");
+
+            Map<String, String> map1 = new HashMap<>();
+
+
+            int a = 3;
+        });
     }
 
     private void testForBreak(){

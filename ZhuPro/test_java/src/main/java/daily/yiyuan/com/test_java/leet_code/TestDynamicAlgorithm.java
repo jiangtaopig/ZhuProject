@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/12/5
- *
+ * 参考 ：https://labuladong.gitbook.io/algo/
  * 动态规划算法
  */
 public class TestDynamicAlgorithm {
@@ -112,15 +112,16 @@ public class TestDynamicAlgorithm {
     public static int maxSubSequence(int [] arr){
         int max = 0;
         int n = arr.length;
-        int [] d = new int[n];
-        Arrays.fill(d, 1);//因为最少也有1个
+        // dp[i] 表示 以arr[i]结尾的最长上升子序列的个数
+        int [] dp = new int[n];
+        Arrays.fill(dp, 1);//因为最少也有1个
         for (int i = 0; i< n; i++){
             for (int j = 0; j < i; j++){
                 if (arr[i] > arr[j]){
-                    d[i] = Math.max(d[j]+1, d[i]);
+                    dp[i] = Math.max(dp[j]+1, dp[i]);
                 }
             }
-            max = Math.max(max, d[i]);
+            max = Math.max(max, dp[i]);
         }
         return max;
     }

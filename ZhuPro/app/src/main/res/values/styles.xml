@@ -310,4 +310,10 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    
+    
+    <declare-styleable name="TestView2">
+        <attr name="android:text"/>
+        <attr name="android:textSize"/>
+    </declare-styleable>
 </resources>

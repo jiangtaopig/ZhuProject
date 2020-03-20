@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".TransitionActivity"
+            android:name=".TestMemoryLeakActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,11 +80,11 @@
         <activity
             android:name=".launch_mode.B1Activity"
             android:taskAffinity="com.zjt.b" />
-        <activity
-            android:name=".DefineViewActivity"
-            android:theme="@style/MyAppTheme">
+<!--        <activity-->
+<!--            android:name=".DefineViewActivity"-->
+<!--            android:theme="@style/MyAppTheme">-->
 
-        </activity>
+<!--        </activity>-->
 
 <!--        <activity android:name=".TransitionActivity" />-->
 
