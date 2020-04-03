@@ -1,6 +1,7 @@
 package com.example.za_zhujiangtao.zhupro.launch_mode;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -51,8 +54,8 @@ public class TestLaunchModeActivity extends BaseActivity {
     private void initView() {
         mJumpBtn = findViewById(R.id.jump_activity);
         mJumpBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(TestLaunchModeActivity.this, A1Activity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(TestLaunchModeActivity.this, A1Activity.class);
+            startActivity(intent);
 //            testHandler();
 //            ArrayDeque<String> stringArrayDeque = new ArrayDeque<>();
 //            stringArrayDeque.offer("a");
@@ -67,8 +70,8 @@ public class TestLaunchModeActivity extends BaseActivity {
 //            stringThreadLocal.set("b");
 //            Log.e("TestLaunchModeActivity", "local value = "+stringThreadLocal.get());
 
-            FileUtils.writeFile("hotfix", "zjt2.txt", "i am zjt");
-            moveFileFromSdcardToAppDir();
+//            FileUtils.writeFile("hotfix", "zjt2.txt", "i am zjt");
+//            moveFileFromSdcardToAppDir();
         });
 
 //        testAsyncTask();

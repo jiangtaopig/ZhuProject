@@ -1,6 +1,7 @@
 package com.example.za_zhujiangtao.zhupro;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -48,6 +49,13 @@ public class TestActivity extends Activity {
                 return true;
             }
         });
+
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                return null;
+            }
+        };
 
         button.setOnClickListener(v -> {
             ExecutorService executorService = Executors.newFixedThreadPool(3);

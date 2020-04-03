@@ -101,6 +101,25 @@ public class TestDynamicAlgorithm {
     }
 
     /**
+     * 1. 求素组的连续子段和的最大值
+     * 例如：-2,11,-4,13,-5,-2，和最大的子段为：11,-4,13。和为20。
+     */
+    public static int findMaxSubSum(int[] arr) {
+        int nowSum = 0;
+        int maxSum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            nowSum += arr[i];
+            if (nowSum > maxSum) {
+                maxSum = nowSum;
+            }
+            if (nowSum < 0) {
+                nowSum = 0;
+            }
+        }
+        return maxSum;
+    }
+
+    /**
      * 给定一个无序的整数数组，找到其中最长上升子序列的长度。
      *
      *  输入: [10,9,2,5,3,7,101,18]

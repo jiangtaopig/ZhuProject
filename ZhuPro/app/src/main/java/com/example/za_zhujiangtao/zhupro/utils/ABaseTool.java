@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -82,19 +83,19 @@ public class ABaseTool {
      */
     public static int getStatusBarHeight(Activity act) {
 
-		/*
+        /*
          * 方法一，荣耀3c无效 Rect frame = new Rect();
-		 * act.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-		 * int statusBarHeight = frame.top; return statusBarHeight;
-		 */
+         * act.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+         * int statusBarHeight = frame.top; return statusBarHeight;
+         */
 
-		/*
-		 * 方法二，荣耀3c无效 Rect rectgle= new Rect(); Window window= act.getWindow();
-		 * window.getDecorView().getWindowVisibleDisplayFrame(rectgle); int
-		 * StatusBarHeight= rectgle.top; int contentViewTop=
-		 * window.findViewById(Window.ID_ANDROID_CONTENT).getTop(); int
-		 * statusBar = contentViewTop - StatusBarHeight; return statusBar;
-		 */
+        /*
+         * 方法二，荣耀3c无效 Rect rectgle= new Rect(); Window window= act.getWindow();
+         * window.getDecorView().getWindowVisibleDisplayFrame(rectgle); int
+         * StatusBarHeight= rectgle.top; int contentViewTop=
+         * window.findViewById(Window.ID_ANDROID_CONTENT).getTop(); int
+         * statusBar = contentViewTop - StatusBarHeight; return statusBar;
+         */
 
         //方法三，荣耀3c有效
         Class<?> c = null;
@@ -226,7 +227,7 @@ public class ABaseTool {
                     0);
             return info.versionName;
         } catch (Exception e) {
-            Log.e("AndroidRuntime",e.getMessage());
+            Log.e("AndroidRuntime", e.getMessage());
             return "";
         }
     }
@@ -338,12 +339,15 @@ public class ABaseTool {
      * @return
      */
     public static Bitmap convertViewToBitmap(View view) {
-//	    view.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-//	        view.layout(0, 0, view.getMeasuredWidth() , view.getMeasuredHeight() + view.getPaddingBottom());
-//	        view.buildDrawingCache();
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight() + view.getPaddingBottom());
+        view.buildDrawingCache();
 //	        Bitmap bitmap = view.getDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        view.draw(new Canvas(bitmap));
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        canvas.drawBitmap(bitmap, 0, view.getMeasuredHeight(), paint);
+        view.draw(canvas);
         return bitmap;
     }
 
@@ -559,7 +563,6 @@ public class ABaseTool {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
         context.startActivity(intent);
     }
-
 
 
     /**

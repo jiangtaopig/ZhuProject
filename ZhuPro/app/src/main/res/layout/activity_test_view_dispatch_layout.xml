@@ -23,4 +23,12 @@
         android:textColor="@color/white"
         android:textSize="26sp" />
 
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_20sp"
+        android:textColor="@color/color_8f66ff"
+        android:text="123456789"/>
+
 </com.example.za_zhujiangtao.zhupro.view_dispatch.MyLinearLayout>

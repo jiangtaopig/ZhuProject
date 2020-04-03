@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class TestTree {
     static List<List<Integer>> levels = new ArrayList<>();
+
     public static void main(String[] args) {
 
 //        testSameTree();
@@ -16,11 +17,16 @@ public class TestTree {
         TreeNode p = new TreeNode(1);
         TreeNode pR = new TreeNode(2);
         p.right = pR;
+        p.left = new TreeNode(5);
         pR.left = new TreeNode(3);
+        pR.right = new TreeNode(4);
 
         inorderTraversal(p);
 
-        levelOrder(null);
+        levelOrder(p);
+        levels.size();
+
+        levelZOrder(p);
 
         numTrees(2);
     }
@@ -165,10 +171,10 @@ public class TestTree {
     }
 
     public static void levelOrder(TreeNode root, int level) {
-        if (root == null){
+        if (root == null) {
             return;
         }
-        if (levels.size() == level){
+        if (levels.size() == level) {
             levels.add(new ArrayList<Integer>());
         }
         levels.get(level).add(root.val);
@@ -177,19 +183,48 @@ public class TestTree {
     }
 
     /**
+     * Z 字形 打印 二叉树
+     *
+     * @param root
+     * @return
+     */
+    public static List<List<Integer>> levelZOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        levelZOrder(root, 0, res);
+        return res;
+    }
+
+    public static void levelZOrder(TreeNode root, int level, List<List<Integer>> res) {
+        if (root == null) {
+            return;
+        }
+        int size = res.size();
+        if (size == level) {
+            res.add(new ArrayList<Integer>());
+        }
+        res.get(level).add(root.val);
+        if ((size & 1) == 0) {//偶数
+            levelZOrder(root.left, level + 1, res);
+            levelZOrder(root.right, level + 1, res);
+        } else {
+            levelZOrder(root.right, level + 1, res);
+            levelZOrder(root.left, level + 1, res);
+        }
+
+    }
+
+    /**
      * 给定 n ,那么 1~ n 可以构成多少种 搜索二叉树
-     * @param n
      *
-     * 标签：动态规划
-     * 假设n个节点存在二叉排序树的个数是G(n)，令f(i)为以i为根的二叉搜索树的个数，则
-     * G(n) = f(1) + f(2) + f(3) + f(4) + ... + f(n)G(n)=f(1)+f(2)+f(3)+f(4)+...+f(n)
-     *
-     * 当i为根节点时，其左子树节点个数为i-1个，右子树节点为n-i，则
-     * f(i) = G(i-1)*G(n-i)f(i)=G(i−1)∗G(n−i)
-     *
-     * 综合两个公式可以得到 卡特兰数 公式
-     * G(n) = G(0)∗G(n−1)+G(1)∗(n−2)+...+G(n−1)∗G(0)
-     *
+     * @param n 标签：动态规划
+     *          假设n个节点存在二叉排序树的个数是G(n)，令f(i)为以i为根的二叉搜索树的个数，则
+     *          G(n) = f(1) + f(2) + f(3) + f(4) + ... + f(n)G(n)=f(1)+f(2)+f(3)+f(4)+...+f(n)
+     *          <p>
+     *          当i为根节点时，其左子树节点个数为i-1个，右子树节点为n-i，则
+     *          f(i) = G(i-1)*G(n-i)f(i)=G(i−1)∗G(n−i)
+     *          <p>
+     *          综合两个公式可以得到 卡特兰数 公式
+     *          G(n) = G(0)∗G(n−1)+G(1)∗(n−2)+...+G(n−1)∗G(0)
      */
     public static int numTrees(int n) {
         int[] G = new int[n + 1];

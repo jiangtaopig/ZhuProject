@@ -1,7 +1,6 @@
-package daily.yiyuan.com.test_java;
+package daily.yiyuan.com.test_java.cas;
 
 import java.lang.reflect.Field;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import sun.misc.Unsafe;
 

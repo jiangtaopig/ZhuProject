@@ -72,7 +72,7 @@ public class A1Activity extends BaseActivity {
         jump2B.setText("Jump 2 A2Activity");
         jump2B.setOnClickListener(v -> {
             Intent intent = new Intent(A1Activity.this, A2Activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
 
@@ -94,6 +94,6 @@ public class A1Activity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
+//        unbindService(serviceConnection);
     }
 }

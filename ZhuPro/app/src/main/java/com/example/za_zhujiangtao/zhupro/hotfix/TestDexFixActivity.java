@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 import butterknife.BindView;
 
@@ -49,6 +52,12 @@ public class TestDexFixActivity extends BaseActivity {
             //先将 生成好的 .dex 文件放到 MainApplication.getContext().getExternalCacheDir() + "/hotfix" 目录下
             dexFix();
         });
+
+        Map<String, String> map = new HashMap<>();
+        map.remove("");
+
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
     }
 
     private void dexFix() {

@@ -1,0 +1,88 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ZJT GOOD</title>
+
+    <!--JS代码-->
+    <script type="text/javascript">
+   function callJS(){
+      alert("Android调用了JS的callJS方法");
+      return "android invoke js";
+   }
+
+   function callAndroid(){
+      test.hello("js调用了android中的hello方法");
+   }
+
+   function clickPrompt(){
+    var result=prompt("js://webview?arg1=111&arg2=222", '{"param":"cardRecognise_aaaa"}', '{"name":"zjt"}');
+    alert("demo " + result);
+    }
+
+    function jsCallAndroid(){
+     window.LocalJSBridge.invoke("request",'{"name":"zjt", "age":23 }', function callback(result, success){
+     alert("demo " + result + ", success = "+success);
+	 console.log("-----result-----"+result+", success >>> "+success);
+    });
+
+}
+
+window.LocalJSBridge = {
+
+	invoke : function(name, params, callback){
+		if (typeof name !== 'string') {
+			return;
+		}
+		if (!params) {
+			params = {};
+		}
+		var callbackKey = name;
+		if (callback) {
+			if (typeof(window.callbacks == 'undefined')) {
+				window.callbacks = {};
+			}
+			window.callbacks[callbackKey] = callback;
+		}
+		 prompt(name,JSON.stringify(params));
+	},
+
+	callJsBack: function(message){
+		console.log("message = "+message);
+		if (!message) {
+			return;
+		}
+
+		message = JSON.parse(message);
+		 var callbackKey = message.action;
+		 console.log("callbackKey = "+callbackKey+", window.callbacks = "+window.callbacks);
+        if (!callbackKey || !window.callbacks) {
+            return;
+        }
+
+        var callback =  window.callbacks[callbackKey];
+        console.log(callback);
+
+        if (callback) {
+            var params = message.params;
+            var success = message.success;
+            callback(params, success);
+        }
+	}
+
+};
+
+
+    </script>
+
+</head>
+
+<body>
+<!--点击按钮则调用callAndroid函数-->
+<button type="button" onclick="clickPrompt()">点击调用Android代码</button>
+<button type="button" onclick="jsCallAndroid()">JS调用Android并回调</button>
+<video width="500" height="405" controls="controls" preload="none" poster="http://tanzi27niu.cdsb.mobi/wps/wp-content/uploads/2017/05/2017-05-17_17-30-43.jpg" >
+    <source src="http://tanzi27niu.cdsb.mobi/wps/wp-content/uploads/2017/05/2017-05-17_17-33-30.mp4" type="video/mp4">
+</video>
+</body>
+
+</html>

@@ -14,7 +14,7 @@ public class TestDynamic {
 
         String str1 = "aiba";
         String str2 = "abdka";
-        int maxSubListLen = findLCS(str1, str1.length(), str2, str2.length());
+        int maxSubListLen = findLCS(str1, str2);
         System.out.println("maxSubListLen = " + maxSubListLen);
     }
 
@@ -45,7 +45,9 @@ public class TestDynamic {
      * ab是两个串的子序列，abc也是，abca也是，其中abca是这两个字符串最长的子序列
      */
 
-    public static int findLCS(String A, int n, String B, int m) {
+    public static int findLCS(String A, String B) {
+        int n = A.length();
+        int m = B.length();
         int[][] dp = new int[n + 1][m + 1];
         for (int i = 0; i <= n; i++) {
             for (int j = 0; j <= m; j++) {

@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".token_auto.TokenAutoActivity"
+            android:name=".view_dispatch.TestViewDispatchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -77,7 +77,8 @@
             <!--</meta-data>-->
         </activity>
 
-        <activity android:name=".launch_mode.A1Activity" />
+        <activity android:name=".launch_mode.A1Activity"
+            android:launchMode="singleInstance"/>
         <activity android:name=".launch_mode.A2Activity" />
         <activity
             android:name=".launch_mode.B1Activity"
