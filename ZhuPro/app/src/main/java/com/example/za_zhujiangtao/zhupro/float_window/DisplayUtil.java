@@ -48,7 +48,7 @@ public class DisplayUtil {
     }
 
     public static int dip2px(float dip) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, MainApplication.getInstance().getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, MainApplication.getContext().getResources().getDisplayMetrics());
     }
 
 }

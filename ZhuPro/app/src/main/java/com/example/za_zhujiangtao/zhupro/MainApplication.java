@@ -18,7 +18,14 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
+import com.example.za_zhujiangtao.zhupro.api.DaggerApplicationComponent;
 import com.example.za_zhujiangtao.zhupro.float_window.WindowUtil;
+import com.example.za_zhujiangtao.zhupro.http.DaggerMyApplicationComponent;
+import com.example.za_zhujiangtao.zhupro.http.IApplicationComponent;
+import com.example.za_zhujiangtao.zhupro.http.MyApplicationComponent;
+import com.example.za_zhujiangtao.zhupro.http.MyApplicationModule;
+import com.example.za_zhujiangtao.zhupro.http.MyHttpModule;
+import com.example.za_zhujiangtao.zhupro.http.OkHttpClientCreator;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -28,18 +35,21 @@ import java.util.List;
  * Created by za-zhujiangtao on 2019/3/12.
  */
 
-public class MainApplication extends Application implements Application.ActivityLifecycleCallbacks{
+public class MainApplication extends Application implements Application.ActivityLifecycleCallbacks, IApplicationComponent {
 
     private static final String TAG = "MainApplication";
     private static Context mContext;
     private int activityCount;
     private RefWatcher mRefWatcher;
+    private MyApplicationComponent mApplicationComponent;
+    private static MainApplication mInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.e("MainApplication", ".............onCreate...............");
         mContext = getApplicationContext();
+        mInstance = this;
         initCloudChannel(this);
         initARouter();
 
@@ -59,21 +69,24 @@ public class MainApplication extends Application implements Application.Activity
         //GCM/FCM辅助通道注册
         GcmRegister.register(this, "775137713200", "1:775137713200:android:913d54526211277d");
 
-        if (LeakCanary.isInAnalyzerProcess(this)){
+        if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
 
         mRefWatcher = LeakCanary.install(this);
+
+        initComponent();
     }
 
-    public static RefWatcher getRefWatcher(Context context){
+    public static RefWatcher getRefWatcher(Context context) {
         MainApplication application = (MainApplication) context.getApplicationContext();
         return application.mRefWatcher;
     }
 
-    public static Context getInstance(){
-        return mContext;
+    public static MainApplication getInstance() {
+        return mInstance;
     }
+
 
     /**
      * 初始化云推送通道
@@ -135,12 +148,25 @@ public class MainApplication extends Application implements Application.Activity
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        Log.e("zjt", "attachBaseContext  MultiDex.install start time >>> "+System.currentTimeMillis());
+        Log.e("zjt", "attachBaseContext  MultiDex.install start time >>> " + System.currentTimeMillis());
         MultiDex.install(this);
-        Log.e("zjt", "attachBaseContext  MultiDex.install end time >>> "+System.currentTimeMillis());
+        Log.e("zjt", "attachBaseContext  MultiDex.install end time >>> " + System.currentTimeMillis());
     }
 
+    private void initComponent() {
+        mApplicationComponent = DaggerMyApplicationComponent.builder()
+                .myApplicationModule(new MyApplicationModule(getApplicationContext()))
+                .myHttpModule(new MyHttpModule.Builder()
+                        .setBaseUrl("http://www.imooc.com/")
+                        .setOkHttpClient(OkHttpClientCreator.create())
+                        .build())
+                .build();
+    }
 
+    @Override
+    public MyApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
+    }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -167,7 +193,7 @@ public class MainApplication extends Application implements Application.Activity
     public void onActivityStopped(Activity activity) {
         activityCount--;
         if (activityCount == 0) {
-            Log.e("MMMMMM", ".........activityCount........"+activityCount);
+            Log.e("MMMMMM", ".........activityCount........" + activityCount);
             WindowUtil.getInstance().dismissWindow();
         }
     }
@@ -181,4 +207,6 @@ public class MainApplication extends Application implements Application.Activity
     public void onActivityDestroyed(Activity activity) {
 
     }
+
+
 }

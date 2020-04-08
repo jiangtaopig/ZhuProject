@@ -64,7 +64,7 @@ public class TestCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // STROKE ±íÊ¾Ãè±ß Paint.Style.FILL ±íÊ¾Ìî³ä
+        // STROKE è¡¨ç¤ºæè¾¹ Paint.Style.FILL è¡¨ç¤ºå¡«å……
 //        mPaint.setStyle(Paint.Style.STROKE);
 
         int width = getWidth();
@@ -74,10 +74,10 @@ public class TestCanvas extends View {
         canvas.drawRect(rect, mPaint);
 
         mPaint.setColor(Color.WHITE);
-        //startAngle ±íÊ¾»æÖÆµÄÆğÊ¼½Ç¶È£¬ sweepAngle ±íÊ¾ ÒªÉ¨¹ıµÄ½Ç¶È£¬ ÕıÊı ÊÇ°´Ë³Ê±Õë£¬ ¸ºÊıÊÇÄæÊ±Õë
+        //startAngle è¡¨ç¤ºç»˜åˆ¶çš„èµ·å§‹è§’åº¦ï¼Œ sweepAngle è¡¨ç¤º è¦æ‰«è¿‡çš„è§’åº¦ï¼Œ æ­£æ•° æ˜¯æŒ‰é¡ºæ—¶é’ˆï¼Œ è´Ÿæ•°æ˜¯é€†æ—¶é’ˆ
         canvas.drawArc(rect, 90, -45, true, mPaint);
 
-        //-----------------------------------Canvas»­²¼µÄ²Ù×÷------------------------------------------
+        //-----------------------------------Canvasç”»å¸ƒçš„æ“ä½œ------------------------------------------
 //        testTranslate(canvas);
 //        testScale(canvas);
 //        testRotate(canvas, width, height);
@@ -88,7 +88,7 @@ public class TestCanvas extends View {
     }
 
     private void testRotate(Canvas canvas, int width, int height) {
-        //rotate: Ä¬ÈÏÒÔ×ø±êÔ­µã½øĞĞĞı×ª
+        //rotate: é»˜è®¤ä»¥åæ ‡åŸç‚¹è¿›è¡Œæ—‹è½¬
         canvas.translate(width / 2, height/ 2);
         RectF rectF = new RectF(0, - width/2, width/2, 0);
         mPaint.setColor(Color.BLUE);
@@ -102,7 +102,7 @@ public class TestCanvas extends View {
     private void testScale(Canvas canvas) {
         RectF rectF = new RectF(0, -DisplayUtil.dip2px(150), DisplayUtil.dip2px(150), 0);
         canvas.drawRect(rectF, mPaint);
-        canvas.scale(0.5f, 0.5f, 100, 0); //ÒÔ»­²¼ÖĞĞÄÏòÓÒÒÆ¶¯100¸öÏñËØ×÷ÎªËõ·ÅÖĞĞÄ½øĞĞËõ·Å£¬x ºÍ y ¸÷Ëõ·ÅÒ»°ë;
+        canvas.scale(0.5f, 0.5f, 100, 0); //ä»¥ç”»å¸ƒä¸­å¿ƒå‘å³ç§»åŠ¨100ä¸ªåƒç´ ä½œä¸ºç¼©æ”¾ä¸­å¿ƒè¿›è¡Œç¼©æ”¾ï¼Œx å’Œ y å„ç¼©æ”¾ä¸€åŠ;
         mPaint.setColor(Color.RED);
         canvas.drawRect(rectF, mPaint);
     }
@@ -110,7 +110,7 @@ public class TestCanvas extends View {
     private void testTranslate(Canvas canvas) {
         mPaint.setColor(Color.BLACK);
         canvas.drawCircle(0, 0, DisplayUtil.dip2px(50), mPaint);
-        canvas.translate(DisplayUtil.dip2px(150), DisplayUtil.dip2px(150)); //»­²¼ÏòÏÂ¡¢ÏòÓÒ150dp È»ºóÔÚÒÆ¶¯ºóµÄ»­²¼µÄ(0, 0)»­Ò»¸öÔ²
+        canvas.translate(DisplayUtil.dip2px(150), DisplayUtil.dip2px(150)); //ç”»å¸ƒå‘ä¸‹ã€å‘å³150dp ç„¶ååœ¨ç§»åŠ¨åçš„ç”»å¸ƒçš„(0, 0)ç”»ä¸€ä¸ªåœ†
         canvas.drawCircle(0, 0, DisplayUtil.dip2px(50), mPaint);
     }
 }

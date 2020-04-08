@@ -152,6 +152,11 @@ dependencies {
 
     implementation project(':token_auto_complete')
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 repositories {
     mavenCentral()
 }

@@ -7,6 +7,8 @@ import android.widget.Button;
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.ThreadPoolExecutor;
+import com.example.za_zhujiangtao.zhupro.api.DataBase;
+import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +65,8 @@ public class TestDefineActivity extends BaseActivity {
         return rs | wc;
     }
 
+
+
     private boolean compareAndIncrementWorkerCount(int expect) {
         return ctl.compareAndSet(expect, expect + 1);
     }
@@ -70,6 +74,7 @@ public class TestDefineActivity extends BaseActivity {
 
     @Override
     protected void onInitLogic() {
+
         ExecutorService executorService = new ThreadPoolExecutor(2, 4, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<Runnable>());
 
         Log.e("test thread pool", "ctl = " + ctl + ", RUNNING = " + RUNNING + ", SHUTDOWN = " + SHUTDOWN
@@ -146,7 +151,6 @@ public class TestDefineActivity extends BaseActivity {
             Map<String, String> map1 = new HashMap<>();
 
 
-            int a = 3;
         });
     }
 
