@@ -48,8 +48,10 @@ public class TestBinary {
         int size2 = 0;
         getSum(5, 3);
 
-         a = 2 ^25;
-         int b = 5 ^ 25;
+        a = 2 ^ 25;
+        int b = 5 ^ 25;
+
+        movingCount(16, 8, 4);
     }
 
     /**
@@ -546,45 +548,101 @@ public class TestBinary {
 
     /**
      * 汉明距离 : 两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
+     *
      * @param x
      * @param y
-     * @return
-     *
-     *  思路：2个数异或，对应的二进制不同 结果为1 ，所以 只需要计算 两个数的异或 ，然后计算异或后结果中 1 的个数
+     * @return 思路：2个数异或，对应的二进制不同 结果为1 ，所以 只需要计算 两个数的异或 ，然后计算异或后结果中 1 的个数
      */
     public int hammingDistance(int x, int y) {
         int res = x ^ y;
         int cnt = 0;
-        while (res != 0){//计算0的个数的很妙的方法
+        while (res != 0) {//计算0的个数的很妙的方法
             cnt++;
-            res &= res -1;
+            res &= res - 1;
         }
         return cnt;
     }
 
     /**
      * 汉明距离总和:计算一个数组中，任意两个数之间汉明距离的总和。
-     * @param nums
-     * @return
-     *   7  :   0 1 1 1
-     *   11 :   1 0 1 1
-     *   13 :   1 1 0 1
      *
-     *  从 每行的最后一位看，7， 11 ，13最后一位都是1， 所以汉明距离的个数为0，
-     *  倒数 第二位，汉明结果为 2， 数字7的 1 和 数字 13 的 0 是一个，数字 11 的 1 和13的0 是另一个，所以为2；
-     *  以此类推，可以看出 总和 就是 每个二进制位 0 的 个数乘以 1 的个数
+     * @param nums
+     * @return 7  :   0 1 1 1
+     * 11 :   1 0 1 1
+     * 13 :   1 1 0 1
+     * <p>
+     * 从 每行的最后一位看，7， 11 ，13最后一位都是1， 所以汉明距离的个数为0，
+     * 倒数 第二位，汉明结果为 2， 数字7的 1 和 数字 13 的 0 是一个，数字 11 的 1 和13的0 是另一个，所以为2；
+     * 以此类推，可以看出 总和 就是 每个二进制位 0 的 个数乘以 1 的个数
      */
     public int totalHammingDistance(int[] nums) {
-        int [] bitArray = new int[32];
-        for (int i = 0; i < 32; i++){
-            for (int j = 0, len = nums.length; j < len; j++){
+        int[] bitArray = new int[32];
+        for (int i = 0; i < 32; i++) {
+            for (int j = 0, len = nums.length; j < len; j++) {
                 bitArray[i] += (nums[j] >> i) & 1;
             }
         }
         int res = 0;
-        for (int i = 0, len = nums.length; i < 32; i++){
-            res += (len - bitArray[i])*bitArray[i];
+        for (int i = 0, len = nums.length; i < 32; i++) {
+            res += (len - bitArray[i]) * bitArray[i];
         }
+        return res;
+    }
+
+    /**
+     * leetcode 397 整数替换
+     * 1. 如果 n 是偶数，则用 n / 2替换 n。
+     * 2. 如果 n 是奇数，则可以用 n + 1或n - 1替换 n。
+     * n 变为 1 所需的最小替换次数是多少？
+     * 输入 8
+     * 输出 3
+     * 解释 ： 8 -> 4 -> 2 -> 1
+     *
+     * @param n
+     * @return
+     */
+    public int integerReplacement(int n) {
+        int cnt = 0;
+        while (n != 1) {
+            if ((n & 1) == 0) {//偶数直接除以2
+                n >>>= 1;
+                cnt++;
+            } else {
+                //识别奇数的上一位是否为1，即 以 10 结尾(xxxx01)还是以11结尾(xxxx11)
+                if ((n & 2) == 0) {//01结尾最优则应当 用 n -1 取代 n
+                    n = n - 1;
+                    cnt++;
+                } else {
+                    //11结尾除3这个特殊情况外，其余选用 n + 1取代 n，原因如上
+                    if (n == 3) {
+                        cnt += 2;
+                        break;
+                    } else {
+                        n += 1;
+                    }
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+
+    public static int movingCount(int m, int n, int k) {
+        int res = 0;
+        if (k == 0){
+            return 1;
+        }
+
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n ;j++){
+                if (i/10 + i%10 + j/10 + j %10 <= k){
+                    res ++;
+                }else {
+                    break;
+                }
+            }
+        }
+
         return res;
     }
 

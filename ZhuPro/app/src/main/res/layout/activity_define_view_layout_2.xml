@@ -73,8 +73,15 @@
 
     <com.example.za_zhujiangtao.zhupro.define_view.TestView2
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_120dp"
+        android:layout_height="@dimen/dimen_60dp"
         android:textSize="@dimen/dimen_20sp"
         android:text="EEE"/>
+
+    <com.example.za_zhujiangtao.zhupro.define_view.TestCanvas
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/color_e1edfa"
+        android:layout_marginLeft="@dimen/dimen_10dp"
+        android:layout_marginTop="@dimen/dimen_5dp"/>
 
 </LinearLayout>
