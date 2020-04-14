@@ -1,10 +1,14 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.za_zhujiangtao.zhupro.launch_mode.B1Activity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -27,8 +31,12 @@ public class TestMemoryLeakActivity extends BaseActivity {
     @BindView(R.id.txt)
     TextView textView;
 
+    @BindView(R.id.btn_jump)
+    Button mJumpBtn;
+
     private MyHandler myHandler;
     private Subscription mDisposable;
+    private int cnt;
     @Override
     protected int layoutId() {
         return R.layout.activity_memory_leak_layout;
@@ -45,12 +53,23 @@ public class TestMemoryLeakActivity extends BaseActivity {
 ////            myHandler.sendMessage(message);
 ////        }, 5000);
 
-        MainApplication.getRefWatcher(this).watch(this);
 
-        testMemoryLeak();
-        List<String> strings = new ArrayList<>();
-        strings.add("ss");
+//        testMemoryLeak();
 
+        mJumpBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(TestMemoryLeakActivity.this, B1Activity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    Log.e("xxxxx", "leark cnt = "+(cnt++));
+                }
+            }
+        }).start();
     }
 
     private void testMemoryLeak() {
@@ -67,7 +86,8 @@ public class TestMemoryLeakActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDisposable.unsubscribe();
+        Log.e("xxxx", ".....onDestroy .....");
+//        mDisposable.unsubscribe();
     }
 
 

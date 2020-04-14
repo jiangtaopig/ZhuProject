@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/12/16
  */
-public class TestDefineActivity extends BaseActivity {
+public class TestThreadPoolActivity extends BaseActivity {
 
     @BindView(R.id.test_thread_pool)
     Button mTestThreadPool;
@@ -50,7 +50,7 @@ public class TestDefineActivity extends BaseActivity {
 
     @Override
     protected int layoutId() {
-        return R.layout.activity_define_view_layout_2;
+        return R.layout.activity_thread_pool_layout;
     }
 
     private static int runStateOf(int c) {

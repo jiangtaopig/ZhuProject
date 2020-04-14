@@ -95,7 +95,10 @@ class MyKotlinActivity : BaseActivity() {
                 Log.e(Tag, "v = $v")
             }
 
+            //为MutableList 添加扩展函数
             fun MutableList<Int>.swap(i: Int, j: Int){
+                var size = this.size
+                Log.e(Tag, " swap : size = $size")
                 var tmp = this[i]
                 this[i] = this[j]
                 this[j] = tmp
@@ -106,6 +109,16 @@ class MyKotlinActivity : BaseActivity() {
             for (v in list){
                 Log.e(Tag, "after swap : v = $v")
             }
+
+            Connection(Host("zjt.cy"), 12345).connect();
+
+            val user1 = User("john");
+            val user2 = User("john");
+            user1.age = 10
+            user2.age = 20
+
+            Log.e(Tag, "user1 toString ${user1.toString()}, user2 toString ${user2.toString()} user1 equal user2 = ")
+
 
         }
     }
@@ -212,4 +225,41 @@ class MyClass {
         @JvmField
         var name: String? = "zcy" //JvmField 用在属性上
     }
+}
+
+//........................在一个内的内部为另一个类声明扩展..................................
+class Host(val hostName : String){
+    fun printHost(){
+        Log.e("MyKotlinActivity", "hostName = $hostName")
+    }
+
+    override fun toString(): String {
+        return "Host hostName = $hostName"
+    }
+}
+
+class Connection(val host: Host, val port: Int){
+    fun printPort(){
+        Log.e("MyKotlinActivity", "port = $port")
+    }
+
+    fun Host.printConnectionString(){ //声明Host类的方法
+        printHost()
+        Log.e("MyKotlinActivity", "............")
+        printPort()
+        Log.e("MyKotlinActivity", "Host toString : "+toString())//调用的是Host的toString, 因为这里扩展的是 Host的方法
+        Log.e("MyKotlinActivity", "Connection toString : "+this@Connection.toString()) // 调用的是 Connection 的toString
+    }
+
+    fun connect(){
+        host.printConnectionString()
+    }
+
+    override fun toString(): String {
+        return "Connection host = ${host.hostName}, prot = $port"
+    }
+}
+
+data class User(var name: String){
+    var age: Int = 11;
 }
