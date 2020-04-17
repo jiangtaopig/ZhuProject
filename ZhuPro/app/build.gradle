@@ -50,8 +50,7 @@ android {
             //默认版本，完全继承defaultConfig中的配置
             dimension "default"
             manifestPlaceholders = [
-                    APP_PLATFORM: "ZJT_MAIN",
-                    APP_ICON: "@drawable/ic_launcher"
+                    APP_PLATFORM: "ZJT_MAIN"
             ]
         }
 
@@ -62,10 +61,16 @@ android {
             versionCode cfg.version_code
             versionName cfg.version_name
             manifestPlaceholders = [
-                    APP_PLATFORM: "ZJT_TEST",
-                    APP_ICON: "@drawable/ic_launcher_2"
+                    APP_PLATFORM: "ZJT_TEST"
             ]
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 
     compileOptions {

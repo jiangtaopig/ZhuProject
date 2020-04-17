@@ -8,13 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/12/16
  */
-public class TestViewGroup extends ViewGroup {
+public class MyFlowLayout extends ViewGroup {
     private static final String TAG = "TestViewGroup";
     private int mScreenWidth;
     /**
@@ -23,51 +22,55 @@ public class TestViewGroup extends ViewGroup {
     private int resultW;
     private int resultH;
 
-    public TestViewGroup(Context context) {
+    public MyFlowLayout(Context context) {
         this(context, null);
     }
 
-    public TestViewGroup(Context context, AttributeSet attrs) {
+    public MyFlowLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TestViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mScreenWidth = DisplayUtil.getScreenWidth(context);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int topStart = getPaddingTop();
-        int leftStart = getPaddingLeft();
-        int childW = 0;
-        int childH = 0;
+        int count = getChildCount();
+        int lineWidth = 0;//已绘制的宽度
+        int lineHeight = 0;
+        int top = 0, left = 0;
         MarginLayoutParams layoutParams = null;
-
-        for (int i = 0; i < getChildCount(); i++) {
+        for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
-
             //子元素不可见时，不参与布局，因此不需要将其尺寸计算在内
             if (child.getVisibility() == View.GONE) {
                 continue;
             }
-
             layoutParams = (MarginLayoutParams) child.getLayoutParams();
+            int childWidth = child.getMeasuredWidth();
+            int childHeight = child.getMeasuredHeight();
+            int width = childWidth + layoutParams.leftMargin + layoutParams.rightMargin;
+            int height = childHeight + layoutParams.topMargin + layoutParams.bottomMargin;
 
-            childW = child.getMeasuredWidth();
-            childH = child.getMeasuredHeight();
+            if (lineWidth + width > getMeasuredWidth()) {//如果大于MyFlowLayout的宽度则从下一行开始
+                left = 0;
+                top += lineHeight;
+                lineWidth = width;
+                lineHeight = height;
+            } else {
+                lineWidth += width;
+                lineHeight = Math.max(lineHeight, height);
+            }
 
-            //在 onLayout 中，child.getWidth() 的 大小等于0 ， 所以要使用 getMeasuredWidth;
-            // getMeasureWidth()方法在measure()过程结束后就可以获取到了，而getWidth()方法要在layout()过程结束后才能获取到。
-            Log.e(TAG, "onLayout width = " + child.getWidth() + ",childW = " + childW);
-
-            leftStart += layoutParams.leftMargin;
-            topStart += layoutParams.topMargin;
-
-            child.layout(leftStart, topStart, leftStart + childW, topStart + childH);
-
-            leftStart += childW + layoutParams.rightMargin;
-            topStart += childH + layoutParams.bottomMargin;
+            int lc = left + layoutParams.leftMargin;
+            int rc = lc + childWidth;
+            int tc = top + layoutParams.topMargin;
+            int bc = tc + childHeight;
+            child.layout(lc, tc, rc, bc);
+            //left 设置为下一个控件的起点
+            left += width;
         }
     }
 
@@ -101,8 +104,11 @@ public class TestViewGroup extends ViewGroup {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
         Log.e(TAG, "onMeasure widthSize = " + widthSize + ", heightSize = " + heightSize + ", mScreenWidth = " + mScreenWidth);
+
+        /**resultW 代表最终设置的宽，resultH 代表最终设置的高*/
         resultW = widthSize;
         resultH = heightSize;
+
         /**计算尺寸的时候要将自身的 padding 考虑进去*/
         int contentW = getPaddingLeft() + getPaddingRight();
         int contentH = getPaddingTop() + getPaddingBottom();

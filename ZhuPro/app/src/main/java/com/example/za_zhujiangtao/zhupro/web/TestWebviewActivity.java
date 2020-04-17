@@ -21,6 +21,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -30,8 +31,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.za_zhujiangtao.zhupro.R;
 
 import java.io.IOException;
@@ -57,7 +60,16 @@ public class TestWebviewActivity extends Activity {
     WebView webView;
 
     @BindView(R.id.load_js)
-    Button button;
+    TextView button;
+
+    @BindView(R.id.back)
+    TextView back;
+
+    @BindView(R.id.forward)
+    TextView forward;
+
+    @BindView(R.id.load_other_html)
+    TextView loadOtherHtml;
 
     /** 视频全屏参数 */
     protected static final FrameLayout.LayoutParams COVER_SCREEN_PARAMS = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -121,11 +133,50 @@ public class TestWebviewActivity extends Activity {
                         }
                     });
                 }
-
             });
         });
 
+        loadOtherHtml.setOnClickListener(v -> {
+            webView.loadUrl("https://www.baidu.com");//   file:///android_asset/test.html
+        });
+
+        back.setOnClickListener(v -> {
+            WebBackForwardList list = webView.copyBackForwardList();
+            if (webView.canGoBack()){
+                webView.goBack();
+            }
+        });
+
+        forward.setOnClickListener(v -> {
+
+            if (webView.canGoForward()){
+                webView.goForward();
+            }
+        });
+
         webView.setWebViewClient(new WebViewClient() {
+
+            @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                Log.e("TestWebviewActivity", "request url = "+request.getUrl().toString());
+                if (request.getUrl().toString().contains("baidu")){
+                    view.loadUrl(request.getUrl().toString());
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("TestWebviewActivity", "url = "+url);
+                if (url.contains("baidu")){
+                    view.loadUrl(url);
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
@@ -138,6 +189,7 @@ public class TestWebviewActivity extends Activity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                Log.e("TestWebviewActivity", "onPageStarted = ");
                 super.onPageStarted(view, url, favicon);
             }
 
@@ -149,7 +201,7 @@ public class TestWebviewActivity extends Activity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse webResourceResponse = handleIntercept(request);
+//                WebResourceResponse webResourceResponse = handleIntercept(request);
                 return null;
             }
         });
@@ -323,27 +375,27 @@ public class TestWebviewActivity extends Activity {
         settings.setAppCacheEnabled(true);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private WebResourceResponse handleIntercept(WebResourceRequest request) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        final Call call = okHttpClient.newCall(new Request.Builder()
-                .url(request.getUrl().toString())
-                .method(request.getMethod(), null)
-                .headers(Headers.of(request.getRequestHeaders()))
-                .build()
-        );
-        try {
-            final Response response = call.execute();
-            return new WebResourceResponse(
-                    response.header("content-type", "text/html"), // You can set something other as default content-type
-                    response.header("content-encoding", "utf-8"),  //you can set another encoding as default
-                    response.body().byteStream()
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    private WebResourceResponse handleIntercept(WebResourceRequest request) {
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//        final Call call = okHttpClient.newCall(new Request.Builder()
+//                .url(request.getUrl().toString())
+//                .method(request.getMethod(), null)
+//                .headers(Headers.of(request.getRequestHeaders()))
+//                .build()
+//        );
+//        try {
+//            final Response response = call.execute();
+//            return new WebResourceResponse(
+//                    response.header("content-type", "text/html"), // You can set something other as default content-type
+//                    response.header("content-encoding", "utf-8"),  //you can set another encoding as default
+//                    response.body().byteStream()
+//            );
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private <ResponseType> void jsCallback(String action, boolean success, ResponseType response) {
         JSCallbackMessage<ResponseType> message = new JSCallbackMessage<>(action);

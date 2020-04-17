@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.za_zhujiangtao.zhupro.launch_mode.B1Activity;
+import com.example.za_zhujiangtao.zhupro.utils.Platform;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -37,6 +39,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
     private MyHandler myHandler;
     private Subscription mDisposable;
     private int cnt;
+
     @Override
     protected int layoutId() {
         return R.layout.activity_memory_leak_layout;
@@ -57,19 +60,45 @@ public class TestMemoryLeakActivity extends BaseActivity {
 //        testMemoryLeak();
 
         mJumpBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(TestMemoryLeakActivity.this, B1Activity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(TestMemoryLeakActivity.this, B1Activity.class);
+//            startActivity(intent);
+//            finish();
+
+            Observable.just(1)
+                    .map(integer -> 1 / 0)
+                    .onErrorResumeNext(throwable -> {//会把错误“吃掉”，不会执行下面的onError，所以最好加log
+                        Log.e("xxx", "error = "+throwable.fillInStackTrace());
+                        return Observable.just(-1);
+                    })
+                    .subscribe(new Subscriber<Integer>() {
+                        @Override
+                        public void onCompleted() {
+                            Log.e("xxx", "onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("xxx", "onError e = " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onNext(Integer integer) {
+                            Log.e("xxx", "onNext integer = " + integer.toString());
+                        }
+                    });
+
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    Log.e("xxxxx", "leark cnt = "+(cnt++));
-                }
-            }
-        }).start();
+        boolean isMain = Platform.getInstance().isMain();
+        Log.e("xxx", "isMain = " + isMain);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true){
+//                    Log.e("xxxxx", "leark cnt = "+(cnt++));
+//                }
+//            }
+//        }).start();
     }
 
     private void testMemoryLeak() {

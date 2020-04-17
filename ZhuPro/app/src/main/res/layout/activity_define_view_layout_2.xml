@@ -18,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
-
+        android:visibility="visible">
 
         <com.example.za_zhujiangtao.zhupro.define_view.TestView
             android:layout_width="match_parent"
@@ -34,9 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/color_ffaa00"
-            android:padding="@dimen/dimen_10dp"
-           >
-
+            android:visibility="gone"
+            android:padding="@dimen/dimen_10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,13 +64,73 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_10dp"
                 android:text="1234"
-                android:textSize="@dimen/dimen_24sp"
-                >
+                android:textSize="@dimen/dimen_24sp">
 
             </com.example.za_zhujiangtao.zhupro.define_view.TestView>
 
 
         </com.example.za_zhujiangtao.zhupro.define_view.TestViewGroup>
+
+        <com.example.za_zhujiangtao.zhupro.define_view.MyFlowLayout
+            android:layout_width="@dimen/dimen_250dp"
+            android:layout_height="wrap_content"
+            android:background="@color/color_fddddd"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_666666"
+                android:gravity="center"
+                android:text="555"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_18sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:background="@color/color_666666"
+                android:gravity="center"
+                android:text="666"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_666666"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:text="77777777"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_18sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:background="@color/color_666666"
+                android:gravity="center"
+                android:text="88888888"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:background="@color/color_666666"
+                android:gravity="center"
+                android:text="999999999999"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_18sp"/>
+
+        </com.example.za_zhujiangtao.zhupro.define_view.MyFlowLayout>
 
         <com.example.za_zhujiangtao.zhupro.define_view.TestView2
             android:layout_width="wrap_content"
@@ -89,9 +147,7 @@
 
         <com.example.za_zhujiangtao.zhupro.define_view.XfermodeView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_400dp"
-            >
-        </com.example.za_zhujiangtao.zhupro.define_view.XfermodeView>
+            android:layout_height="@dimen/dimen_400dp"></com.example.za_zhujiangtao.zhupro.define_view.XfermodeView>
 
     </LinearLayout>
 
