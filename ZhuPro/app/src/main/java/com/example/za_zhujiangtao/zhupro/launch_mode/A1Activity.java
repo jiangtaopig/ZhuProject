@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -88,6 +91,25 @@ public class A1Activity extends BaseActivity {
                 myBindService.startMyActivity();
             }
         });
+
+        Observable.zip(Observable.just(1), Observable.just("zz"), Pair:: new)
+                .subscribe(new Subscriber<Pair<Integer, String>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Pair<Integer, String> integerStringPair) {
+                        Integer integer = integerStringPair.first;
+                        String s = integerStringPair.second;
+                    }
+                });
 
     }
 

@@ -52,12 +52,6 @@ public class TestDexFixActivity extends BaseActivity {
             //先将 生成好的 .dex 文件放到 MainApplication.getContext().getExternalCacheDir() + "/hotfix" 目录下
             dexFix();
         });
-
-        Map<String, String> map = new HashMap<>();
-        map.remove("");
-
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
     }
 
     private void dexFix() {

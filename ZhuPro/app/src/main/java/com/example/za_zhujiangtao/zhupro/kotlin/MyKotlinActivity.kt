@@ -1,10 +1,9 @@
-package com.example.za_zhujiangtao.zhupro
+package com.example.za_zhujiangtao.zhupro.kotlin
 
-import android.app.IntentService
-import android.nfc.Tag
 import android.util.Log
 import android.widget.TextView
-import com.example.za_zhujiangtao.zhupro.kotlin.KotlinUtils
+import com.example.za_zhujiangtao.zhupro.BaseActivity
+import com.example.za_zhujiangtao.zhupro.R
 import kotlinx.android.synthetic.main.kotlin_activity_layout.*
 
 /**
@@ -72,8 +71,8 @@ class MyKotlinActivity : BaseActivity() {
             var filler = FilledRectangle().Filler();
             filler.drawAndFill()
 
-            var instance = MyClass.Factory.plus(2, 3)
-            MyClass.Factory.name = "xz"
+            var instance = MyClass.plus(2, 3)
+            MyClass.name = "xz"
 
             var plus = MyClass.plus(3, 4);
             Log.e(Tag, "plus = $plus")
@@ -111,14 +110,26 @@ class MyKotlinActivity : BaseActivity() {
             }
 
             Connection(Host("zjt.cy"), 12345).connect();
-
+//---------------------------------data 声明的数据类 start ------------------------------------------------------
             val user1 = User("john");
             val user2 = User("john");
             user1.age = 10
             user2.age = 20
 
-            Log.e(Tag, "user1 toString ${user1.toString()}, user2 toString ${user2.toString()} user1 equal user2 = ")
+            // user1.equals(user2) 返回 true, 因为 比较的是 主构造函数里面的 name字段；
+            Log.e(Tag, "user1 toString ${user1.toString()}, user2 toString ${user2.toString()} user1 equal user2 = "+user1.equals(user2))
 
+            //copy 函数
+            val user3 = user2.copy()
+            user3.age = 23
+            Log.e(Tag, "user name = ${user3.name} , age = ${user3.age}")
+
+            //数据类的解构声明
+            val (name) = user3;
+            Log.e(Tag, "name = $name")
+//---------------------------------data 声明的数据类 end ------------------------------------------------------
+            val direction = Direction.EAST;
+            Log.e(Tag, "direction = $direction")
 
         }
     }
@@ -192,6 +203,7 @@ class FilledRectangle : Rectangle() {
             Log.e("MyKotlinActivity", "size set value = $value")
         }
 
+    //使用 inner 声明的 内部类才能够范文外部类的成员。内部类会持有内部类的一个引用
     inner class Filler {
         fun fill() {
             Log.e("MyKotlinActivity", "inner Filler fill...")
@@ -199,6 +211,7 @@ class FilledRectangle : Rectangle() {
 
         fun drawAndFill() {
             super@FilledRectangle.draw() //访问外部类的超类 Rectangle 的 draw 方法
+            draw()
             fill()
             Log.e("MyKotlinActivity", "draw a filled rectangle with color ${super@FilledRectangle.borderColor}")
         }
@@ -239,11 +252,11 @@ class Host(val hostName : String){
 }
 
 class Connection(val host: Host, val port: Int){
-    fun printPort(){
+    private fun printPort(){
         Log.e("MyKotlinActivity", "port = $port")
     }
 
-    fun Host.printConnectionString(){ //声明Host类的方法
+    private fun Host.printConnectionString(){ //声明Host类的方法
         printHost()
         Log.e("MyKotlinActivity", "............")
         printPort()
@@ -260,6 +273,14 @@ class Connection(val host: Host, val port: Int){
     }
 }
 
+// data 声明的数据类
 data class User(var name: String){
     var age: Int = 11;
+}
+
+/**
+ * 枚举类
+ */
+enum class Direction{
+    EAST, SOUTH, WEST,NORTH;
 }

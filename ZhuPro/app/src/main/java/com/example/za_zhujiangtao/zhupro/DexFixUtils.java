@@ -45,6 +45,8 @@ public class DexFixUtils {
 
     /**
      * 通过PathClassLoader、DexClassLoader合并dex文件，实现类替换修复
+     * PathClassLoader：用来加载已安装的应用程序dex；
+     * DexClassLoader：支持加载外部的APK、Jar或dex文件；（限制：必须要在应用程序目录下）
      *
      * @param context  上下文环境
      * @param filesDir dex所在的文件目录
@@ -57,7 +59,7 @@ public class DexFixUtils {
             fileOpt.mkdirs();
         }
 
-        //1.获得加载应用程序dex的PathClassLoader
+        //1.获得加载已安装应用程序dex的PathClassLoader
         PathClassLoader pathClassLoader = (PathClassLoader) context.getClassLoader();
 
         for (File dex : loadedDex) {
