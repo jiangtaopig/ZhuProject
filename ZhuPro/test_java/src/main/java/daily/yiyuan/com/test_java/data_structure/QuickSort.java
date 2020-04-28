@@ -28,7 +28,6 @@ public class QuickSort {
         int tmp = arr[low];
         int i = low;
         int j = high;
-
         while (i < j){
             //先处理右边
             while (arr[j] >= tmp && i < j){
@@ -45,10 +44,8 @@ public class QuickSort {
                 arr[j] = temp;
             }
         }
-
         arr[low] = arr[i];
         arr[i] = tmp;
-
         //递归排序基准数左边的数据
         quickSort(arr, low, j-1);
         //递归排序基准数右边的数据

@@ -1125,45 +1125,94 @@ public class TestNormal {
                 break;
             }
         }
-        if (addNum == 1){
-            int [] res = new int[len + 1];
+        if (addNum == 1) {
+            int[] res = new int[len + 1];
             res[0] = 1;
-            for (int i = 1; i< len+1; i++){
-                res[i] = digits[i-1];
+            for (int i = 1; i < len + 1; i++) {
+                res[i] = digits[i - 1];
             }
             return res;
         }
-        return  digits;
+        return digits;
     }
 
     /**
      * 找最长的上升子序列
      * 1、5、3、6、7、8、2  结果是 3 6 7 8
+     *
      * @param arr
      */
-    public static void findMaxSequence(int [] arr){
+    public static void findMaxSequence(int[] arr) {
         int start = 0;
         int n = arr.length;
-        int x = 0, y = 0 , cnt = 0, max = 0;
+        int x = 0, y = 0, cnt = 0, max = 0;
 
-        for (int i = 0; i < n - 1; i++){
-            y = i+1;
-            if (arr[i+1] > arr[i]){
+        for (int i = 0; i < n - 1; i++) {
+            y = i + 1;
+            if (arr[i + 1] > arr[i]) {
                 cnt++;
-                if (cnt > max){
+                if (cnt > max) {
                     max = cnt;
                     start = x;
                 }
-            }else {
+            } else {
                 cnt = 0;
                 x = y;
             }
         }
 
         System.out.print("maxSubSequence : ");
-        for (int i = start; i <= start + max; i++){
+        for (int i = start; i <= start + max; i++) {
             System.out.print(arr[i] + " ");
         }
+    }
+
+
+    /**
+     * 凹凸不平的地面每当下雨的时候总会积水。假设地面是一维的，
+     * 每一块宽度都为1，高度是非负整数，那么可以用一个数组来表达一块地面。例如[0,1,0,2,1,0,1,3,2,1,2,1]可以用来表示下图地面：
+     *
+     */
+    // 改良后的算法(积水面积=砖和水面积-砖面积)
+    public static int fill2(int[] nums) {
+        if (nums.length < 3) {
+            return 0;
+        }
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+        }
+        // 积水面积=砖和水面积-砖面积
+        return fill2(nums, 0, nums.length - 1) - sum;
+    }
+
+    // 求砖和水的面积(从两侧最小值开始计算,遇上更大的开始递归)
+    private static int fill2(int[] nums, int start, int end) {
+        int sum = 0;
+        if (nums[start] <= nums[end]) {
+            int v = nums[start];
+            sum += v;
+            for (int i = start + 1; i <= end; i++) {
+                if (nums[i] > v) {
+                    sum += fill2(nums, i, end);
+                    break;
+                } else {
+                    sum += v;
+                }
+            }
+        } else {
+            int v = nums[end];
+            sum += v;
+            for (int i = end - 1; i >= start; i--) {
+                if (nums[i] > v) {
+                    sum += fill2(nums, start, i);
+                    break;
+                } else {
+                    sum += v;
+                }
+            }
+        }
+        return sum;
     }
 
 }

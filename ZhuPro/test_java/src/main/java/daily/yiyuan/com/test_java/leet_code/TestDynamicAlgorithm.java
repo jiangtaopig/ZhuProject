@@ -88,7 +88,6 @@ public class TestDynamicAlgorithm {
         if (arr == null || arr.length == 0){
             return 0;
         }
-
         int [] d = new int[arr.length];
         d[0] = arr[0];
         int result = d[0];

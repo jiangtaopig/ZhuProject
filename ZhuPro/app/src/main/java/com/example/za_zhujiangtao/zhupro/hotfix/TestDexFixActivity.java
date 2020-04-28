@@ -45,7 +45,8 @@ public class TestDexFixActivity extends BaseActivity {
     protected void onInitLogic() {
         calculateBtn.setOnClickListener(v -> {
             TestHotfix hotfix = new TestHotfix();
-            hotfix.testFix(TestDexFixActivity.this);
+//            hotfix.testFix(TestDexFixActivity.this);
+            Toast.makeText(this, "hello", Toast.LENGTH_LONG).show();
         });
 
         fixBtn.setOnClickListener(v -> {

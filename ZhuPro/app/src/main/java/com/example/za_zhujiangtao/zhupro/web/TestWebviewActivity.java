@@ -71,7 +71,9 @@ public class TestWebviewActivity extends Activity {
     @BindView(R.id.load_other_html)
     TextView loadOtherHtml;
 
-    /** 视频全屏参数 */
+    /**
+     * 视频全屏参数
+     */
     protected static final FrameLayout.LayoutParams COVER_SCREEN_PARAMS = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private View customView;
     private FrameLayout fullscreenContainer;
@@ -120,16 +122,16 @@ public class TestWebviewActivity extends Activity {
         button.setOnClickListener(view -> {
             webView.post(() -> {
                 int version = Build.VERSION.SDK_INT;
-                if (version < 18){
+                if (version < 18) {
                     // 注意调用的JS方法名要对应上
                     // 调用javascript的callJS()方法
                     webView.loadUrl("javascript:callJS()");
-                }else {
+                } else {
                     webView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
                             //此处为 js 返回的结果
-                            Log.e("TestWebviewActivity", "evaluateJavascript value = "+value);
+                            Log.e("TestWebviewActivity", "evaluateJavascript value = " + value);
                         }
                     });
                 }
@@ -142,14 +144,14 @@ public class TestWebviewActivity extends Activity {
 
         back.setOnClickListener(v -> {
             WebBackForwardList list = webView.copyBackForwardList();
-            if (webView.canGoBack()){
+            if (webView.canGoBack()) {
                 webView.goBack();
             }
         });
 
         forward.setOnClickListener(v -> {
 
-            if (webView.canGoForward()){
+            if (webView.canGoForward()) {
                 webView.goForward();
             }
         });
@@ -159,8 +161,8 @@ public class TestWebviewActivity extends Activity {
             @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Log.e("TestWebviewActivity", "request url = "+request.getUrl().toString());
-                if (request.getUrl().toString().contains("baidu")){
+                Log.e("TestWebviewActivity", "request url = " + request.getUrl().toString());
+                if (request.getUrl().toString().contains("baidu")) {
                     view.loadUrl(request.getUrl().toString());
                     return true;
                 }
@@ -169,8 +171,8 @@ public class TestWebviewActivity extends Activity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.e("TestWebviewActivity", "url = "+url);
-                if (url.contains("baidu")){
+                Log.e("TestWebviewActivity", "url = " + url);
+                if (url.contains("baidu")) {
                     view.loadUrl(url);
                     return true;
                 }
@@ -189,7 +191,7 @@ public class TestWebviewActivity extends Activity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                Log.e("TestWebviewActivity", "onPageStarted = ");
+                Log.e("TestWebviewActivity", "onPageStarted url = " + url);
                 super.onPageStarted(view, url, favicon);
             }
 
@@ -201,6 +203,8 @@ public class TestWebviewActivity extends Activity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Log.e("TestWebviewActivity", "shouldInterceptRequest url = " + url);
 //                WebResourceResponse webResourceResponse = handleIntercept(request);
                 return null;
             }
@@ -279,7 +283,9 @@ public class TestWebviewActivity extends Activity {
         });
     }
 
-    /** 视频播放全屏 webview 是不支持全屏播放的**/
+    /**
+     * 视频播放全屏 webview 是不支持全屏播放的
+     **/
     private void showCustomView(View view, WebChromeClient.CustomViewCallback callback) {
         // if a view already exists then immediately terminate the new one
         if (customView != null) {
@@ -298,12 +304,13 @@ public class TestWebviewActivity extends Activity {
         customViewCallback = callback;
     }
 
-    /** 隐藏视频全屏 */
+    /**
+     * 隐藏视频全屏
+     */
     private void hideCustomView() {
         if (customView == null) {
             return;
         }
-
         setStatusBarVisibility(true);
         FrameLayout decor = (FrameLayout) getWindow().getDecorView();
         decor.removeView(fullscreenContainer);
@@ -313,7 +320,9 @@ public class TestWebviewActivity extends Activity {
         webView.setVisibility(View.VISIBLE);
     }
 
-    /** 全屏容器界面 */
+    /**
+     * 全屏容器界面
+     */
     static class FullscreenHolder extends FrameLayout {
 
         public FullscreenHolder(Context ctx) {

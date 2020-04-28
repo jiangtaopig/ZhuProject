@@ -68,6 +68,8 @@ public class TestStream {
         System.out.println("fibonacci = " + fibonacci);
         int index = SearchUtils.binarySearchFirst(new int[]{1, 2, 4, 4, 4, 5, 6, 7}, 4);
         System.out.println("index = " + index);
+
+        binaryInsert(new int[]{1, 2, 6, 8, 13, 15, 19}, 14);
     }
 
     public static int binarySearch(int[] arr, int target) {
@@ -155,5 +157,34 @@ public class TestStream {
         public String toString() {
             return "[name = " + name + "; speed = " + speed + "]";
         }
+    }
+
+
+    /**
+     *  有序数组插入一个 数字
+     * @param arr
+     * @param target
+     * @return
+     */
+    public static int binaryInsert(int [] arr, int target){
+        int left = 0;
+        int right = arr.length - 1;
+        while (left <= right){
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] > target){
+                right = mid - 1;
+                if (arr[right] <= target){
+                    return right;
+                }
+            }else if (arr[mid] < target){
+                left = mid + 1;
+                if (arr[left] >= target){
+                    return left - 1;
+                }
+            }else {
+                return mid;
+            }
+        }
+        return -1;
     }
 }

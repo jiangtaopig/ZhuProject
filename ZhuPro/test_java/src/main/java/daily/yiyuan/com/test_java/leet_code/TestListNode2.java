@@ -7,7 +7,8 @@ import static daily.yiyuan.com.test_java.leet_code.TestMain.initListNodeWithoutH
  * on 2019/10/24
  */
 public class TestListNode2 {
-    static int flow  = 0;
+    static int flow = 0;
+
     public static void main(String[] args) {
 //        int[][] nums = {{1, 2, 3}, {4, 5, 6}};
 //        matrixReshape(nums, 3, 2);
@@ -32,7 +33,6 @@ public class TestListNode2 {
 
 
         addTwoNumbers(initListNodeWithoutHead(new int[]{2, 4, 3}), initListNodeWithoutHead(new int[]{9, 7, 6, 4}));
-
 
 
         ListNode l6 = initListNodeWithoutHead(new int[]{3, 4, 1});
@@ -342,7 +342,7 @@ public class TestListNode2 {
 
     public static ListNode insertionSortList(ListNode head) {
         ListNode L, p, t, r, preT = null;
-        if (head == null){
+        if (head == null) {
             return head;
         }
 
@@ -352,23 +352,23 @@ public class TestListNode2 {
         t = L;
         L.next = null;
 
-        while (p != null){
+        while (p != null) {
             r = p.next;
-            while (t != null){
-                if (p.val > t.val){
+            while (t != null) {
+                if (p.val > t.val) {
                     preT = t;
                     t = t.next;
-                }else {
+                } else {
                     p.next = t;
-                    if (preT != null){
+                    if (preT != null) {
                         preT.next = p;
-                    }else {
+                    } else {
                         L = p;
                     }
                     break;
                 }
             }
-            if (t == null && preT != null){
+            if (t == null && preT != null) {
                 preT.next = p;
                 p.next = null;
             }
@@ -377,6 +377,35 @@ public class TestListNode2 {
             p = r;
         }
         return L;
+    }
+
+    public static ListNode reverseListNodeWithNum(ListNode node, int n) {
+        if (node == null) {
+            return node;
+        }
+        ListNode L = new ListNode(-1);
+        ListNode r = L;
+        ListNode p = node;
+        ListNode q = node;
+        ListNode tail = node;
+        int cnt = 0;
+
+        while (q != null && cnt < n) {
+            q = q.next;
+            cnt++;
+            if (cnt == n) {
+                while (p != q) {
+                    p = p.next;
+                    node.next = r.next;
+                    r.next = p;
+                    node = p;
+                    cnt--;
+                }
+                r = tail;
+                tail = p;
+            }
+        }
+        return L.next;
     }
 
 }

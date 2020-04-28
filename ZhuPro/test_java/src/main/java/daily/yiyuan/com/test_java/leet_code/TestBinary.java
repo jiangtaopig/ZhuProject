@@ -556,7 +556,7 @@ public class TestBinary {
     public int hammingDistance(int x, int y) {
         int res = x ^ y;
         int cnt = 0;
-        while (res != 0) {//计算0的个数的很妙的方法
+        while (res != 0) {//计算1的个数的很妙的方法
             cnt++;
             res &= res - 1;
         }
@@ -567,7 +567,8 @@ public class TestBinary {
      * 汉明距离总和:计算一个数组中，任意两个数之间汉明距离的总和。
      *
      * @param nums
-     * @return 7  :   0 1 1 1
+     * @return
+     * 7  :   0 1 1 1
      * 11 :   1 0 1 1
      * 13 :   1 1 0 1
      * <p>

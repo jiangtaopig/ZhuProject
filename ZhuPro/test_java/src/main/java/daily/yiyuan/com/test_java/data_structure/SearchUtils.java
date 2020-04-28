@@ -20,7 +20,6 @@ public class SearchUtils {
                 }
             }
         }
-
         return -1;
     }
 

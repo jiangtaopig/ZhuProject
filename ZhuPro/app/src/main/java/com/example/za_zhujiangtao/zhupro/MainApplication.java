@@ -18,7 +18,6 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
-import com.example.za_zhujiangtao.zhupro.api.DaggerApplicationComponent;
 import com.example.za_zhujiangtao.zhupro.float_window.WindowUtil;
 import com.example.za_zhujiangtao.zhupro.http.DaggerMyApplicationComponent;
 import com.example.za_zhujiangtao.zhupro.http.IApplicationComponent;
@@ -43,6 +42,7 @@ public class MainApplication extends Application implements Application.Activity
     private RefWatcher mRefWatcher;
     private MyApplicationComponent mApplicationComponent;
     private static MainApplication mInstance;
+
 
     @Override
     public void onCreate() {
@@ -76,6 +76,7 @@ public class MainApplication extends Application implements Application.Activity
         mRefWatcher = LeakCanary.install(this);
 
         initComponent();
+
     }
 
     public static RefWatcher getRefWatcher(Context context) {

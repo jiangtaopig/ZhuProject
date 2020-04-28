@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
-//apply plugin: 'me.tatarka.retrolambda'
 def cfg = rootProject.ext.configuration // 配置
 android {
     compileSdkVersion cfg.compileVersion
@@ -36,6 +35,25 @@ android {
 
 
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword 'zhu123456789'
+            storePassword 'zhu123456789'
+            storeFile file('../keystore/zjt.jks')
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        debug {
+            keyAlias 'key0'
+            keyPassword 'zhu123456789'
+            storePassword 'zhu123456789'
+            storeFile file('../keystore/zjt.jks')
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -58,8 +76,8 @@ android {
             //渠道包,覆盖了applicationId、添加了versionName后缀
             dimension "default"
             applicationId "com.zjt.test"
-            versionCode cfg.version_code
-            versionName cfg.version_name
+            versionCode 2
+            versionName "1.1.1"
             manifestPlaceholders = [
                     APP_PLATFORM: "ZJT_TEST"
             ]
@@ -130,7 +148,7 @@ dependencies {
     implementation 'com.jungly:gridPasswordView:0.3'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     api 'com.aliyun.ams:alicloud-android-utils:1.1.3'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3' //多 dex 配置 bugly热修复
     annotationProcessor project(':annotation_processor')
     implementation project(':annotation_my')
     //DiskLruCache
@@ -156,6 +174,7 @@ dependencies {
     implementation files('libs/joda-time-2.3.jar')
 
     implementation project(':token_auto_complete')
+
 }
 
 tasks.withType(JavaCompile) {
