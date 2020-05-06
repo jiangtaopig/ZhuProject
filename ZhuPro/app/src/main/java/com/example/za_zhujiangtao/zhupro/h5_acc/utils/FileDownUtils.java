@@ -20,7 +20,8 @@ public class FileDownUtils {
     private BaseDownloadTask singleTask;
     private int singleTaskId = 0;
     //文件下载地址
-    private String downloadUrl = "https://image.zuifuli.com/14/20200506/b5d3b3762ccb65a4f48ed3f7ba87724f.zip";
+    private String downloadUrl = "https://image.zuifuli.com/14/20200506/121cea03bd24ca3274c1e50f36a5cdec.zip";
+    //"https://image.zuifuli.com/14/20200506/b5d3b3762ccb65a4f48ed3f7ba87724f.zip";
     //下载下来的文件名称
     private String fileName;
     private OnDownLoadCompleteListener listener;

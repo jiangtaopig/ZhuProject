@@ -38,6 +38,7 @@ public class IndexActivity extends AppCompatActivity {
         fileDownUtils.setListener(new OnDownLoadCompleteListener() {
             @Override
             public void onComplete(String fileName) {
+                //下载完成后直接去解压，注意 这个回调是在 子UI线程中执行的
                 Log.e("FileDownUtils", "IndexActivity -- onComplete fileName = " + fileName + ", ThreadName = " + Thread.currentThread().getName());
                 ZipUtils.unZipFile(new File(saveZipFilePath + File.separator + fileName), saveZipFilePath);
             }
