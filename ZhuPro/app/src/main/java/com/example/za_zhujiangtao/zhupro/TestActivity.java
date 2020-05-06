@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by za-zhujiangtao on 2018/5/24.
@@ -26,6 +27,7 @@ public class TestActivity extends Activity {
 
     private EditText editText;
     private Button button;
+    private  ReentrantLock reentrantLock = new ReentrantLock();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,18 +46,12 @@ public class TestActivity extends Activity {
                 switch (actionId){
                     case EditorInfo.IME_ACTION_SEND:
                         Toast.makeText(getBaseContext(), "send", Toast.LENGTH_LONG).show();
+                        doTask1();
                         break;
                 }
                 return true;
             }
         });
-
-        AsyncTask asyncTask = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                return null;
-            }
-        };
 
         button.setOnClickListener(v -> {
             ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -68,6 +64,32 @@ public class TestActivity extends Activity {
             executorService.shutdown();
         });
 
+    }
 
+    private void doTask1(){
+        try {
+            reentrantLock.lock();
+            Log.e("aqs", "doTask1 获得锁");
+            Thread.sleep(3 * 1000);
+            doTask2();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            reentrantLock.unlock();
+            Log.e("aqs", "doTask1 释放锁");
+        }
+    }
+
+    private void doTask2(){
+        try {
+            reentrantLock.lock();
+            Log.e("aqs", "doTask2 获得锁");
+            Thread.sleep(10 * 1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            reentrantLock.unlock();
+            Log.e("aqs", "doTask2 释放锁");
+        }
     }
 }

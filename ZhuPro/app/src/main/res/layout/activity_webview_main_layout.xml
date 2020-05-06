@@ -20,6 +20,7 @@
         <TextView
             android:id="@+id/load_js"
             android:layout_width="wrap_content"
+            android:layout_weight="0"
             android:layout_height="@dimen/dimen_30dp"
             android:gravity="center"
             android:text="Load Js"
@@ -30,6 +31,7 @@
         <TextView
             android:id="@+id/back"
             android:layout_width="wrap_content"
+            android:layout_weight="0"
             android:layout_height="@dimen/dimen_30dp"
             android:gravity="center"
             android:text="Back"
@@ -40,6 +42,7 @@
         <TextView
             android:id="@+id/forward"
             android:layout_width="wrap_content"
+            android:layout_weight="0"
             android:layout_height="@dimen/dimen_30dp"
             android:gravity="center"
             android:text="Forward"
@@ -49,7 +52,8 @@
 
         <TextView
             android:id="@+id/load_other_html"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_weight="1"
             android:layout_height="@dimen/dimen_30dp"
             android:gravity="center"
             android:text="load other html"

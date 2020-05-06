@@ -90,12 +90,12 @@ class MyKotlinActivity : BaseActivity() {
 //            var kotinUtils = KotlinUtils(); //KotlinUtils 的构造函数 是private 所以不能初始化
 
             val list = mutableListOf(1, 2, 3)
-            for (v in list){
+            for (v in list) {
                 Log.e(Tag, "v = $v")
             }
 
             //为MutableList 添加扩展函数
-            fun MutableList<Int>.swap(i: Int, j: Int){
+            fun MutableList<Int>.swap(i: Int, j: Int) {
                 var size = this.size
                 Log.e(Tag, " swap : size = $size")
                 var tmp = this[i]
@@ -105,7 +105,7 @@ class MyKotlinActivity : BaseActivity() {
 
             list.swap(0, 2)
 
-            for (v in list){
+            for (v in list) {
                 Log.e(Tag, "after swap : v = $v")
             }
 
@@ -117,7 +117,7 @@ class MyKotlinActivity : BaseActivity() {
             user2.age = 20
 
             // user1.equals(user2) 返回 true, 因为 比较的是 主构造函数里面的 name字段；
-            Log.e(Tag, "user1 toString ${user1.toString()}, user2 toString ${user2.toString()} user1 equal user2 = "+user1.equals(user2))
+            Log.e(Tag, "user1 toString ${user1.toString()}, user2 toString ${user2.toString()} user1 equal user2 = " + user1.equals(user2))
 
             //copy 函数
             val user3 = user2.copy()
@@ -128,10 +128,128 @@ class MyKotlinActivity : BaseActivity() {
             val (name) = user3;
             Log.e(Tag, "name = $name")
 //---------------------------------data 声明的数据类 end ------------------------------------------------------
+// -----------------------------枚举开始--------------------
             val direction = Direction.EAST;
             Log.e(Tag, "direction = $direction")
 
+//-----------------------------枚举结束--------------------
+            val total = sum(1, 2, 3, 4, 5)
+            Log.e(Tag, "total = $total")
+
+
+//---------------------------------------lambda表达式演练开始------------------------------
+            val add = { x: Int, y: Int -> x + y }
+            var v = add(2, 3)
+            Log.e(Tag, "v  = $v ")
+
+            //如果lambda表达式是唯一的参数，函数调用的括号可以去掉
+            twoAndThress { a, b -> a + b }
+            twoAndThress { a, b -> a * b }
+
+            //如果 函数的最后一个参数是函数，那么 作为相应参数传入的lambda表达式可以放在圆括号之外
+            val s = multiple(5) { a, b ->
+                a + b
+            }
+            Log.e(Tag, " s  = $s ")
+//---------------------------------------lambda表达式演练结束------------------------------
+
+            //可变集合 可以 add remove
+            val numbers = mutableListOf(1, 5, 3, 6);
+            numbers.add(3, 4);//在 index为3的位置插入4
+//            numbers.remove(5)//删除元素5
+            val nums = numbers.filter { it > 4 }
+            for (v in nums) {
+                Log.e(Tag, " v  = $v ")
+            }
+
+            //只读集合，不可以 add / remove
+            val list2 = listOf("a", "b", "c")
+
+            val p1 = Person2("bob", 31);
+            val pList = listOf<Person2>(Person2("adal", 32), p1)
+            val pList2 = listOf<Person2>(Person2("adal", 32), Person2("bob", 31))
+
+            Log.e(Tag, "pList == pList2 ? ${pList == pList2}")
+
+            //只读的map, 用to创建的短时存活对象 性能不佳，可以使用 apply来替代
+            val numberMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3)
+            Log.e(Tag, "key = ${numberMap.keys}, value = ${numberMap.values}")
+
+            val mutableMap = mutableMapOf("a" to "zjt", "b" to "zcy")
+            mutableMap.put("c", "wq")
+            for (value in mutableMap.values) {
+                Log.e(Tag, "val = $value")
+            }
+
+            val stringMap = mutableMapOf<String, String>().apply { this["one"] = "1"; this["two"] = "2" }
+            Log.e(Tag, "stringMap val = ${stringMap.values}")
+
+            //空集合
+            val map = emptyMap<String, String>()
+            val mm = mutableMapOf<String, String>()
+
+            val sourceList = mutableListOf<Person2>(Person2("zjt", 32), Person2("wq", 32), Person2("zcy", 3));
+            val copyList = sourceList.toMutableList();
+            sourceList.get(0).apply {
+                this.name = "xxx"
+                this.age = 23
+            }
+
+            //把sourceList的所有age改为10
+            sourceList.map {
+                it.age = 10;
+            }
+
+            copyList.add(Person2("mm", 55))
+            for (p in sourceList) {
+                Log.e(Tag, "source list name = ${p.name}, age = ${p.age}")
+            }
+            for (p in copyList) {
+                Log.e(Tag, "..... copy list name = ${p.name}, age = ${p.age}")
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
+    }
+
+    //----------------------------------------lambda 表达式 start------------------------------------------------------------------
+
+    /**
+     * lambda作为函数参数
+     */
+    fun twoAndThress(operation: (Int, Int) -> Int) {
+        val result = operation(2, 3);
+        Log.e(Tag, "twoAndThress  result= $result ")
+    }
+
+    fun multiple(x: Int, operation: (Int, Int) -> Int): Int {
+        val res = operation(3, 4);
+        return x * res;
+    }
+    //----------------------------------------lambda 表达式 start------------------------------------------------------------------
+
+    /**
+     * kotlin 的可变参数
+     */
+    fun sum(vararg ts: Int): Int {
+        var sum: Int = 0;
+        for (t in ts) {
+            sum += t;
+        }
+        return sum;
     }
 
     fun showPerson(person: Person?) {
@@ -241,8 +359,8 @@ class MyClass {
 }
 
 //........................在一个内的内部为另一个类声明扩展..................................
-class Host(val hostName : String){
-    fun printHost(){
+class Host(val hostName: String) {
+    fun printHost() {
         Log.e("MyKotlinActivity", "hostName = $hostName")
     }
 
@@ -251,20 +369,20 @@ class Host(val hostName : String){
     }
 }
 
-class Connection(val host: Host, val port: Int){
-    private fun printPort(){
+class Connection(val host: Host, val port: Int) {
+    private fun printPort() {
         Log.e("MyKotlinActivity", "port = $port")
     }
 
-    private fun Host.printConnectionString(){ //声明Host类的方法
+    private fun Host.printConnectionString() { //声明Host类的方法
         printHost()
         Log.e("MyKotlinActivity", "............")
         printPort()
-        Log.e("MyKotlinActivity", "Host toString : "+toString())//调用的是Host的toString, 因为这里扩展的是 Host的方法
-        Log.e("MyKotlinActivity", "Connection toString : "+this@Connection.toString()) // 调用的是 Connection 的toString
+        Log.e("MyKotlinActivity", "Host toString : " + toString())//调用的是Host的toString, 因为这里扩展的是 Host的方法
+        Log.e("MyKotlinActivity", "Connection toString : " + this@Connection.toString()) // 调用的是 Connection 的toString
     }
 
-    fun connect(){
+    fun connect() {
         host.printConnectionString()
     }
 
@@ -274,13 +392,17 @@ class Connection(val host: Host, val port: Int){
 }
 
 // data 声明的数据类
-data class User(var name: String){
+data class User(var name: String) {
     var age: Int = 11;
 }
 
 /**
  * 枚举类
  */
-enum class Direction{
-    EAST, SOUTH, WEST,NORTH;
+enum class Direction {
+    EAST, SOUTH, WEST, NORTH;
+}
+
+class Person2(var name: String?, var age: Int?) {
+
 }

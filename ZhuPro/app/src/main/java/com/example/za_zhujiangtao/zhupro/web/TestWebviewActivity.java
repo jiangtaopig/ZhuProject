@@ -92,23 +92,6 @@ public class TestWebviewActivity extends Activity {
         // 设置WebView对JavaScript的支持
         initSetting(settings);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);// true 表示允许Chrome://inspect/#devices
-        }
-
-        // 设置可以访问文件
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            settings.setAllowFileAccessFromFileURLs(true);
-            settings.setAllowUniversalAccessFromFileURLs(true);
-        }
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-
-
-        //允许H5本地存储(localStorage & sessionStorage)
-        settings.setDomStorageEnabled(true);
-        settings.setGeolocationEnabled(true);
-
         // 先载入JS代码
         // 格式规定为:file:///android_asset/文件名.html
         webView.loadUrl("file:///android_asset/javascript.html");//file:///android_asset/javascript.html
@@ -382,6 +365,24 @@ public class TestWebviewActivity extends Activity {
 
         //开启缓存机制
         settings.setAppCacheEnabled(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);// true 表示允许Chrome://inspect/#devices
+        }
+
+        // 设置可以访问文件
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+        }
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+
+
+        //允许H5本地存储(localStorage & sessionStorage)
+        settings.setDomStorageEnabled(true);
+        settings.setGeolocationEnabled(true);
+
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
