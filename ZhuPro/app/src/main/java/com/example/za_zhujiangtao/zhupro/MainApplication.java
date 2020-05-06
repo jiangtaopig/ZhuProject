@@ -11,6 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -43,6 +46,8 @@ public class MainApplication extends Application implements Application.Activity
     private MyApplicationComponent mApplicationComponent;
     private static MainApplication mInstance;
 
+    private final String YU_GANG_SHUO_URL = "http://renyugang.io/post/75";
+    private static WebView mWebView;
 
     @Override
     public void onCreate() {
@@ -77,6 +82,29 @@ public class MainApplication extends Application implements Application.Activity
 
         initComponent();
 
+//        initWebView();
+    }
+
+//    private void initWebView() {
+//        mWebView = new WebView(this);
+//        mWebView.setWebViewClient(new WebViewClient(){
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//                return super.shouldOverrideUrlLoading(view, request);
+//            }
+//        });
+//    }
+
+//    public static WebView getWebView(){
+//        return mWebView;
+//    }
+
+    public static void destroyWebView(WebView webView){
+        if (webView != null){
+            webView.loadDataWithBaseURL(null,"", "text/html", "utf-8", null);
+            webView.clearHistory();
+            webView.destroy();
+        }
     }
 
     public static RefWatcher getRefWatcher(Context context) {

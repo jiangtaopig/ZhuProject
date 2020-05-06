@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".kotlin.MyKotlinActivity"
+            android:name=".h5_acc.IndexActivity"
             android:configChanges="orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">
@@ -77,19 +77,24 @@
             <!--</meta-data>-->
         </activity>
 
-        <activity android:name=".launch_mode.A1Activity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".launch_mode.A1Activity"
+            android:launchMode="singleInstance" />
+
         <activity android:name=".launch_mode.A2Activity" />
+
         <activity
             android:name=".launch_mode.B1Activity"
             android:taskAffinity="com.zjt.b" />
-<!--        <activity-->
-<!--            android:name=".DefineViewActivity"-->
-<!--            android:theme="@style/MyAppTheme">-->
 
-<!--        </activity>-->
+        <activity android:name=".h5_acc.WebAccumulateActivity" />
+        <!--        <activity-->
+        <!--            android:name=".DefineViewActivity"-->
+        <!--            android:theme="@style/MyAppTheme">-->
 
-<!--        <activity android:name=".TransitionActivity" />-->
+        <!--        </activity>-->
+
+        <!--        <activity android:name=".TransitionActivity" />-->
 
         <activity android:name=".arouter.RouterActivity1" />
 
@@ -97,7 +102,7 @@
 
         <activity android:name=".arouter.ARouterUrlActivity" />
 
-        <service android:name=".launch_mode.MyBindService"/>
+        <service android:name=".launch_mode.MyBindService" />
 
         <activity android:name=".arouter.URLReceiverActivity">
             <intent-filter>

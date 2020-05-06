@@ -175,6 +175,9 @@ dependencies {
 
     implementation project(':token_auto_complete')
 
+    //文件下载
+    implementation 'com.liulishuo.filedownloader:library:1.7.7'
+
 }
 
 tasks.withType(JavaCompile) {
