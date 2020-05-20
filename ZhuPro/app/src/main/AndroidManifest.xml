@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".h5_acc.IndexActivity"
+            android:name=".EditPosterActivity"
             android:configChanges="orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">
@@ -76,6 +76,8 @@
             <!--android:resource="@xml/shortcuts">-->
             <!--</meta-data>-->
         </activity>
+
+        <activity android:name=".ImageSliderActivity"/>
 
         <activity
             android:name=".launch_mode.A1Activity"

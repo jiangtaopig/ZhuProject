@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,7 +37,7 @@ public class EditPosterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_poster_layout);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 
         mEditPosterAdapter = new EditPosterAdapter(this, mRecyclerView);
         mRecyclerView.setAdapter(mEditPosterAdapter);

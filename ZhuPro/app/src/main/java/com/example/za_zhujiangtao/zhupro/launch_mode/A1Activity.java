@@ -4,16 +4,29 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -52,6 +65,7 @@ public class A1Activity extends BaseActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,19 +94,18 @@ public class A1Activity extends BaseActivity {
         });
 
 
-
         mBindService.setOnClickListener(v -> {
             Intent intent = new Intent(A1Activity.this, MyBindService.class);
             bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
         });
 
         mStartActivityFromService.setOnClickListener(v -> {
-            if (myBindService != null){
+            if (myBindService != null) {
                 myBindService.startMyActivity();
             }
         });
 
-        Observable.zip(Observable.just(1), Observable.just("zz"), Pair:: new)
+        Observable.zip(Observable.just(1), Observable.just("zz"), Pair::new)
                 .subscribe(new Subscriber<Pair<Integer, String>>() {
                     @Override
                     public void onCompleted() {

@@ -120,14 +120,18 @@ public class EditPosterAdapter extends RecyclerView.Adapter<EditPosterAdapter.Ed
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         if (mOnAddImageListener != null){
                             mOnAddImageListener.onAddImg();
                         }
                     }
                 });
             } else {
-                img.setOnClickListener(null);
+                img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ImageSliderActivity.enter(itemView.getContext(), mList, position);
+                    }
+                });
                 img.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
             }
         }
