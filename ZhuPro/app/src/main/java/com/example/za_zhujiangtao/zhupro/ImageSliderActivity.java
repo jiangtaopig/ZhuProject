@@ -3,7 +3,6 @@ package com.example.za_zhujiangtao.zhupro;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
@@ -75,9 +75,9 @@ public class ImageSliderActivity extends BaseActivity {
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 mCurIndexTV.setText((mViewPager.getCurrentItem() + 1) + "/" + mImags.size());
                 PhotoView photoView = new PhotoView(ImageSliderActivity.this);
-//                Glide.with(ImageSliderActivity.this).load(mImags.get(position))
-//                        .into(photoView);
-                photoView.setImageBitmap(BitmapFactory.decodeFile(mImags.get(position)));
+                Glide.with(ImageSliderActivity.this).load(mImags.get(position))
+                        .into(photoView);
+//                photoView.setImageBitmap(BitmapFactory.decodeFile(mImags.get(position)));
                 photoView.setOnClickListener(view -> {
                     finish();
                 });

@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".EditPosterActivity"
+            android:name=".kotlin.MyKotlinActivity"
             android:configChanges="orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">
@@ -76,6 +76,8 @@
             <!--android:resource="@xml/shortcuts">-->
             <!--</meta-data>-->
         </activity>
+
+        <activity android:name=".EditPosterActivity"/>
 
         <activity android:name=".ImageSliderActivity"/>
 

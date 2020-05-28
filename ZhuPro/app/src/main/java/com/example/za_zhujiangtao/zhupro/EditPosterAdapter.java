@@ -60,12 +60,12 @@ public class EditPosterAdapter extends RecyclerView.Adapter<EditPosterAdapter.Ed
         notifyDataSetChanged();
     }
 
-    public void addData(String imgPath){
-        mList.add(0, imgPath);
+    public void addData(String imgPath) {
+        mList.add(imgPath);
         notifyDataSetChanged();
     }
 
-    public void setOnAddImageListener(OnAddImageListener listener){
+    public void setOnAddImageListener(OnAddImageListener listener) {
         this.mOnAddImageListener = listener;
     }
 
@@ -120,7 +120,7 @@ public class EditPosterAdapter extends RecyclerView.Adapter<EditPosterAdapter.Ed
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mOnAddImageListener != null){
+                        if (mOnAddImageListener != null) {
                             mOnAddImageListener.onAddImg();
                         }
                     }
@@ -161,7 +161,7 @@ public class EditPosterAdapter extends RecyclerView.Adapter<EditPosterAdapter.Ed
         }
     }
 
-    public interface OnAddImageListener{
+    public interface OnAddImageListener {
         void onAddImg();
     }
 

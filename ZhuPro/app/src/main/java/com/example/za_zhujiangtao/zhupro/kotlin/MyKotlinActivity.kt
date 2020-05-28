@@ -1,10 +1,12 @@
 package com.example.za_zhujiangtao.zhupro.kotlin
 
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.za_zhujiangtao.zhupro.BaseActivity
+import com.example.za_zhujiangtao.zhupro.EditPosterActivity
 import com.example.za_zhujiangtao.zhupro.R
 import kotlinx.android.synthetic.main.kotlin_activity_layout.*
 import kotlinx.coroutines.*
@@ -34,6 +36,48 @@ class MyKotlinActivity : BaseActivity() {
     }
 
     override fun onInitLogic() {
+
+
+        // Kotlin Activity 之间跳转
+        kt_txt_3.setOnClickListener {
+            val intent: Intent = Intent(this, EditPosterActivity::class.java)// 或者下面的方式 ::class.java 的方式来获取该对象的 Java 类
+//            intent.setClass(this, EditPosterActivity::class.java)
+            startActivity(intent)
+
+            val ss = "hello world"
+            ss.run {// run 在大括号内表示的是自己 即 this, 返回的是大括号中的最后一行
+                Log.e(Tag, "ss 1 = $this")
+                substring(2, 5)
+            }.run {
+                Log.e(Tag, "ss 2 = $this") // 11o
+                if (length > 5){
+                    "xxx"
+                }else{
+                    "ccc"
+                }
+            }.let {// let 在大括号范围内是 it, 返回的是大括号的最后一行
+                Log.e(Tag, "let it = $it")
+                111
+            }.let {
+                Log.e(Tag, "let it 2 = $it") // 输出 111
+                "abcds" //返回 abcds
+            }.also {// 大括号范围内是 it , 返回的是自己 this
+                Log.e(Tag, "also it  = $it") // abcds
+                it.reversed() // 翻转字符串，但是 also 返回的是this, 所以返回的还是 abcds
+            }.also {
+                Log.e(Tag, "also it 2 = $it") // 输出abcds而不是反转后的字符串
+            }.apply {
+                // 大括号范围内表示的是自己 this. 返回的也是自己，而不是大括号最后一行
+                Log.e(Tag, "apply  = $length") // 输出 abcds 的长度 5
+                this + "123"
+            }.apply {
+                Log.e(Tag, "apply  = $this") // 输出 abcds 而不是 abcds123
+            }
+
+
+
+
+        }
 
         kt_txt.setOnClickListener {
             //            name = "124";
@@ -162,14 +206,14 @@ class MyKotlinActivity : BaseActivity() {
             }
             Log.e(Tag, " s  = $s ")
 
-            a{
-                a , b -> a+b
+            a { a, b ->
+                a + b
             }
 
             // 对于一个声明好的函数，不管是你要把它作为参数传递给函数，还是要把它赋值给变量，都得在函数名的左边加上双冒号(::)才行
             // 函数名左边 加上双冒号后，这个就变成了一个和这个函数具有相同功能的对象，----是对象了，因为 kotlin中只有对象才能作为参数传递和赋值给变量
             val r1 = a(::ff)
-            val plusFun = :: ff
+            val plusFun = ::ff
             val r2 = plusFun(2, 6)
 
             Log.e(Tag, "r1 = $r1, r2 = $r2")
@@ -179,18 +223,18 @@ class MyKotlinActivity : BaseActivity() {
             }
 
 
-           // 把一个匿名函数赋值给变量而不是作为函数参数传递的时候
-            val b = fun(params: Int) :String{
-               return params.toString()
+            // 把一个匿名函数赋值给变量而不是作为函数参数传递的时候
+            val b = fun(params: Int): String {
+                return params.toString()
             }
 
             // 如果简写成lambda表达式, 那么就不可以省略 参数类型 Int 了，因为省略了Int 就无法推断 params 类型了
-            val c = {params : Int ->
+            val c = { params: Int ->
                 params.toString()
             }
 
             // 如果你出于场景的需求或者个人偏好，就是想在这里省掉参数类型，那你需要给左边的变量指明类型：
-            val d : (params : Int) -> String = {
+            val d: (params: Int) -> String = {
                 it.toString() //另外 Lambda 的返回值不是用 return 来返回，而是直接取最后一行代码的值
             }
 
@@ -207,7 +251,7 @@ class MyKotlinActivity : BaseActivity() {
 // ------------------------------强制类型转换-------------------------------------------------------------
             Log.e(Tag, "----------------------------  测试强制类型转换  ----------------------------------------")
             testTransform()
-            val user4 :User2 = User2(12, "xxx")
+            val user4: User2 = User2(12, "xxx")
             val maneger = Manager("zhujiangtao", 23)
             Log.e(Tag, "manager name's size = ${maneger.size}, name = ${maneger.name}")
 
@@ -221,7 +265,7 @@ class MyKotlinActivity : BaseActivity() {
         (myBase as? MyDetail)?.doSth()
 
         // 还可以使用类型判断
-        if (myBase is MyDetail){
+        if (myBase is MyDetail) {
             myBase.doSth()
         }
 
@@ -229,11 +273,11 @@ class MyKotlinActivity : BaseActivity() {
         Log.e(Tag, "txt = $txt")
 
         val ll = listOf(21, 40, 11, 33, 78)
-       val filterList: List<Int> = ll.filter {
-            it % 3 ==0
+        val filterList: List<Int> = ll.filter {
+            it % 3 == 0
         }
 
-        for (v in filterList){
+        for (v in filterList) {
             Log.e(Tag, "v = $v")
         }
     }
@@ -845,15 +889,15 @@ class MyKotlinActivity : BaseActivity() {
         return x * res;
     }
 
-    fun ff(a: Int, b: Int) :Int{
+    fun ff(a: Int, b: Int): Int {
         return a + b;
     }
 
-    fun a(operation: (Int, Int) -> Int) : Int{
+    fun a(operation: (Int, Int) -> Int): Int {
         return operation(7, 4)
     }
 
-    fun int2String(operation: (Int) -> String){
+    fun int2String(operation: (Int) -> String) {
         operation(4)
     }
     //----------------------------------------lambda 表达式 end ------------------------------------------------------------------
@@ -1043,12 +1087,12 @@ class MyDetail(age: Int) : MyBase(age) {
 }
 
 // Kt 中类默认是final 的，不可以被继承，要想继承 必须在 class 前面加上 open
-open class User2{
+open class User2 {
     val id: Int
     val name: String
 
     // Kt 中的构造函数
-    constructor(id: Int, name: String){
+    constructor(id: Int, name: String) {
         this.id = id
         this.name = name
     }
@@ -1059,30 +1103,31 @@ class Stu(id: Int, name: String) : User2(id, name) {
 
 }
 
-open class Employee{
-    var name: String ? = "default"
+open class Employee {
+    var name: String? = "default"
 
-    constructor(name: String?){
+    constructor(name: String?) {
         this.name = name
     }
 
-    constructor(){
+    constructor() {
 
     }
 }
 
-class Manager (name: String?, age: Int?): Employee(name){
+class Manager(name: String?, age: Int?) : Employee(name) {
 
     var title: String? = "Manager"
+
     // 初始化代码块，先于次级构造器，后于主构造器执行
     init {
         Log.e("MyKotlinActivity", "init block Manager name = $name , title = $title")
     }
 
     val size: Int?
-      get() {
-          return name?.length
-      }
+        get() {
+            return name?.length
+        }
 
 }
 
@@ -1093,21 +1138,22 @@ class Manager (name: String?, age: Int?): Employee(name){
  * oject : 创建一个类，并且创建一个这个类的对象，使用很简单， 直接在 代码中调用 Sample.name, Sample.showName(), 类似于Java中的单例
  * Java 中静态变量和方法 等价于 kotlin 中的 companion object --- 伴生对象
  */
-object Sample{
+object Sample {
     val name = "test object"
-    fun showName(){
+    fun showName() {
         Log.e("MyKotlinActivity", "Sample name = $name")
     }
 }
 
-class A{
+class A {
 
-    fun doSthA(){
+    fun doSthA() {
 
     }
-    companion object{
+
+    companion object {
         val age = 1
-        fun showAge(){
+        fun showAge() {
             Log.e("MyKotlinActivity", "A age = ${age}")
         }
     }
@@ -1118,11 +1164,11 @@ class User1 constructor(name: String) { // 通常主构造器是可以省略的�
     //                  👇 这里与构造器中的 name 是同一个
     var name: String = name
 
-    constructor(name: String, age: Int): this(name){ // 通过 this 直接调用主构造器
+    constructor(name: String, age: Int) : this(name) { // 通过 this 直接调用主构造器
 
     }
 
-    constructor(name:String, age: Int, id: Int): this(name, age){ // 通过上一个次级构造器，间接调用主构造器
+    constructor(name: String, age: Int, id: Int) : this(name, age) { // 通过上一个次级构造器，间接调用主构造器
 
     }
 }
@@ -1132,26 +1178,27 @@ class User1 constructor(name: String) { // 通常主构造器是可以省略的�
  *  constructor(var name: String) 表示在主构造器中直接声明属性，即 name 就是 User4 一个属性了；
  *  如果在主构造器的参数声明时加上 var 或者 val，就等价于在类中创建了该名称的属性
  */
-class User4 private constructor(var name: String){// 主构造器被修饰为私有的，外部就无法调用该构造器
-    constructor(name: String, age: Int): this(name){
+class User4 private constructor(var name: String) {
+    // 主构造器被修饰为私有的，外部就无法调用该构造器
+    constructor(name: String, age: Int) : this(name) {
 
     }
 }
 
-class LoginManager(var user: String){
+class LoginManager(var user: String) {
 
-    fun login(user: String, password: String){
-        if (user.isEmpty()){
+    fun login(user: String, password: String) {
+        if (user.isEmpty()) {
             throw IllegalArgumentException("illegal params user is null")
         }
 
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             throw IllegalArgumentException("illegal params password is null")
         }
 
         // 这个函数中 参数检查的部分有点冗余，我们又不想将这段逻辑作为一个单独的函数对外暴露，这时可以使用嵌套函数，即在 login 函数内部声明一个函数
-        fun validate(value: String){
-            if (value.isEmpty()){
+        fun validate(value: String) {
+            if (value.isEmpty()) {
                 throw IllegalArgumentException("illegal params value is null")
             }
         }
