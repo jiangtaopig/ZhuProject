@@ -8,25 +8,27 @@ import java.util.List;
  * on 2020/2/24
  */
 public class TestTree {
-    static List<List<Integer>> levels = new ArrayList<>();
 
     public static void main(String[] args) {
 
 //        testSameTree();
 
         TreeNode p = new TreeNode(1);
-        TreeNode pR = new TreeNode(2);
+        TreeNode pR = new TreeNode(3);
         p.right = pR;
-        p.left = new TreeNode(5);
-        pR.left = new TreeNode(3);
-        pR.right = new TreeNode(4);
+        p.left = new TreeNode(2);
+        pR.left = new TreeNode(4);
+        pR.right = new TreeNode(5);
 
         inorderTraversal(p);
 
-        levelOrder(p);
-        levels.size();
+        System.out.println("---------------levelOrder-------------");
+        List<List<Integer>> res = levelOrder(p);
+        System.out.println(res);
 
-        levelZOrder(p);
+        System.out.println("---------------levelZOrder-------------");
+        List<List<Integer>> res2 = levelZOrder(p);
+        System.out.println(res2);
 
         numTrees(2);
     }
@@ -166,11 +168,12 @@ public class TestTree {
      * @return
      */
     public static List<List<Integer>> levelOrder(TreeNode root) {
-        levelOrder(root, 0);
+        List<List<Integer>> levels = new ArrayList<>();
+        levelOrder(root, 0, levels);
         return levels;
     }
 
-    public static void levelOrder(TreeNode root, int level) {
+    public static void levelOrder(TreeNode root, int level, List<List<Integer>> levels) {
         if (root == null) {
             return;
         }
@@ -178,8 +181,8 @@ public class TestTree {
             levels.add(new ArrayList<Integer>());
         }
         levels.get(level).add(root.val);
-        levelOrder(root.left, level + 1);
-        levelOrder(root.right, level + 1);
+        levelOrder(root.left, level + 1, levels);
+        levelOrder(root.right, level + 1, levels);
     }
 
     /**
@@ -203,7 +206,7 @@ public class TestTree {
             res.add(new ArrayList<Integer>());
         }
         res.get(level).add(root.val);
-        if ((size & 1) == 0) {//偶数
+        if ((level & 1) == 0) {//偶数
             levelZOrder(root.left, level + 1, res);
             levelZOrder(root.right, level + 1, res);
         } else {

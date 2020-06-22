@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".kotlin.MyKotlinActivity"
+            android:name=".room_data_base.TestRoomActivity"
             android:configChanges="orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">
@@ -83,7 +83,8 @@
 
         <activity
             android:name=".launch_mode.A1Activity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask"
+             />
 
         <activity android:name=".launch_mode.A2Activity" />
 

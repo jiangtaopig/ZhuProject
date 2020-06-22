@@ -77,7 +77,7 @@ public class DexFixUtils {
                 Object pathDexElements = getDexElements(pathObj);
                 //合并两个数组
                 Object newDexElements = combineArray(fixDexElements, pathDexElements);
-                //重新赋值给PathClassLoader 中的exElements数组
+                //重新赋值给PathClassLoader 中的dexElements数组
                 Object pathList = getPathList(pathClassLoader);
                 setField(pathList, pathList.getClass(), "dexElements", newDexElements);
             } catch (Exception e) {
@@ -86,10 +86,22 @@ public class DexFixUtils {
         }
     }
 
+    /**
+     * 获取 BaseDexClassLoader 中的 pathList 变量；final DexPathList pathList;
+     * @param baseDexClassLoader
+     * @return
+     * @throws Exception
+     */
     private static Object getPathList(Object baseDexClassLoader) throws Exception {
         return getField(baseDexClassLoader, Class.forName("dalvik.system.BaseDexClassLoader"), "pathList");
     }
 
+    /**
+     * 获取 DexPathList 中的 dexElements 变量 :  private final Element[] dexElements;
+     * @param obj
+     * @return
+     * @throws Exception
+     */
     private static Object getDexElements(Object obj) throws Exception {
         return getField(obj, obj.getClass(), "dexElements");
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f5f5f5"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:gravity="center"
+        android:textSize="@dimen/dimen_18sp"
+        android:background="@color/cal_text_light"
+        android:textColor="@color/white"
+        android:text="Test Dagger"/>
+
+</LinearLayout>

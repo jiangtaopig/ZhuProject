@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
+import com.example.za_zhujiangtao.zhupro.MainApplication;
 import com.example.za_zhujiangtao.zhupro.R;
 
 import butterknife.BindView;
@@ -46,7 +47,8 @@ public class A2Activity extends BaseActivity {
         mTxt.setText("I am A2 Activity");
         mJumpBtn.setText("jump 2 B1Activity");
         mJumpBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(A2Activity.this, B1Activity.class);
+            Intent intent = new Intent(MainApplication.getContext(), A1Activity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }

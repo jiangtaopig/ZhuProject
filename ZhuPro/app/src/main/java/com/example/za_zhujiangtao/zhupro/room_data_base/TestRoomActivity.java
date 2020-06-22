@@ -12,6 +12,7 @@ import com.example.za_zhujiangtao.zhupro.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -50,6 +51,12 @@ public class TestRoomActivity extends BaseActivity {
 
     @Override
     protected void onInitLogic() {
+        ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        readWriteLock.readLock().lock();
+        readWriteLock.readLock().unlock();
+
+        readWriteLock.writeLock().lock();
+        readWriteLock.writeLock().unlock();
         //数据库从版本1升级为版本2，增加一个字段 sex
          Migration MIGRATION_1_2 = new Migration(1, 2) {
             @Override
