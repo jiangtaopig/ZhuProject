@@ -143,16 +143,16 @@ public class FactoryProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
         try {
-            // éå†æ‰€æœ‰è¢«æ³¨è§£äº†@Factoryçš„å…ƒç´ , Element å¯ä»¥æ˜¯ç±»ã€æ–¹æ³•æˆ–è€…å˜é‡
+            // ±éÀúËùÓĞ±»×¢½âÁË@FactoryµÄÔªËØ, Element ¿ÉÒÔÊÇÀà¡¢·½·¨»òÕß±äÁ¿
             for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Factory.class)) {
 
-                // æ£€æŸ¥è¢«æ³¨è§£ä¸º@Factoryçš„å…ƒç´ æ˜¯å¦æ˜¯ä¸€ä¸ªç±»
+                // ¼ì²é±»×¢½âÎª@FactoryµÄÔªËØÊÇ·ñÊÇÒ»¸öÀà
                 if (annotatedElement.getKind() != ElementKind.CLASS) {
                     throw new ProcessingException(annotatedElement, "Only classes can be annotated with @%s",
                             Factory.class.getSimpleName());
                 }
 
-                // å› ä¸ºæˆ‘ä»¬å·²ç»çŸ¥é“å®ƒæ˜¯ElementKind.CLASSç±»å‹ï¼Œæ‰€ä»¥å¯ä»¥ç›´æ¥å¼ºåˆ¶è½¬æ¢
+                // ÒòÎªÎÒÃÇÒÑ¾­ÖªµÀËüÊÇElementKind.CLASSÀàĞÍ£¬ËùÒÔ¿ÉÒÔÖ±½ÓÇ¿ÖÆ×ª»»
                 TypeElement typeElement = (TypeElement) annotatedElement;
 
                 FactoryAnnotatedClass annotatedClass = new FactoryAnnotatedClass(typeElement);

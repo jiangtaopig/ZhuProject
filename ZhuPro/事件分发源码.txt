@@ -94,10 +94,8 @@
            return super.dispatchTouchEvent(ev);  
        }  
 
-       //这个if里面的代码ACTION_DOWN不会执行，只有ACTION_MOVE  
-       //ACTION_UP才会走到这里, 假如在ACTION_MOVE或者ACTION_UP拦截的  
-       //Touch事件, 将ACTION_CANCEL派发给target，然后直接返回true  
-       //表示消费了此Touch事件  
+       //这个if里面的代码ACTION_DOWN 事件不会执行到，只有ACTION_MOVE、ACTION_UP才会走到这里,
+       // 假如在ACTION_MOVE或者ACTION_UP拦截了Touch事件, 那么就会将ACTION_CANCEL派发给target，然后直接返回true  ,表示消费了此Touch事件
        if (!disallowIntercept && onInterceptTouchEvent(ev)) {  
            final float xc = scrolledXFloat - (float) target.mLeft;  
            final float yc = scrolledYFloat - (float) target.mTop;  

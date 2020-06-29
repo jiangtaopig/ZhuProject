@@ -50,9 +50,9 @@ class MyKotlinActivity : BaseActivity() {
                 substring(2, 5)
             }.run {
                 Log.e(Tag, "ss 2 = $this") // 11o
-                if (length > 5){
+                if (length > 5) {
                     "xxx"
-                }else{
+                } else {
                     "ccc"
                 }
             }.let {// let 在大括号范围内是 it, 返回的是大括号的最后一行
@@ -73,8 +73,6 @@ class MyKotlinActivity : BaseActivity() {
             }.apply {
                 Log.e(Tag, "apply  = $this") // 输出 abcds 而不是 abcds123
             }
-
-
 
 
         }
@@ -239,6 +237,10 @@ class MyKotlinActivity : BaseActivity() {
             }
 
             d.invoke(5)
+
+           val sums = add(3, 11) { a, b ->
+                a + b
+            }
 
 
             Log.e(Tag, "------------------------------- lambda ---------------------------------------")
@@ -899,6 +901,10 @@ class MyKotlinActivity : BaseActivity() {
 
     fun int2String(operation: (Int) -> String) {
         operation(4)
+    }
+
+    fun add(x: Int, y: Int, operation: (Int, Int) -> Int): Int {
+        return operation(x, y)
     }
     //----------------------------------------lambda 表达式 end ------------------------------------------------------------------
 

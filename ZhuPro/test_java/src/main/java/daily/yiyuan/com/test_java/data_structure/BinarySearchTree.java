@@ -154,9 +154,9 @@ public class BinarySearchTree {
 
         if (pp.leftChild == p){
             pp.leftChild = node;
-        }else if (p.rightChild == p){
+        }else if (pp.rightChild == p){
             pp.rightChild = node;
-        }else if (pp == null){//删除的是根节点
+        }else if (pp == null){// 删除的是根节点 且 根节点最多只有一个结点的情况
          p = node;
         }
     }

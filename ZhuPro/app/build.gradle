@@ -114,6 +114,7 @@ dependencies {
     implementation 'com.andkulikov:transitionseverywhere:1.6.9'
     implementation project(':wheelLibrary')
     implementation project(':citypicker')
+//    implementation project(':base')
     //butterknife
     implementation 'com.jakewharton:butterknife:9.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0'

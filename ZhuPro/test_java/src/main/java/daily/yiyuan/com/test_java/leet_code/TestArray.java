@@ -82,4 +82,36 @@ public class TestArray {
         }
         return num;
     }
+
+    /**
+     * 找最长的上升子序列
+     * 1、5、3、6、7、8、2  结果是 3 6 7 8
+     *
+     * @param arr
+     */
+    public static void findMaxSequence(int[] arr) {
+        int start = 0;
+        int n = arr.length;
+        int x = 0, y , cnt = 0;
+        int max = 0; // 表示最长上升子序列的个数
+
+        for (int i = 0; i < n - 1; i++) {
+            y = i + 1;
+            if (arr[i + 1] > arr[i]) {
+                cnt++;
+                if (cnt > max) {
+                    max = cnt;
+                    start = x;
+                }
+            } else {
+                cnt = 0;
+                x = y;
+            }
+        }
+
+        System.out.print("maxSubSequence : ");
+        for (int i = start; i <= start + max; i++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
 }

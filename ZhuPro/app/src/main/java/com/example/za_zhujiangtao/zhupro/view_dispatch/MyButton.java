@@ -32,7 +32,7 @@ public class MyButton extends AppCompatButton {
                 Log.e("view_dispatch", "MyButton  dispatchTouchEvent ACTION_DOWN");
                 //true 不允许父布局拦截 , 我在 MyLinearLayout 中的 onInterceptTouchEvent 的 ACTION_MOVE中 return true 即拦截了，这里又调用方法让父布局不要拦截
                 getParent().requestDisallowInterceptTouchEvent(true);
-                // break;
+                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.e("view_dispatch", "MyButton dispatchTouchEvent ACTION_MOVE");
                 break;

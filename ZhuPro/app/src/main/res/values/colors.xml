@@ -41,7 +41,7 @@
     <color name="gold_red_envelope">#ffc01b</color>
     <color name="bg_headline_gray">#f6f5ef</color>
     <color name="headline_text_red">#ff5756</color>
-    <color name="color_fff5d8">#FFF5D8</color>
+    <color name="color_fff5d8">#f4f4f4</color>
 
     <drawable name="drawable_5f572e">#5F572E</drawable>
     <drawable name="drawable_f6de8d">#F6DE8D</drawable>

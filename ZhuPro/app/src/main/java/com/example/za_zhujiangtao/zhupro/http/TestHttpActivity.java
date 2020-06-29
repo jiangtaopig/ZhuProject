@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -64,6 +65,7 @@ public class TestHttpActivity extends BaseActivity {
                 }
             });
 
+            requestByOkHttp();
         });
     }
 
@@ -122,6 +124,16 @@ public class TestHttpActivity extends BaseActivity {
 
     private void requestByOkHttp() {
         OkHttpClient client = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        okhttp3.Response originalResponse = chain.proceed(chain.request());
+                        return originalResponse.newBuilder()
+                                .body(new DownLoadResponseBody(originalResponse.body(), progress -> {
+                                    Log.e("TestHttpActivity", "requestByOkHttp progress = "+progress);
+                                })).build();
+                    }
+                })
                 .addInterceptor(new HttpLoggingInterceptor(msg -> {
                     Log.e("zjt test okhttp ", "msg >>> " + msg);
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -130,7 +142,7 @@ public class TestHttpActivity extends BaseActivity {
             @Override
             public void run() {
                 Request request = new Request.Builder()
-                        .url("https://www.imooc.com/api/teacher?type=4&num=6")
+                        .url("http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&f=JPEG?w=1200&h=1290")
                         .build();
                 try {
                     okhttp3.Response response = client.newCall(request).execute();

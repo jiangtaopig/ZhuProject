@@ -16,18 +16,20 @@ public class TestSynchronousQueue {
 
 
         double val = 1232;
-        double a = val / 100.0;
-        BigDecimal bigDecimal = new BigDecimal(val);
+        double a = val / 1.0;
+        BigDecimal bigDecimal = new BigDecimal(a);
 
-        NumberFormat numberFormat = new DecimalFormat("0");
-        String s = numberFormat.format(bigDecimal.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue());
+        // 设置小数的最大位数
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        String s = numberFormat.format(bigDecimal.doubleValue());
         System.out.println("s = "+s);
 
 
 
-        SynchronousQueue<Integer> synchronousQueue = new SynchronousQueue<>();
-        new Product(synchronousQueue)
-                .start();
+//        SynchronousQueue<Integer> synchronousQueue = new SynchronousQueue<>();
+//        new Product(synchronousQueue)
+//                .start();
 
 //        new Customer(synchronousQueue)
 //                .start();

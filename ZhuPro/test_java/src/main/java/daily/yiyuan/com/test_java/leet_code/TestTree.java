@@ -1,6 +1,7 @@
 package daily.yiyuan.com.test_java.leet_code;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class TestTree {
         p.left = new TreeNode(2);
         pR.left = new TreeNode(4);
         pR.right = new TreeNode(5);
+
+        levelTraverse(p);
 
         inorderTraversal(p);
 
@@ -183,6 +186,31 @@ public class TestTree {
         levels.get(level).add(root.val);
         levelOrder(root.left, level + 1, levels);
         levelOrder(root.right, level + 1, levels);
+    }
+
+    /**
+     * 按 层 遍历输出
+     * @param root
+     */
+    private static void levelTraverse(TreeNode root){
+        if (root == null){
+            return;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(root); // 根节点入队
+        TreeNode current = null;
+
+        while (!queue.isEmpty()){ // 利用队列的先进先出的特性
+            current = queue.poll(); // 出队队列的头部元素
+            System.out.print("-->"+current.val);
+            if (current.left != null){
+                queue.offer(current.left);
+            }
+            if (current.right != null){
+                queue.offer(current.right);
+            }
+        }
+        System.out.println();
     }
 
     /**
