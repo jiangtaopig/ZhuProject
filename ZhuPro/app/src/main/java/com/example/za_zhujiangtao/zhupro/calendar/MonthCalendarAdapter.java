@@ -66,10 +66,10 @@ public class MonthCalendarAdapter extends RecyclerView.Adapter<MonthCalendarAdap
         public void bindData(int position) {
             dateTv.setText(String.valueOf(mDatas.get(position)));
             if (position < lastMonthEndIndex || position >= nextMonthStartIndex) {
-                Log.e("xxx 1", "position = " + position +",nextMonthStartIndex = "+nextMonthStartIndex);
+//                Log.e("xxx 1", "position = " + position +",nextMonthStartIndex = "+nextMonthStartIndex);
                 dateTv.setTextColor(itemView.getContext().getResources().getColor(R.color.color_999999));
             } else {
-                Log.e("xxx 2", "position = " + position);
+//                Log.e("xxx 2", "position = " + position);
                 dateTv.setTextColor(itemView.getContext().getResources().getColor(R.color.color_333333));
             }
         }

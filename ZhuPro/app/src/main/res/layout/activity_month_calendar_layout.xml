@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -9,10 +10,89 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_f3ac30"
-        android:textSize="@dimen/dimen_18sp"
         android:gravity="center"
         android:padding="@dimen/dimen_5dp"
-        android:textColor="@color/color_333333"/>
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dimen_18sp" />
+
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/dimen_4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="日"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="一"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="二"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="三"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="四"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="五"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="六"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

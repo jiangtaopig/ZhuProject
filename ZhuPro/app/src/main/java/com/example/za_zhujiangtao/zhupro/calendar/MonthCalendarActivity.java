@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +28,10 @@ public class MonthCalendarActivity extends BaseActivity {
 
     private TextView mDateTitle;
     private ViewPager mViewPager;
-    private MonthCalendarPagerAdapter mMonthCalendarPagerAdapter;
 
+    private MonthCalendarPagerAdapter mMonthCalendarPagerAdapter;
+    private List<MonthCalendarView> mMonthCalendarViewList;
+    private MonthCalendarView mCurCalendarView;
 
     @Override
     protected int layoutId() {
@@ -36,14 +39,29 @@ public class MonthCalendarActivity extends BaseActivity {
     }
 
     @Override
-    protected void onInitLogic() {
+    protected void onInitLogic()  {
         mDateTitle = findViewById(R.id.txt_date);
         mViewPager = findViewById(R.id.view_pager);
-        mMonthCalendarPagerAdapter = new MonthCalendarPagerAdapter();
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            field.setAccessible(true);
+            PagerScroller scroller = new PagerScroller(this);
+            scroller.setDuration(120);
+            field.set(mViewPager, scroller);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        mMonthCalendarViewList = new ArrayList<>();
+        mMonthCalendarPagerAdapter = new MonthCalendarPagerAdapter(mMonthCalendarViewList);
+
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mMonthCalendarPagerAdapter);
 
         List<String> monthDataList = parseData();
+
         mMonthCalendarPagerAdapter.setMonthDataList(monthDataList);
         mViewPager.setCurrentItem(1, false);
 
@@ -55,27 +73,34 @@ public class MonthCalendarActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
-                Log.e("zhu_aron", "onPageSelected i = " + i);
+                Log.e("zhu_aron____", "onPageSelected i = " + i);
                 if (i == 2) {
-                    mViewPager.setCurrentItem(1, false);
                     monthDataList.remove(0);
                     String nextMonth = DateUtils.getNextMonthData(monthDataList.get(monthDataList.size() - 1));
                     monthDataList.add(nextMonth);
                     mViewPager.removeAllViews();
                     mMonthCalendarPagerAdapter.setMonthDataList(monthDataList);
-                } else if (i == 0) {
                     mViewPager.setCurrentItem(1, false);
+                } else if (i == 0) {
                     monthDataList.remove(monthDataList.size() - 1);
                     String lastMonth = DateUtils.getLastMonthData(monthDataList.get(0));
                     monthDataList.add(0, lastMonth);
                     mViewPager.removeAllViews();
                     mMonthCalendarPagerAdapter.setMonthDataList(monthDataList);
+                    mViewPager.setCurrentItem(1, false);
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
+                Log.e("zhu_aron____", "onPageScrollStateChanged i = " + i);
+                if (i == ViewPager.SCROLL_STATE_DRAGGING){// 表示按下且开始拖动，不拖动则不执行此状态
+                    if (mCurCalendarView != null){
+//                        mCurCalendarView.makeShadowVisible();
+                    }
+                }else if (i == ViewPager.SCROLL_STATE_SETTLING){ // 表示手指离开屏幕的状态
+//                    mCurCalendarView.makeShadowInvisible();
+                }
             }
         });
     }
@@ -93,13 +118,12 @@ public class MonthCalendarActivity extends BaseActivity {
     }
 
     class MonthCalendarPagerAdapter extends PagerAdapter {
-
         private List<String> monthDataList;
-        private List<MonthCalendarView> monthCalendarViewList;
+        List<MonthCalendarView> monthCalendarViewList;
 
-        public MonthCalendarPagerAdapter() {
+        public MonthCalendarPagerAdapter(List<MonthCalendarView> calendarViewList) {
             monthDataList = new LinkedList<>();
-            monthCalendarViewList = new ArrayList<>();
+            monthCalendarViewList = calendarViewList;
         }
 
         public void setMonthDataList(List<String> dataList) {
@@ -142,8 +166,9 @@ public class MonthCalendarActivity extends BaseActivity {
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             super.setPrimaryItem(container, position, object);
-            Log.e("zhu_aron", "setPrimaryItem position = " + position);
+            Log.e("zhu_aron____", "setPrimaryItem position = " + position);
             mDateTitle.setText(monthDataList.get(position));
+            mCurCalendarView = monthCalendarViewList.get(position);
         }
     }
 }

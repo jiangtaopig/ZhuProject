@@ -4,10 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view"
+    <FrameLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_eeeeee" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_eeeeee" />
+
+        <LinearLayout
+            android:id="@+id/shadow_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66333333"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="111"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20sp" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
