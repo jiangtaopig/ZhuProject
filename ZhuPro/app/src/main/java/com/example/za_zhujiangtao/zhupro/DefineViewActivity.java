@@ -156,13 +156,13 @@ public class DefineViewActivity extends BaseActivity {
         });
         mTv.setOnClickListener(v -> {
 //            performAnimation(mTv, mTv.getWidth(), 600);
-////            displayInputDialog();
+            displayInputDialog();
 
-            Uri uri = Uri.parse("https://h.zuifuli.com/test/_deeplinks/sda?redirect=icare://zoom/meeting/action/show/home");
-            String path =uri.getPath();
-            if (Pattern.matches("/.*/_deeplinks/.*", path)){
-                String jumpUrl = uri.getQueryParameter("redirect");
-            }
+//            Uri uri = Uri.parse("https://h.zuifuli.com/test/_deeplinks/sda?redirect=icare://zoom/meeting/action/show/home");
+//            String path =uri.getPath();
+//            if (Pattern.matches("/.*/_deeplinks/.*", path)){
+//                String jumpUrl = uri.getQueryParameter("redirect");
+//            }
 
             Intent intent = new Intent(this, A1Activity.class);
             //如果AActivity属于当前的任务栈，则清空当前的任务栈，然后新建AActivity作为该任务栈的根Activity；

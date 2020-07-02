@@ -1,5 +1,7 @@
 package com.example.za_zhujiangtao.zhupro.recycle;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,6 +58,13 @@ public class TestRecycleViewActivity extends BaseActivity {
             String msg = "消息" + random;
             addMessage(new MsgBean(name, msg));
         });
+
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
     }
 
 

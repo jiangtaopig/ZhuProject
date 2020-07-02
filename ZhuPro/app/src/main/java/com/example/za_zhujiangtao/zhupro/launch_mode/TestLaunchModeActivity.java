@@ -3,12 +3,15 @@ package com.example.za_zhujiangtao.zhupro.launch_mode;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.MessageQueue;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.FileUtils;
@@ -123,6 +126,7 @@ public class TestLaunchModeActivity extends BaseActivity {
         task.execute();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void testHandler() {
         Message message = Message.obtain();
         message.obj = "i am good man";

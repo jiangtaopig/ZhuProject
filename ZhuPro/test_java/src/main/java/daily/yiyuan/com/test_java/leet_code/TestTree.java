@@ -13,6 +13,8 @@ public class TestTree {
     public static void main(String[] args) {
 
 //        testSameTree();
+        System.out.println(1 << 31 - 1);
+        System.out.println("------------------------------------------------");
 
         TreeNode p = new TreeNode(1);
         TreeNode pR = new TreeNode(3);
