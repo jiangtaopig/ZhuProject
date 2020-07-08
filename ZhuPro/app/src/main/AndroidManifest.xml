@@ -63,7 +63,7 @@
             android:required="false" />
 
         <activity
-            android:name=".calendar.MonthCalendarActivity"
+            android:name=".city_select.TestFragmentActivity"
             android:configChanges="orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">

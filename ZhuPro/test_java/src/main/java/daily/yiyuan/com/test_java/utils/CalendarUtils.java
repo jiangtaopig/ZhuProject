@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -19,14 +20,17 @@ public class CalendarUtils {
         String lastDay = getLastDayOfMonth(2016, 2);
         System.out.println(firstDay + "-------" + lastDay + "---------" + getCurDay());
 
-        for (int i = 1; i <= 12; i++) {
-            int maxDay = getMaxDay(2019, i);
-            System.out.println("month " + i + " maxDay is : " + maxDay);
-        }
+//        for (int i = 1; i <= 12; i++) {
+//            int maxDay = getMaxDay(2019, i);
+//            System.out.println("month " + i + " maxDay is : " + maxDay);
+//        }
+//
+//        getMonthData("2020-06-28");
+//        getNextMonthData("2020-06-28");
+//        getLastMonthData("2020-06-28");
 
-        getMonthData("2020-06-28");
-        getNextMonthData("2020-06-28");
-        getLastMonthData("2020-06-28");
+//        getWeekDays("2020-07-08");
+        getDays("2020-07-08", 10, 30);
     }
 
     /**
@@ -168,10 +172,11 @@ public class CalendarUtils {
 
     /**
      * 获取当前月的下一个月日期
+     *
      * @param dateStr
      * @return
      */
-    public static String getNextMonthData(String dateStr){
+    public static String getNextMonthData(String dateStr) {
         Calendar cale = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -191,10 +196,11 @@ public class CalendarUtils {
 
     /**
      * 获取当前月的上一个月日期
+     *
      * @param dateStr
      * @return
      */
-    public static String getLastMonthData(String dateStr){
+    public static String getLastMonthData(String dateStr) {
         Calendar cale = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -210,6 +216,70 @@ public class CalendarUtils {
         int month = cale.get(Calendar.MONTH) + 1;
         int day = cale.get(Calendar.DATE);
         return sdf.format(cale.getTime());
+    }
+
+    /**
+     * 获取当前周的7天
+     * @param dateStr
+     * @return
+     */
+    public static List<String> getWeekDays(String dateStr) {
+        List<String> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance(Locale.CHINESE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            calendar.setTime(sdf.parse(dateStr));
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            if (week > 0) {
+                for (int i = 1; i <= week; i++) {
+                    calendar.add(Calendar.DATE, -1);
+                    int tmp = calendar.get(Calendar.DAY_OF_MONTH);
+                    days.add(0, String.valueOf(tmp));
+                }
+                calendar.add(Calendar.DATE, week);
+            }
+            days.add(String.valueOf(day));
+            for (int i = 0, diff = 7 - week -1; i < diff; i++) {
+                calendar.add(Calendar.DATE, 1);
+                int tmp = calendar.get(Calendar.DAY_OF_MONTH);
+                days.add(String.valueOf(tmp));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
+    }
+
+    /**
+     * 获取 dateStr 之前preDays 和 之后 postDays 加起来的天数
+     * @param dateStr
+     * @param preDays
+     * @param postDays
+     * @return
+     */
+    public static List<String> getDays(String dateStr, int preDays, int postDays){
+        List<String> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance(Locale.CHINESE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            calendar.setTime(sdf.parse(dateStr));
+            for (int i = 0; i < preDays; i++){
+                calendar.add(Calendar.DATE, -1); // 当前日期的前一天
+                String date = sdf.format(calendar.getTime());
+                days.add(0, date);
+            }
+            days.add(dateStr);
+            calendar.add(Calendar.DATE, preDays);
+            for (int i = 0; i < postDays; i++){
+                calendar.add(Calendar.DATE, 1); // 当前日期的后一天
+                String date = sdf.format(calendar.getTime());
+                days.add(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
     }
 
 }

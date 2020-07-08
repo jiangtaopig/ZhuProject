@@ -23,6 +23,10 @@ public class TestTree {
         pR.left = new TreeNode(4);
         pR.right = new TreeNode(5);
 
+        int height = getTreeHeightByRecursion(p);
+        System.out.println("height = " + height);
+        System.out.println("-----------------------------------------");
+
         levelTraverse(p);
 
         inorderTraversal(p);
@@ -192,23 +196,24 @@ public class TestTree {
 
     /**
      * 按 层 遍历输出
+     *
      * @param root
      */
-    private static void levelTraverse(TreeNode root){
-        if (root == null){
+    private static void levelTraverse(TreeNode root) {
+        if (root == null) {
             return;
         }
         LinkedList<TreeNode> queue = new LinkedList<>();
         queue.offer(root); // 根节点入队
         TreeNode current = null;
 
-        while (!queue.isEmpty()){ // 利用队列的先进先出的特性
+        while (!queue.isEmpty()) { // 利用队列的先进先出的特性
             current = queue.poll(); // 出队队列的头部元素
-            System.out.print("-->"+current.val);
-            if (current.left != null){
+            System.out.print("-->" + current.val);
+            if (current.left != null) {
                 queue.offer(current.left);
             }
-            if (current.right != null){
+            if (current.right != null) {
                 queue.offer(current.right);
             }
         }
@@ -272,4 +277,78 @@ public class TestTree {
         return G[n];
     }
 
+    /**
+     * 递归获取树的最大高度
+     *
+     * @param node
+     * @return
+     */
+    public static int getTreeHeightByRecursion(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int left = getTreeHeightByRecursion(node.left);
+        int right = getTreeHeightByRecursion(node.right);
+        if (left > right) {
+            return left + 1;
+        } else {
+            return right + 1;
+        }
+    }
+
+    /**
+     * 通过迭代求出二叉树的高度
+     *
+     * @param node
+     */
+    public static void getHeightByIteration(TreeNode node) {
+        //这个就是慢迭代的下标
+        int front = -1;
+        //这个是记录每一层结尾处的下标
+        int last = 0;
+        //树的高度
+        int height = 0;
+        //这个是快迭代的下标
+        int rear = -1;
+        List<TreeNode> linkList = new ArrayList<>();
+        linkList.add(++rear, node);
+        TreeNode tmp;
+        while (front < rear) {
+            tmp = linkList.get(++front);
+            if (tmp.left != null) {
+                linkList.add(++rear, tmp.left);
+            }
+            if (tmp.right != null) {
+                linkList.add(++rear, tmp.right);
+            }
+            if (front == last) {
+                height++;
+                last = rear;
+            }
+
+        }
+        System.out.println(height);
+    }
+
+    /**
+     * 求叶子结点的个数
+     * @param node
+     * @return
+     */
+    public static int biTreeNodeCount(TreeNode node) {
+        if (node != null) {
+            int L = biTreeNodeCount(node.left);
+            int R = biTreeNodeCount(node.right);
+            if (L == 0 && L == 0) {
+                return 1;
+            } else {
+                return L + R;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+
+//-----------------------------------最后的花括号---------------------------------------------------------
 }

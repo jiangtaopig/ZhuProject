@@ -15,6 +15,15 @@ import java.util.List;
  */
 public class DateUtils {
 
+    private static final int DAY_NUMBER = 42;
+    private static final String[] WEEKS = {"日", "一", "二", "三", "四", "五", "六"};
+
+    /**
+     * 获取 dateStr 所在月的42天数据
+     *
+     * @param dateStr
+     * @return
+     */
     public static DateBean getMonthData(String dateStr) {
         DateBean dateBean = new DateBean();
         List<Integer> dateList = new ArrayList<>();
@@ -44,15 +53,14 @@ public class DateUtils {
         }
         int size = dateList.size();
         dateBean.nextMonthStartIndex = size;
-        if (size < 42) {
-            int diff = 42 - size;
+        if (size < DAY_NUMBER) {
+            int diff = DAY_NUMBER - size;
             for (int i = 1; i <= diff; i++) {
                 dateList.add(i);
             }
         }
         dateBean.monthList = dateList;
         dateBean.lastMonthEndIndex = week;
-
         Log.e("DateUtils", "year ：" + year + ", month : " + month + ", day = " + day + ", week = " + week);
         return dateBean;
     }
@@ -90,11 +98,17 @@ public class DateUtils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-      return isCurMonth(date);
+        return isCurMonth(date);
     }
 
+    /**
+     * 是否是当前月
+     *
+     * @param date
+     * @return
+     */
     private static boolean isCurMonth(Date date) {
-        if (date == null){
+        if (date == null) {
             return false;
         }
         boolean isCurMonth = false;
@@ -108,10 +122,11 @@ public class DateUtils {
 
     /**
      * 获取当前月的下一个月日期
+     *
      * @param dateStr
      * @return
      */
-    public static String getNextMonthData(String dateStr){
+    public static String getNextMonthData(String dateStr) {
         Calendar cale = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -119,7 +134,7 @@ public class DateUtils {
             cale.add(Calendar.MONTH, 1);//获取当前时间下一个月
             if (!isCurMonth(cale.getTime())) { // 如果不是当前月
                 cale.set(Calendar.DAY_OF_MONTH, 1);     //设置到每月的第一天
-            }else {
+            } else {
                 cale.setTime(new Date());
             }
         } catch (ParseException e) {
@@ -133,10 +148,11 @@ public class DateUtils {
 
     /**
      * 获取当前月的上一个月日期
+     *
      * @param dateStr
      * @return
      */
-    public static String getLastMonthData(String dateStr){
+    public static String getLastMonthData(String dateStr) {
         Calendar cale = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -144,7 +160,7 @@ public class DateUtils {
             cale.add(Calendar.MONTH, -1);//获取当前时间上一个月
             if (!isCurMonth(cale.getTime())) { // 如果不是当前月
                 cale.set(Calendar.DAY_OF_MONTH, 1);     //设置到每月的第一天
-            }else {
+            } else {
                 cale.setTime(new Date());
             }
         } catch (ParseException e) {
