@@ -8,16 +8,17 @@
         android:id="@+id/sendMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#f5f5f5"
         android:gravity="center"
-        android:textColor="@color/black"
         android:padding="@dimen/dimen_8dp"
         android:text="sendMsg"
-        android:textSize="@dimen/dimen_18sp"
-        android:background="#f5f5f5"/>
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_18sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

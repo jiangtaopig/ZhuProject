@@ -61,6 +61,7 @@ class Buf{
     }
 
     synchronized int get() throws InterruptedException {
+        // 为什么多线程同步的时候 要用while而不是if
         //A线程和B线程在执行 get 方法的时候，由于list 的 size 为 0， 所以A和B线程都执行wait方法阻塞住并且释放了锁。
         //C 线程执行put操作是，调用 notifyAll() 方法唤醒A和B线程，假设是A线程先获得锁，那么A remove 后，现在 list 的大小又为 0 了
         // 此时线程A调用 notifyAll 方法来唤醒B线程，那么B线程获得锁之后，会直接调用 remove 方法，此时 list 的大小为0，所以报 IndexOutOfBoundsException

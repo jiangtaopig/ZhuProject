@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -81,6 +82,9 @@ public class DefineViewActivity extends BaseActivity {
     ImageView imageView;
 
     private MyService.MyBinder myBinder;
+    private boolean mExpand = true;
+    private int mStart;
+    private int mOriginalWidth;
 
     @Override
     protected int layoutId() {
@@ -110,10 +114,10 @@ public class DefineViewActivity extends BaseActivity {
             intent.putExtra("msg", "我的对话");
             List<ShortcutInfo> list = new ArrayList<>();
 
-            for (int i = 0; i<5; i++){
-                ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "111"+i)
+            for (int i = 0; i < 5; i++) {
+                ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "111" + i)
                         .setShortLabel("段")
-                        .setLongLabel("联系人:"+i )
+                        .setLongLabel("联系人:" + i)
                         .setIcon(Icon.createWithResource(this, R.drawable.meet_pwd_error))
                         .setIntent(intent)
                         .build();
@@ -132,6 +136,15 @@ public class DefineViewActivity extends BaseActivity {
         Log.e("xxx", name);
 
         Glide.with(this).load("").into(imageView);
+
+        mTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mOriginalWidth = mTv.getWidth();
+                mTv.getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+        });
 
         testOkHttp.setOnClickListener(v -> {
             OkHttpClient client = new OkHttpClient.Builder()
@@ -154,9 +167,13 @@ public class DefineViewActivity extends BaseActivity {
                 }
             }.start();
         });
+
+
+
         mTv.setOnClickListener(v -> {
-//            performAnimation(mTv, mTv.getWidth(), 600);
-            displayInputDialog();
+            performAnimation(mTv, mOriginalWidth, 600, mExpand);
+            mExpand = false;
+//            displayInputDialog();
 
 //            Uri uri = Uri.parse("https://h.zuifuli.com/test/_deeplinks/sda?redirect=icare://zoom/meeting/action/show/home");
 //            String path =uri.getPath();
@@ -164,7 +181,7 @@ public class DefineViewActivity extends BaseActivity {
 //                String jumpUrl = uri.getQueryParameter("redirect");
 //            }
 
-            Intent intent = new Intent(this, A1Activity.class);
+//            Intent intent = new Intent(this, A1Activity.class);
             //如果AActivity属于当前的任务栈，则清空当前的任务栈，然后新建AActivity作为该任务栈的根Activity；
             //如果AActivity不属于当前的任务栈，即AActivity设置了taskAffinity="com.zjt.A"，那么会新建一个任务栈然后new AActivity作为根Activity
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -186,8 +203,8 @@ public class DefineViewActivity extends BaseActivity {
 
         getFromCache.setOnClickListener(v -> {
             List<TestCache> data = CatchUtils.getInstance(DefineViewActivity.this).getListFromCache("zcy", TestCache.class);
-            for (TestCache cache : data){
-                Log.e("xxxxxx", "cache = "+cache.toString());
+            for (TestCache cache : data) {
+                Log.e("xxxxxx", "cache = " + cache.toString());
             }
         });
 
@@ -207,8 +224,6 @@ public class DefineViewActivity extends BaseActivity {
         serviceJump2BActivity.setOnClickListener(v -> {
             myBinder.jump2BActivity();
         });
-
-
 
 
     }
@@ -241,14 +256,23 @@ public class DefineViewActivity extends BaseActivity {
         mInputDialog.show();
     }
 
-    private void performAnimation(View targetView, int start, int end) {
+
+
+    private void performAnimation(View targetView, int start, int end, boolean expand) {
+        Log.e(TAG, "start = " + start + ", end = " + end);
         ValueAnimator animator = ValueAnimator.ofInt(0, 100);
         IntEvaluator intEvaluator = new IntEvaluator();
         animator.addUpdateListener(animation -> {
             int currentValue = (int) animation.getAnimatedValue();
             float fraction = animation.getAnimatedFraction();
             Log.e(TAG, "currentValue = " + currentValue + ", fraction = " + fraction);
-            int value = intEvaluator.evaluate(fraction, start, end);
+//            int value = intEvaluator.evaluate(fraction, start, end);
+            int value;
+            if (expand) {
+                value = (int) (start + fraction * (end - start));
+            } else {
+                value = (int) (end - fraction * (end - start));
+            }
             targetView.getLayoutParams().width = value;
             targetView.requestLayout();
         });
@@ -256,13 +280,13 @@ public class DefineViewActivity extends BaseActivity {
         animator.start();
     }
 
-    public static class TestCache{
+    public static class TestCache {
         private String name;
         private String content;
         private int size;
         private Stu stu;
 
-        public TestCache(String name, String content, int size , Stu stu){
+        public TestCache(String name, String content, int size, Stu stu) {
             this.name = name;
             this.content = content;
             this.size = size;
@@ -271,22 +295,22 @@ public class DefineViewActivity extends BaseActivity {
 
         @Override
         public String toString() {
-            return "name : "+name+", content = "+content+", size = "+size+", stu = "+stu.toString();
+            return "name : " + name + ", content = " + content + ", size = " + size + ", stu = " + stu.toString();
         }
     }
 
-    public static class Stu{
+    public static class Stu {
         private String name;
         private int age;
 
-        public Stu(String name, int age){
+        public Stu(String name, int age) {
             this.name = name;
             this.age = age;
         }
 
         @Override
         public String toString() {
-            return ">> stu name "+name+", age = "+age;
+            return ">> stu name " + name + ", age = " + age;
         }
     }
 

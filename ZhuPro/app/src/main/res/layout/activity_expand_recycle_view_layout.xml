@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/sendMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_2dp"
+        android:background="@drawable/my_layer_bg"
+        android:gravity="center"
+        android:padding="@dimen/dimen_8dp"
+        android:text="sendMsg"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_18sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_16dp"
+        android:paddingRight="@dimen/dimen_10dp">
+
+        <LinearLayout
+            android:id="@+id/expand_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp">
+
+            <ImageView
+                android:id="@+id/img_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/dimen_3dp"
+                android:src="@drawable/small_down_arrow"
+                android:visibility="invisible"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_25dp"
+                android:layout_marginRight="@dimen/dimen_5dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_all_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全天"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dimen_13sp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_3dp"
+        android:background="@color/color_f3ac30"
+        android:gravity="center"
+        android:padding="@dimen/dimen_8dp"
+        android:text="test"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_18sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_23dp"
+        android:layout_margin="@dimen/dimen_3dp"
+        android:background="@drawable/round_4dp_dddddd_stroke"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/tag_view"
+            android:layout_width="@dimen/dimen_5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_6dp"
+            android:text="差旅"
+            android:textColor="#111111"
+            android:textSize="@dimen/dimen_13sp" />
+
+        <View
+            android:layout_width="@dimen/dimen_1dp"
+            android:layout_height="@dimen/dimen_12dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_5dp"
+            android:layout_marginRight="@dimen/dimen_5dp"
+            android:background="@color/color_666666" />
+
+        <TextView
+            android:id="@+id/txt_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="北京董事会"
+            android:textColor="#111111"
+            android:textSize="@dimen/dimen_13sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
