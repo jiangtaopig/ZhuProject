@@ -25,7 +25,7 @@ public class QuickSort {
         if (low > high){
             return;
         }
-        int tmp = arr[low];
+        int tmp = arr[low]; // 设置基准数
         int i = low;
         int j = high;
         while (i < j){
@@ -44,6 +44,7 @@ public class QuickSort {
                 arr[j] = temp;
             }
         }
+        // 2个哨兵相遇了则交换相遇位置和基准数tmp的值
         arr[low] = arr[i];
         arr[i] = tmp;
         //递归排序基准数左边的数据

@@ -1,7 +1,6 @@
 package com.example.za_zhujiangtao.zhupro.section_recycle.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.section_recycle.entity.HotelEntity;
 import com.example.za_zhujiangtao.zhupro.section_recycle.utils.HotelUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,29 +19,28 @@ import java.util.List;
  * Created by lyd10892 on 2016/8/23.
  */
 
-public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolder, DescHolder, RecyclerView.ViewHolder> {
-
-
+public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolder, DescHolder, FooterHolder> {
     public List<HotelEntity.TagsEntity> allTagList;
-    private Context mContext;
     private LayoutInflater mInflater;
-
     private SparseBooleanArray mBooleanMap;
 
     public HotelEntityAdapter(Context context) {
-        mContext = context;
         mInflater = LayoutInflater.from(context);
+        allTagList = new ArrayList<>();
         mBooleanMap = new SparseBooleanArray();
     }
 
-    public void setData(List<HotelEntity.TagsEntity> allTagList) {
-        this.allTagList = allTagList;
+    public void setData(List<HotelEntity.TagsEntity> list) {
+        allTagList.clear();
+        allTagList.addAll(list);
         notifyDataSetChanged();
     }
 
     @Override
     protected int getSectionCount() {
-        return HotelUtils.isEmpty(allTagList) ? 0 : allTagList.size();
+        int count = HotelUtils.isEmpty(allTagList) ? 0 : allTagList.size();
+        Log.e("zjt", "getSectionCount size = " + count);
+        return count;
     }
 
     //每个 section 中显示几个item
@@ -49,8 +48,13 @@ public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolde
     protected int getItemCountForSection(int section) {
         Log.e("zjt", "getItemCountForSection section = " + section);
         int count = allTagList.get(section).tagInfoList.size();
-        if (count >= 0 && !mBooleanMap.get(section)) {
-            count = count >= 4 ? 4 : count;
+        // 默认展开4个
+//        if (count >= 0 && !mBooleanMap.get(section)) {
+//            count = count >= 4 ? 4 : count;
+//        }
+
+        if (!mBooleanMap.get(section)) {
+            count = 0;
         }
 
         return HotelUtils.isEmpty(allTagList.get(section).tagInfoList) ? 0 : count;
@@ -59,7 +63,12 @@ public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolde
     //是否有footer布局
     @Override
     protected boolean hasFooterInSection(int section) {
-        return false;
+        Log.e("zjt", "hasFooterInSection section = " + section);
+        if (section == allTagList.size() -1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
@@ -69,8 +78,8 @@ public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolde
 
 
     @Override
-    protected RecyclerView.ViewHolder onCreateSectionFooterViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    protected FooterHolder onCreateSectionFooterViewHolder(ViewGroup parent, int viewType) {
+        return new FooterHolder(mInflater.inflate(R.layout.footer_item_layout, parent, false));
     }
 
     @Override
@@ -78,47 +87,46 @@ public class HotelEntityAdapter extends SectionedRecyclerViewAdapter<HeaderHolde
         return new DescHolder(mInflater.inflate(R.layout.hotel_desc_item, parent, false));
     }
 
-
     @Override
     protected void onBindSectionHeaderViewHolder(final HeaderHolder holder, final int section) {
-        Log.e("zjt", "onBindSectionHeaderViewHolder section = "+section);
+        Log.e("zjt", "onBindSectionHeaderViewHolder section = " + section);
         holder.openView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (section == 0){
+                if (section == 0) {
                     allTagList.get(0).tagInfoList.clear();
                     notifyDataSetChanged();
-                }else {
+                } else {
                     boolean isOpen = mBooleanMap.get(section);
                     String text = isOpen ? "展开" : "关闭";
                     mBooleanMap.put(section, !isOpen);
                     holder.openView.setText(text);
                     notifyDataSetChanged();
-
                 }
             }
         });
-
-        if (section == 0){
+        if (section == 0) {
             holder.openView.setText("删除");
-        }else {
+        } else {
             holder.openView.setText(mBooleanMap.get(section) ? "关闭" : "展开");
         }
-
         holder.titleView.setText(allTagList.get(section).tagsName);
-
-
     }
 
 
     @Override
-    protected void onBindSectionFooterViewHolder(RecyclerView.ViewHolder holder, int section) {
-
+    protected void onBindSectionFooterViewHolder(FooterHolder holder, int section) {
+//        Log.e("zjt", "onBindSectionFooterViewHolder section = " + section + ", size = " + allTagList.size());
+//        if (section == allTagList.size() - 1) {
+//            holder.setTxtVisibility(true);
+//        } else {
+//            holder.setTxtVisibility(false);
+//        }
     }
 
     @Override
     protected void onBindItemViewHolder(DescHolder holder, int section, int position) {
-        Log.e("zjt", "onBindItemViewHolder section = "+section + ", position = "+position);
+        Log.e("zjt", "onBindItemViewHolder section = " + section + ", position = " + position);
         holder.descView.setText(allTagList.get(section).tagInfoList.get(position).tagName);
     }
 }

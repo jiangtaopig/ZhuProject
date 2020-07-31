@@ -34,9 +34,9 @@ public class SectionRecycleActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        setDetail();
+//        setDetail();
 
-//        showHotelList();
+        showHotelList();
     }
 
     private void setDetail() {
@@ -117,31 +117,23 @@ public class SectionRecycleActivity extends BaseActivity {
     }
 
     private void showHotelList() {
-        myHotelAdapter = new MyHotelAdapter(this);
-        GridLayoutManager manager = new GridLayoutManager(this,4);
+//        myHotelAdapter = new MyHotelAdapter(this);
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
         mAdapter = new HotelEntityAdapter(this);
         manager.setSpanSizeLookup(new SectionedSpanSizeLookup(mAdapter, manager));
-
-
         mRecyclerView.setAdapter(mAdapter);
-
         mRecyclerView.setLayoutManager(manager);
-//        mRecyclerView.setAdapter(myHotelAdapter);
-        HotelEntity entity = JsonUtils.analysisJsonFile(this,"json");
-
-        mAdapter.setData(entity.allTagsList);
-
+        HotelEntity entity = JsonUtils.analysisJsonFile(this, "json");
         HotelEntity.TagsEntity historyTags = new HotelEntity.TagsEntity();
         historyTags.tagsName = "历史记录";
         List<HotelEntity.TagsEntity.TagInfo> tagInfoList = new ArrayList<>();
-        for (int i = 1; i < 5; i++){
+        for (int i = 1; i < 5; i++) {
             HotelEntity.TagsEntity.TagInfo tagInfo = new HotelEntity.TagsEntity.TagInfo();
             tagInfo.tagName = "记录" + i;
             tagInfoList.add(tagInfo);
         }
         historyTags.tagInfoList = tagInfoList;
         entity.allTagsList.add(0, historyTags);
-
-//        myHotelAdapter.setData(entity.allTagsList);
+        mAdapter.setData(entity.allTagsList);
     }
 }

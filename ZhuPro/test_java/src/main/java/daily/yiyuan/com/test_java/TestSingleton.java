@@ -114,3 +114,9 @@ class LocalSingleton{
         return local.get();
     }
 }
+
+interface MyInterface{
+    static void showName(){
+
+    }
+}

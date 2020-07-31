@@ -20,10 +20,10 @@ public class DiskClassLoader extends ClassLoader {
     }
 
     @Override
-    protected Class<?> findClass(String s) throws ClassNotFoundException {
+    protected Class<?> findClass(String s) {
         String newPath = filePath + s + ".class";
         byte[] classBytes = null;
-        Path path = null;
+        Path path;
         try {
             path = Paths.get(new URI(newPath));
             classBytes = Files.readAllBytes(path);

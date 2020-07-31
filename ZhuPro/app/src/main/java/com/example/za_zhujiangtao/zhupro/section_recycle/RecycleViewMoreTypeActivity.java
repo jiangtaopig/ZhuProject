@@ -50,7 +50,6 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         mRecyclerView.setAdapter(mMoreTypeAdapter);
         initData();
 
-        "sss".replaceAll("ss", " ");
 
         mTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override

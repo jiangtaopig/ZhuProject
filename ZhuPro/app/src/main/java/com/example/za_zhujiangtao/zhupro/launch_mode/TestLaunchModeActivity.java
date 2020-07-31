@@ -17,6 +17,7 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.FileUtils;
 import com.example.za_zhujiangtao.zhupro.MainApplication;
 import com.example.za_zhujiangtao.zhupro.R;
+import com.example.za_zhujiangtao.zhupro.float_window.FloatActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,21 +58,9 @@ public class TestLaunchModeActivity extends BaseActivity {
     private void initView() {
         mJumpBtn = findViewById(R.id.jump_activity);
         mJumpBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(TestLaunchModeActivity.this, A1Activity.class);
+            Intent intent = new Intent(TestLaunchModeActivity.this, FloatActivity.class);
             startActivity(intent);
 //            testHandler();
-//            ArrayDeque<String> stringArrayDeque = new ArrayDeque<>();
-//            stringArrayDeque.offer("a");
-//            stringArrayDeque.offer("b");
-//            stringArrayDeque.offer("c");
-//            stringArrayDeque.poll();
-//            stringArrayDeque.poll();
-//            testLeakCanary();
-
-//            ThreadLocal<String> stringThreadLocal = new ThreadLocal<>();
-//            stringThreadLocal.set("a");
-//            stringThreadLocal.set("b");
-//            Log.e("TestLaunchModeActivity", "local value = "+stringThreadLocal.get());
 
 //            FileUtils.writeFile("hotfix", "zjt2.txt", "i am zjt");
 //            moveFileFromSdcardToAppDir();

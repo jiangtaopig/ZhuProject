@@ -8,8 +8,9 @@
     <TextView
         android:id="@+id/sendMsg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_2dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_marginLeft="@dimen/dimen_2dp"
+        android:layout_marginRight="@dimen/dimen_2dp"
         android:background="@drawable/my_layer_bg"
         android:gravity="center"
         android:padding="@dimen/dimen_8dp"
@@ -18,6 +19,7 @@
         android:textSize="@dimen/dimen_18sp" />
 
     <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dimen_16dp"

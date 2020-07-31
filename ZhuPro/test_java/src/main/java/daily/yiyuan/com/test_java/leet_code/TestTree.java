@@ -221,6 +221,32 @@ public class TestTree {
     }
 
     /**
+     * 翻转 二叉树 ：交换二叉树的左右两个孩子
+     *
+     * @param node
+     */
+    private static TreeNode invertTree(TreeNode node) {
+        if (node == null) {
+            return null;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            TreeNode tmp = queue.poll();
+            TreeNode left = tmp.left;
+            tmp.left = tmp.right;
+            tmp.right = left;
+            if (tmp.left != null) {
+                queue.offer(tmp.left);
+            }
+            if (tmp.right != null) {
+                queue.offer(tmp.right);
+            }
+        }
+        return node;
+    }
+
+    /**
      * Z 字形 打印 二叉树
      *
      * @param root
@@ -332,6 +358,7 @@ public class TestTree {
 
     /**
      * 求叶子结点的个数
+     *
      * @param node
      * @return
      */

@@ -10,7 +10,8 @@ import java.lang.reflect.Method;
 public class TestDefineClassLoader {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
-        DiskClassLoader diskClassLoader = new DiskClassLoader("file:///D:/test/"); // 如果写成 "D:\\test\\" 则会报java.net.URISyntaxException: Illegal character in opaque part at index 2：Secret.class
+        // 如果写成 "D:\\test\\" 则会报java.net.URISyntaxException: Illegal character in opaque part at index 2：Secret.class
+        DiskClassLoader diskClassLoader = new DiskClassLoader("file:///D:/test/");
 
         Class c = diskClassLoader.findClass("Secret");
         if (c != null){

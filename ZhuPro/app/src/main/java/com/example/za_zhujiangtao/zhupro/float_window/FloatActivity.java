@@ -85,7 +85,7 @@ public class FloatActivity extends BaseActivity {
                                 // 授权失败
                                 showDialog();
                             } else {
-                                WindowUtil.getInstance().showPermissionWindow(FloatActivity.this, null, false);
+                                WindowUtil.getInstance().showPermissionWindow(FloatActivity.this, null, true);
                             }
                         }, 500);
                     });

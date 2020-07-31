@@ -42,7 +42,7 @@ public class WindowUtil {
     private Rect mDeleteRect = new Rect();
     private static final int mViewWidth = 50;
     private int statusBarHeight = 0;
-    private CustomCancelView mCustomCancelView;
+//    private CustomCancelView mCustomCancelView;
     private static final int mCancelViewSize = 100;
     private int mScreenWidth;
     private int mScreenHeight;
@@ -90,13 +90,13 @@ public class WindowUtil {
             mScreenWidth = DisplayUtil.getScreenWidth(context);
             mScreenHeight = DisplayUtil.getScreenHeight(context);
 
-            mCustomCancelView = (CustomCancelView) LayoutInflater.from(mContext).inflate(R.layout.activity_test, null);
-            mCancelViewLayoutParams.format = PixelFormat.RGBA_8888;   //窗口透明
-            mCancelViewLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;  //窗口位置
-            mCancelViewLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-            mCancelViewLayoutParams.width = DisplayUtil.dip2px(mCancelViewSize);
-            mCancelViewLayoutParams.height = DisplayUtil.dip2px(mCancelViewSize);
-            mWindowManager.addView(mCustomCancelView, mCancelViewLayoutParams);
+//            mCustomCancelView = (CustomCancelView) LayoutInflater.from(mContext).inflate(R.layout.activity_test, null);
+//            mCancelViewLayoutParams.format = PixelFormat.RGBA_8888;   //窗口透明
+//            mCancelViewLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;  //窗口位置
+//            mCancelViewLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+//            mCancelViewLayoutParams.width = DisplayUtil.dip2px(mCancelViewSize);
+//            mCancelViewLayoutParams.height = DisplayUtil.dip2px(mCancelViewSize);
+//            mWindowManager.addView(mCustomCancelView, mCancelViewLayoutParams);
 
             if (mDeleteRect.isEmpty()) {
                 mDeleteRect.set(mScreenWidth - mCancelViewLayoutParams.width, mScreenHeight - mCancelViewLayoutParams.height, mScreenWidth, mScreenHeight);
@@ -112,51 +112,50 @@ public class WindowUtil {
     }
 
     public void showJoinView() {
-        Log.e("zzzzz", "showJoinView "+mCustomCancelView);
-        if (mCustomCancelView != null) {
-            mCustomCancelView.startAnimate(true);
-        }
+//        Log.e("zzzzz", "showJoinView "+mCustomCancelView);
+//        if (mCustomCancelView != null) {
+//            mCustomCancelView.startAnimate(true);
+//        }
     }
 
     public void hideJoinView(){
-        Log.e("zzzzz", "hideJoinView "+mCustomCancelView);
-        if (mCustomCancelView != null) {
-            mCustomCancelView.startAnimate(false);
-        }
+//        Log.e("zzzzz", "hideJoinView "+mCustomCancelView);
+//        if (mCustomCancelView != null) {
+//            mCustomCancelView.startAnimate(false);
+//        }
     }
 
     private void initCollectView(){
         mCollectView = LayoutInflater.from(mContext).inflate(R.layout.article_window, null);
         initListener(mContext);
-        ImageView ivImage = mCollectView.findViewById(R.id.aw_iv_image);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
-        lp.width = DisplayUtil.dip2px(mViewWidth - 5);
-        lp.height = DisplayUtil.dip2px(mViewWidth - 5);
-        ivImage.setLayoutParams(lp);
-//            String imageUrl = SPUtil.getStringDefault(WebViewActivity.ARTICLE_IMAGE_URL, "");
-        RequestOptions requestOptions = RequestOptions.circleCropTransform();
-        requestOptions.placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round);
-        Glide.with(mContext).load("").apply(requestOptions).into(ivImage);
+//        ImageView ivImage = mCollectView.findViewById(R.id.aw_iv_image);
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
+//        lp.width = DisplayUtil.dip2px(mViewWidth - 5);
+//        lp.height = DisplayUtil.dip2px(mViewWidth - 5);
+//        ivImage.setLayoutParams(lp);
+//        RequestOptions requestOptions = RequestOptions.circleCropTransform();
+//        requestOptions.placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round);
+//        Glide.with(mContext).load("").apply(requestOptions).into(ivImage);
 
         mCollectViewParams.format = PixelFormat.RGBA_8888;   //窗口透明
         mCollectViewParams.gravity = Gravity.LEFT | Gravity.TOP;  //窗口位置
         mCollectViewParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mCollectViewParams.width = DisplayUtil.dip2px(mViewWidth);
-        mCollectViewParams.height = DisplayUtil.dip2px(mViewWidth);
+        mCollectViewParams.width =  RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getWidth());
+        mCollectViewParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getHeight());
 
         // 可以修改View的初始位置---这里是靠在屏幕居中
         mCollectViewParams.x = mScreenWidth - mCollectViewParams.width;
         mCollectViewParams.y = (mScreenHeight - mCollectViewParams.height) / 2;
         mWindowManager.addView(mCollectView, mCollectViewParams);
-        mCollectView.setVisibility(View.INVISIBLE);
+        mCollectView.setVisibility(View.VISIBLE);
     }
 
     public void showCollectView(){
         Log.e("showCollectView", "mCollectView = "+mCollectView);
         if (mCollectView != null){
             mCollectView.setVisibility(View.VISIBLE);
-            mCustomCancelView.startAnimate(false);
-            mCustomCancelView.isInSide(false);
+//            mCustomCancelView.startAnimate(false);
+//            mCustomCancelView.isInSide(false);
         }
     }
 
@@ -164,13 +163,13 @@ public class WindowUtil {
         Log.e("dismissWindow", "mWindowManager = "+mWindowManager+", mCollectView = "+mCollectView);
         if (mWindowManager != null && mCollectView != null) {
             mWindowManager.removeViewImmediate(mCollectView);
-            if (mCustomCancelView != null){
-                mWindowManager.removeViewImmediate(mCustomCancelView);
-                Log.e("dismissWindow", "..................");
+//            if (mCustomCancelView != null){
+//                mWindowManager.removeViewImmediate(mCustomCancelView);
+//                Log.e("dismissWindow", "..................");
                 mWindowManager = null;
-                mCustomCancelView = null;
+//                mCustomCancelView = null;
                 mCollectView = null;
-            }
+//            }
         }
     }
 
@@ -219,12 +218,12 @@ public class WindowUtil {
                             mCollectView.performClick();
                         }
                         //判断mView是在Window中的位置，以中间为界
-                        if (mCollectViewParams.x + mCollectView.getMeasuredWidth() / 2 >= mWindowManager.getDefaultDisplay().getWidth() / 2) {
-                            finalMoveX = mWindowManager.getDefaultDisplay().getWidth() - mCollectView.getMeasuredWidth();
-                        } else {
-                            finalMoveX = 0;
-                        }
-                        stickToSide();
+//                        if (mCollectViewParams.x + mCollectView.getMeasuredWidth() / 2 >= mWindowManager.getDefaultDisplay().getWidth() / 2) {
+//                            finalMoveX = mWindowManager.getDefaultDisplay().getWidth() - mCollectView.getMeasuredWidth();
+//                        } else {
+//                            finalMoveX = 0;
+//                        }
+//                        stickToSide();
                         return !isPerformClick;
                 }
                 return false;
@@ -244,9 +243,9 @@ public class WindowUtil {
 
     public boolean isRemove(int centerX, int centrY) {
         boolean isInFloatView = mDeleteRect.contains(centerX, centrY);
-        if (isInFloatView){
-            mCustomCancelView.isInSide(true);
-        }
+//        if (isInFloatView){
+//            mCustomCancelView.isInSide(true);
+//        }
         return isInFloatView;
     }
 

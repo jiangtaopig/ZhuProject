@@ -96,28 +96,37 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_trans"
+
+    <RelativeLayout
+        android:id="@+id/lll_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_200dp"
-        android:layout_alignParentBottom="true"
-        android:background="#66ff00"
-        android:text="transition manager"
-        android:textSize="@dimen/dimen_24sp"
-        android:gravity="center"
-        android:textColor="@color/color_333333"
-        android:layout_marginBottom="@dimen/dimen_30dp"
-        android:visibility="gone"/>
+        android:layout_height="match_parent"
+        android:background="#7F000000"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txt_trans"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dimen_32dp"
+            android:background="#66ff00"
+            android:gravity="center"
+            android:text="transition manager"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_24sp" />
+
+    </RelativeLayout>
 
 
     <TextView
         android:id="@+id/txt_ok"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_30dp"
-        android:textSize="@dimen/dimen_24sp"
-        android:text="确定"
         android:layout_alignParentBottom="true"
         android:background="#ff6600"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="@dimen/dimen_24sp" />
 
 </RelativeLayout>

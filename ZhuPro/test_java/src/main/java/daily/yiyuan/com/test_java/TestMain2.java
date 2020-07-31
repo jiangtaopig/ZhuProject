@@ -42,8 +42,67 @@ public class TestMain2 {
         time2Column("2019.06.04-10:15:00");
 //        time2Column("2019.06.04-14:45:00");
         boolean flag = Pattern.matches("^/?.*", "z123");//开头是否有下划线?表示可以有或没有，.*表示匹配任意字符
-        System.out.println("flag = "+flag);
+        System.out.println("flag = " + flag);
 
+        int a = 8;
+        int v = Integer.numberOfLeadingZeros(a);
+        String s = Integer.toBinaryString(v);
+        System.out.println("v = " + v + ", s = " + s + ", s1 = " + Integer.toBinaryString(8));
+
+        int m = 1 << 2 + 2;
+        int q = 32800 << 18;
+        System.out.println("m = " + m + ", n = " + (resizeStamp(0) << 18));
+
+//        testCalculate();
+
+        Student student;
+
+        List<Student> studentList = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            student = new Student("a"+i, 23, "m"+i);
+            studentList.add(student);
+        }
+
+
+    }
+
+    static final int resizeStamp(int n) {
+        return Integer.numberOfLeadingZeros(n) | (1 << (15));
+    }
+
+    private static int calculate(int a, int b) {
+        if (a == 0 || b == 0) {
+            throw new IllegalArgumentException("params not equal 0");
+        } else {
+            return a / b;
+        }
+    }
+
+    private static void testCalculate() {
+        calculate(3, 0);
+    }
+
+    private static void myThrows() throws InterruptedException {
+        int a = 3;
+        int b = 22;
+        Thread.sleep(200);
+        System.out.println("a*b = " + a * b);
+    }
+
+    private static void testThrows() throws InterruptedException {
+        try {
+            myThrows();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void hh() {
+        try {
+            testThrows();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void time2Column(String time) {
@@ -80,7 +139,7 @@ public class TestMain2 {
         System.out.println("hour = " + hour + ", minutes = " + minutes);
     }
 
-    private static void setHourAndMinutes(long time){
+    private static void setHourAndMinutes(long time) {
         Date date = new Date(time);
         if (date == null) {
             return;
@@ -93,38 +152,38 @@ public class TestMain2 {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
 
-        System.out.println("year = "+year+", month = "+month+", day = "+day+", hour = "+hour+", minutes = "+minutes);
+        System.out.println("year = " + year + ", month = " + month + ", day = " + day + ", hour = " + hour + ", minutes = " + minutes);
 
-        calendar.set(year, month, day, 16, 30,0);
-         year = calendar.get(Calendar.YEAR);
-         int month1 = calendar.get(Calendar.MONTH);
-         day = calendar.get(Calendar.DAY_OF_MONTH);
-         hour = calendar.get(Calendar.HOUR_OF_DAY);
-         minutes = calendar.get(Calendar.MINUTE);
-        System.out.println("year = "+year+", month = "+month1+", day = "+day+", hour = "+hour+", minutes = "+minutes);
+        calendar.set(year, month, day, 16, 30, 0);
+        year = calendar.get(Calendar.YEAR);
+        int month1 = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minutes = calendar.get(Calendar.MINUTE);
+        System.out.println("year = " + year + ", month = " + month1 + ", day = " + day + ", hour = " + hour + ", minutes = " + minutes);
         date2String(calendar.getTimeInMillis());
 
 
-        seconds2Date(date, 8*3600);
+        seconds2Date(date, 8 * 3600);
     }
 
-    public static Date seconds2Date(Date date, int seconds){
+    public static Date seconds2Date(Date date, int seconds) {
         int hour = getHour(seconds);
         int minutes = getMinutes(seconds);
-        Calendar calendar =  Calendar.getInstance(Locale.CHINESE);
+        Calendar calendar = Calendar.getInstance(Locale.CHINESE);
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(year, month, day, hour, minutes,0);
+        calendar.set(year, month, day, hour, minutes, 0);
         return calendar.getTime();
     }
 
-    public static int getHour(int time){
+    public static int getHour(int time) {
         return time / 3600;
     }
 
-    public static int getMinutes(int time){
+    public static int getMinutes(int time) {
         return time % 3600 / 60;
     }
 

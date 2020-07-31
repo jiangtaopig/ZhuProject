@@ -3,15 +3,19 @@ package com.example.za_zhujiangtao.zhupro.recycle;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.IntentService;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.BounceInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +24,9 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
 
+import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -39,10 +45,12 @@ public class ExpandRecycleViewActivity extends BaseActivity {
     private View tagView;
     private TextView titleTv;
     private ImageView moreImg;
+    private FrameLayout frameLayout;
 
     private int maxHeight;
     private int defaultHeight;
     private boolean isExpand;
+
 
     @Override
     protected int layoutId() {
@@ -57,6 +65,7 @@ public class ExpandRecycleViewActivity extends BaseActivity {
         tagView = findViewById(R.id.tag_view);
         titleTv = findViewById(R.id.txt_title);
         moreImg = findViewById(R.id.img_more);
+        frameLayout = findViewById(R.id.frame_layout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recycleAdapter = new RecycleAdapter();
@@ -65,6 +74,11 @@ public class ExpandRecycleViewActivity extends BaseActivity {
         expandLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
+                float x = recyclerView.getX();
+                float y = recyclerView.getY();
+                float frameLayoutX = frameLayout.getX();
+                float frameLayoutY = frameLayout.getY();
+                Log.e("TestRecycleViewActivity", " x = " + x + ", y = " + y+", frameLayoutX = "+frameLayoutX+", frameLayoutY = "+frameLayoutY);
                 if (expandLayout.getHeight() >= defaultHeight) {
                     expandLayout.getLayoutParams().height = defaultHeight; // 设置 RecycleView 的最大高度
                     expandLayout.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -89,6 +103,19 @@ public class ExpandRecycleViewActivity extends BaseActivity {
             isExpand = !isExpand;
             performAnimation(expandLayout, defaultHeight, maxHeight, isExpand);
         });
+
+        ConcurrentHashMap<String, String> hashMap = new ConcurrentHashMap<>(5);
+        hashMap.put("1", "a");
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("1", "a");
+
+        new Thread(){
+            @Override
+            public void run() {
+               Log.e("xxxxx","myLooper = "+Looper.myLooper()+", mainLooper = "+Looper.getMainLooper());
+            }
+        }.start();
     }
 
     private void performAnimation(View targetView, int start, int end, boolean expand) {

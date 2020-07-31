@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.transitionseverywhere.TransitionManager;
@@ -62,6 +63,9 @@ public class TransitionActivity extends AppCompatActivity {
     @BindView(R.id.root_layout)
     ViewGroup mRootView;
 
+    @BindView(R.id.lll_layout)
+    RelativeLayout mTvLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +85,10 @@ public class TransitionActivity extends AppCompatActivity {
         mStartTrans.setOnClickListener(v -> {
             com.transitionseverywhere.Slide slide = new com.transitionseverywhere.Slide(Gravity.BOTTOM);
             TransitionManager.beginDelayedTransition(mRootView, slide);
-            if (mTransitionTv.getVisibility() == View.VISIBLE){
-                mTransitionTv.setVisibility(View.GONE);
+            if (mTvLayout.getVisibility() == View.VISIBLE){
+                mTvLayout.setVisibility(View.GONE);
             }else {
-                mTransitionTv.setVisibility(View.VISIBLE);
+                mTvLayout.setVisibility(View.VISIBLE);
             }
         });
     }

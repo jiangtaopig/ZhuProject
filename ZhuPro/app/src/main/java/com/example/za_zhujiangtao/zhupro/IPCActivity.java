@@ -17,6 +17,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.widget.Button;
 
 
@@ -63,6 +64,7 @@ public class IPCActivity extends AppCompatActivity {
             bindService(intent, mMessengerConnection, Context.BIND_AUTO_CREATE);
         });
 
+
         mSendAidlMsg.setOnClickListener(v -> {
             Intent intent = new Intent(this, BookManagerService.class);
             bindService(intent, mAidlConnect, Context.BIND_AUTO_CREATE);
@@ -74,6 +76,8 @@ public class IPCActivity extends AppCompatActivity {
             strings.add("123");
             Handler handler = new Handler();
         });
+
+        SparseArray<String> sparseArray = new SparseArray<>();
 
     }
 
