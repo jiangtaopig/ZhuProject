@@ -14,6 +14,7 @@ import com.example.za_zhujiangtao.zhupro.utils.Platform;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +24,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -60,9 +62,6 @@ public class TestMemoryLeakActivity extends BaseActivity {
 //        testMemoryLeak();
 
         mJumpBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(TestMemoryLeakActivity.this, B1Activity.class);
-//            startActivity(intent);
-//            finish();
 
             Observable.just(1)
                     .map(integer -> 1 / 0)
@@ -99,6 +98,33 @@ public class TestMemoryLeakActivity extends BaseActivity {
 //                }
 //            }
 //        }).start();
+
+        Observable.just(1)
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+
+                    }
+                });
+
+        ThreadLocal<String> threadLocal = new ThreadLocal<>();
+        threadLocal.set("xxx");
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+
+        LinkedList<String> linkedList = new LinkedList<>();
+        linkedList.add("1");
+        linkedList.add("2");
+        linkedList.add("3");
+        linkedList.remove("2");
+        linkedList.peek();
+        linkedList.peekFirst();
+        linkedList.peekLast();
+        linkedList.pollFirst();
+        linkedList.push("f");
+        linkedList.pop();
+        linkedList.poll();
     }
 
     private void testMemoryLeak() {

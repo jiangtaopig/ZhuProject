@@ -7,7 +7,7 @@ import java.util.Arrays;
  * on 2019/9/17
  */
 public class MyArrayList<E> {
-    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = new Object[0];
+    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
     transient Object[] elementData;
     private int size;
 

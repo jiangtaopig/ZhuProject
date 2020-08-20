@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import daily.yiyuan.com.test_java.bean.Course;
@@ -58,10 +59,33 @@ public class TestMain2 {
         Student student;
 
         List<Student> studentList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            student = new Student("a"+i, 23, "m"+i);
-            studentList.add(student);
+//        for (int i = 0; i < 2; i++) {
+//            student = new Student("a" + i, 23, "m" + i);
+//            studentList.add(student);
+//        }
+
+        for (Student student1 : studentList){
+
         }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        String dateStr = simpleDateFormat.format(new Date());
+        System.out.println("dateStr = " + dateStr);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            String ss = sdf.format(simpleDateFormat.parse(dateStr));
+            System.out.println("ss ---- "+ss);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        String vv = "2020-08-09T16:00:00.000Z";
+
+        TimeZone tzone = TimeZone.getDefault();
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("'(GMT'ZZ')'");
+        System.out.println("-------tzone------" + tzone.getDisplayName()+", id = "+tzone.getID()+" .."+simpleDateFormat1.format(new Date()));
 
 
     }

@@ -22,12 +22,12 @@ public class TestCollection {
 
     private static Map<String, String> tail;
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
 //        testConcurrentModificationException();
 
         Object a1 = 1l;
         Object a2 = 1;
-        System.out.println("a1 == a2 ? "+ (a1 == a2));
+        System.out.println("a1 == a2 ? " + (a1 == a2));
 
         Map<String, String> map = new LinkedHashMap<>();
         map.put("a", "aa");
@@ -42,18 +42,21 @@ public class TestCollection {
         subList.add("c++");
 
         MyArrayList myArrayList = new MyArrayList();
-        myArrayList.add("java");
-        myArrayList.add("android");
+        for (int i = 1; i < 11; i++) {
+            myArrayList.add("" + i);
+        }
+
+        myArrayList.add("11");
 
         String[] ELEMENTS = new String[0];
-        System.out.println("size = "+ ELEMENTS.length);
+        System.out.println("size = " + ELEMENTS.length);
         ELEMENTS = Arrays.copyOf(ELEMENTS, 10);
-        System.out.println("size = "+ ELEMENTS.length);
+        System.out.println("size = " + ELEMENTS.length);
 
 
         LinkedList<String> stringList = new LinkedList<>();
         stringList.add("a");
-        System.out.println("last = "+stringList.getLast());
+        System.out.println("last = " + stringList.getLast());
 
         Queue<Integer> queue = new PriorityQueue<>();
         queue.offer(3);
@@ -62,7 +65,7 @@ public class TestCollection {
         queue.offer(2);
 
         int lo = 0;
-        System.out.println("xxx ... "+~lo);
+        System.out.println("xxx ... " + ~lo);
 
 
 //        while (iterator.hasNext()){
@@ -70,20 +73,20 @@ public class TestCollection {
 //        }
 //        System.out.println("队列头元素："+queue.poll());
 
-        System.out.println("第2个元素"+queue.remove(2));
+        System.out.println("第2个元素" + queue.remove(2));
         Iterator<Integer> iterator = queue.iterator();
-        while (iterator.hasNext()){
-            System.out.println(" 元素: "+iterator.next());
+        while (iterator.hasNext()) {
+            System.out.println(" 元素: " + iterator.next());
         }
 
         Vector<String> vector = new Vector<>();
         vector.add("1");
 
-        int [] arr = new int[5];
+        int[] arr = new int[5];
         arr[0] = 5;
 
         int ss = binarySearch(arr, 1, 2);
-        System.out.println("ss = "+ss);
+        System.out.println("ss = " + ss);
 
         StringBuilder stringBuilder = new StringBuilder();
         StringBuffer stringBuffer = new StringBuffer();
@@ -94,7 +97,7 @@ public class TestCollection {
         linkedList.add("2");
         linkedList.add("3");
 
-        System.out.println(" val = "+linkedList.poll()+", size = "+linkedList.size());
+        System.out.println(" val = " + linkedList.poll() + ", size = " + linkedList.size());
 
         List<String> strings = new ArrayList<>();
         strings.add("a");
@@ -102,11 +105,25 @@ public class TestCollection {
         strings.add("c");
         linkedList.addAll(1, strings);
 
-        for (String ssr : linkedList){
-            System.out.println("v = "+ssr);
+        for (String ssr : linkedList) {
+            System.out.println("v = " + ssr);
+        }
+
+        LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>(4, 0.75f, true);
+        linkedHashMap.put("1", "a");
+        linkedHashMap.put("2", "b");
+        linkedHashMap.put("3", "c");
+
+        linkedHashMap.get("1");
+
+        Iterator<Map.Entry<String, String>> iterator1 = linkedHashMap.entrySet().iterator();
+        while (iterator1.hasNext()) {
+            Map.Entry<String, String> entry = iterator1.next();
+            System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
         }
 
     }
+
     static int binarySearch(int[] array, int size, int value) {
         int lo = 0;
         int hi = size - 1;
@@ -132,18 +149,18 @@ public class TestCollection {
         list.add("2");
         list.add("3");
 
-        for (int i = 0; i < list.size(); i++){
-            System.out.println("list.get("+i+") = " + list.get(i));
-            if ("2".equals(list.get(i))){
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("list.get(" + i + ") = " + list.get(i));
+            if ("2".equals(list.get(i))) {
                 list.remove(i);
             }
         }
     }
 
-    private static void linkNodeLast(Map<String, String> p){
+    private static void linkNodeLast(Map<String, String> p) {
         Map<String, String> last = tail;
         tail = p;
-        if (last == null){
+        if (last == null) {
             System.out.println("................null......................");
         }
     }

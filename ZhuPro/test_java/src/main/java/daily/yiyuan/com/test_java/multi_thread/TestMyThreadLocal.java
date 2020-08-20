@@ -2,6 +2,8 @@ package daily.yiyuan.com.test_java.multi_thread;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import daily.yiyuan.com.test_java.multi_thread.my_thread.MyThreadLocal;
+
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2019/12/20
@@ -18,6 +20,11 @@ public class TestMyThreadLocal {
         MyThreadLocal<String> myThreadLocal = new MyThreadLocal<>();
         myThreadLocal.set("zjt");
         myThreadLocal.set("wq");
+
+        System.out.println("----- val ----"+myThreadLocal.get());
+
+        MyThreadLocal<String> threadLocal2 = new MyThreadLocal<>();
+        threadLocal2.set("zcy");
 
 
         int a = new TestMyThreadLocal().threadLocalHashCode;

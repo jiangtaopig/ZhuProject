@@ -30,4 +30,14 @@
         android:layout_height="@dimen/dimen_80dp"
         android:text="start activity from service"/>
 
+    <TextView
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="1dp"
+        android:drawableBottom="@drawable/small_down_arrow"
+        android:gravity="center"
+        android:text="12"
+        android:textColor="@color/color_ff6600">
+
+    </TextView>
+
 </LinearLayout>

@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -148,6 +149,10 @@ public class WindowUtil {
         mCollectViewParams.y = (mScreenHeight - mCollectViewParams.height) / 2;
         mWindowManager.addView(mCollectView, mCollectViewParams);
         mCollectView.setVisibility(View.VISIBLE);
+
+        mCollectView.setOnClickListener(v -> {
+            Toast.makeText(mContext, "click!", Toast.LENGTH_SHORT).show();
+        });
     }
 
     public void showCollectView(){

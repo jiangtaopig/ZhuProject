@@ -11,12 +11,31 @@ import java.util.List;
  * on 2019/10/18
  */
 public class TestReflection {
-    public static void main(String [] args){
+    public static void main(String[] args) {
         List<String> data = new ArrayList<>();
         data.add("1");
         data.add("2");
         data.add("3");
         try {
+
+            Class thread = Thread.currentThread().getClass();
+            Object object = null;
+            Field threadLocals = null;
+//        ThreadLocalMap threadLocalMap = null;
+            try {
+                object = thread.newInstance();
+                threadLocals = object.getClass().getDeclaredField("threadLocals");
+                threadLocals.setAccessible(true);
+//            threadLocalMap = (ThreadLocalMap) threadLocals.get(object);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+
+
             Class c = Class.forName("daily.yiyuan.com.test_java.School");
             Object o = c.newInstance();
             //获取 private 变量 teachers 的用法
@@ -32,28 +51,28 @@ public class TestReflection {
             Field field2 = c.getField("name");
             field2.set(o, "zjt");
 
-            if (o instanceof School){
-                System.out.println("name = "+((School) o).name);
+            if (o instanceof School) {
+                System.out.println("name = " + ((School) o).name);
                 System.out.println(((School) o).getTeachers());
             }
 
             String info = (String) invokePrivateMethod(o, "setInfo", new Class[]{String.class, int.class},
                     "shanghai university", 20);
-            System.out.println("info = "+info);
+            System.out.println("info = " + info);
 
             String info2 = (String) getPrivateFieldValue(o, "info");
-            System.out.println("info2 = "+info2);
+            System.out.println("info2 = " + info2);
 
-            String [] leaders = {"a", "b", "c"};
+            String[] leaders = {"a", "b", "c"};
 
             Field field3 = o.getClass().getDeclaredField("leaders");
             field3.setAccessible(true);
             field3.set(o, leaders);
 
-            if (o instanceof School){
-                String [] lead = ((School) o).getLeaders();
-                for (String l : lead ){
-                    System.out.println("leaders : "+l);
+            if (o instanceof School) {
+                String[] lead = ((School) o).getLeaders();
+                for (String l : lead) {
+                    System.out.println("leaders : " + l);
                 }
 
             }
@@ -88,14 +107,14 @@ public class TestReflection {
     }
 }
 
-class School{
+class School {
     public String name;
     private List<String> teachers;
     private String info;
-    private final String [] leaders;
+    private final String[] leaders;
 
     School() {
-        leaders = new String [3];
+        leaders = new String[3];
     }
 
     public String[] getLeaders() {
@@ -118,16 +137,16 @@ class School{
         this.teachers = teachers;
     }
 
-    private String setInfo(String schoolName, int older){
-        info = schoolName + "-"+older;
+    private String setInfo(String schoolName, int older) {
+        info = schoolName + "-" + older;
         return info;
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        if (teachers != null && teachers.size() > 0){
-            for (String v : teachers){
+        if (teachers != null && teachers.size() > 0) {
+            for (String v : teachers) {
                 stringBuilder.append(v);
             }
         }

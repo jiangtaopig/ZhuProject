@@ -1,7 +1,6 @@
-package daily.yiyuan.com.test_java.multi_thread;
+package daily.yiyuan.com.test_java.multi_thread.my_thread;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -65,22 +64,6 @@ public class MyThreadLocal<T>  {
     }
 
     private ThreadLocalMap getThreadLocalMap(Thread t) {
-//        Class thread = t.getClass();
-//        Object object = null;
-//        Field threadLocals = null;
-//        ThreadLocalMap threadLocalMap = null;
-//        try {
-//            object = thread.newInstance();
-//            threadLocals = object.getClass().getDeclaredField("threadLocals");
-//            threadLocals.setAccessible(true);
-//            threadLocalMap = (ThreadLocalMap) threadLocals.get(object);
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
-//        }
         return threadLocalMap;
     }
 
@@ -305,10 +288,8 @@ public class MyThreadLocal<T>  {
             MyThreadLocal.ThreadLocalMap.Entry[] tab = table;
             int len = tab.length;
             int hash = key.threadLocalHashCode;
-            System.out.println("zjt firstKey.threadLocalHashCode = "+hash);
+            System.out.println("zjt set hash = "+hash + ", len = "+len);
             int i = hash & (len-1);
-
-
             for (MyThreadLocal.ThreadLocalMap.Entry e = tab[i];
                  e != null;
                  e = tab[i = nextIndex(i, len)]) {
