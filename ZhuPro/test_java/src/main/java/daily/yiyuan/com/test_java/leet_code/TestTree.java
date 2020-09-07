@@ -10,8 +10,11 @@ import java.util.List;
  */
 public class TestTree {
 
-    public static void main(String[] args) {
+    private static int res;
+    private static int leftHeight;
+    private static int rightHeight;
 
+    public static void main(String[] args) {
 //        testSameTree();
         System.out.println(1 << 31 - 1);
         System.out.println("------------------------------------------------");
@@ -40,6 +43,24 @@ public class TestTree {
         System.out.println(res2);
 
         numTrees(2);
+
+        TreeNode root = new TreeNode(10);
+        TreeNode l1 = new TreeNode(5);
+        TreeNode r1 = new TreeNode(16);
+        root.left = l1;
+        root.right = r1;
+
+        TreeNode l2 = new TreeNode(3);
+        l1.left = l2;
+        l1.right = new TreeNode(8);
+
+        rangeSum(root, 1, 15);
+        int sum = rangeSum2(root, 1, 15);
+        System.out.println("sum = " + sum);
+
+
+        getDiameter(root);
+
     }
 
     private static void testSameTree() {
@@ -377,5 +398,95 @@ public class TestTree {
     }
 
 
-//-----------------------------------最后的花括号---------------------------------------------------------
+    /**
+     * 二叉搜索树的范围和
+     * 给定二叉搜索树的根结点 root，返回 L 和 R（含）之间的所有结点的值的和。
+     *
+     * @param root
+     * @param L
+     * @param R
+     */
+    public static void rangeSum(TreeNode root, int L, int R) {
+        inOrder(root, L, R);
+        System.out.println("..............................................................");
+        System.out.println("rangeSum = " + res);
+    }
+
+    /**
+     * 二叉搜索树的部分和
+     * 中序遍历然后比较，
+     *
+     * @param node
+     * @param L
+     * @param R
+     */
+    private static void inOrder(TreeNode node, int L, int R) {
+        if (node == null)
+            return;
+        inOrder(node.left, L, R);
+        System.out.println("val = " + node.val + ", res = " + res);
+        if (node.val >= L && node.val <= R) {
+            res += node.val;
+        }
+        inOrder(node.right, L, R);
+    }
+
+    /**
+     * 对于二叉搜索树，左子树 小于根节点 ，右子树大于根节点
+     * 我们只需要数组中L&R之间的数值，故如果当前节点小于L，则遍历右子树，若果当前结点大于R，则遍历左子树，其他情况遍历左右子树和当前节点。
+     *
+     * @param root
+     * @param L
+     * @param R
+     * @return
+     */
+    private static int rangeSum2(TreeNode root, int L, int R) {
+        if (root == null || L > R)
+            return 0;
+
+        if (root.val < L) {
+            return rangeSum2(root.right, L, R);
+        } else if (root.val > R) {
+            return rangeSum2(root.left, L, R);
+        } else {
+            return root.val + rangeSum2(root.left, L, R) + rangeSum2(root.right, L, R);
+        }
+    }
+
+    /**
+     * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。
+     *
+     *       1
+     *     / \
+     *    2   3
+     *  / \
+     * 4   5
+     * 返回 3 , 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
+     *
+     * 注意： 两结点之间的路径长度是以它们之间边的数目表示。
+     *
+     * @param root
+     * @return
+     */
+    private static int getDiameter(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
+        System.out.println("diameter = " + (left + right));
+        return left + right;
+    }
+
+    private static int getHeight(TreeNode node) {
+        if (node == null)
+            return 0;
+        int left = getHeight(node.left);
+        int right = getHeight(node.right);
+
+        return left > right ? left + 1 : right + 1;
+    }
+
+
+//--------------------------------------------------------最后的花括号---------------------------------------------------------
 }

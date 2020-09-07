@@ -3,6 +3,7 @@ package com.example.za_zhujiangtao.zhupro.define_view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -52,7 +53,7 @@ public class XfermodeView extends View {
         //然后在bitmap上绘图
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(0xffffcc44);
+        paint.setColor(Color.BLUE);
         //在bitmap上画一个圆
         canvas.drawOval(new RectF(0, 0, w, h), paint);
         return bitmap;
@@ -68,7 +69,7 @@ public class XfermodeView extends View {
         Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bm);
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setColor(0xFF66AAFF);
+        p.setColor(Color.RED);
         c.drawRect(0, 0,w,h, p);
         return bm;
     }

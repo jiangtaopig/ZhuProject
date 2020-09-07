@@ -143,11 +143,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_10dp"
             android:layout_marginTop="@dimen/dimen_5dp"
+            android:visibility="gone"
             android:background="@color/color_e1edfa" />
+
+        <com.example.za_zhujiangtao.zhupro.define_view.BitmapView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_338f66ff"/>
 
         <com.example.za_zhujiangtao.zhupro.define_view.XfermodeView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_400dp"></com.example.za_zhujiangtao.zhupro.define_view.XfermodeView>
+            android:layout_height="@dimen/dimen_400dp">
+
+        </com.example.za_zhujiangtao.zhupro.define_view.XfermodeView>
 
     </LinearLayout>
 

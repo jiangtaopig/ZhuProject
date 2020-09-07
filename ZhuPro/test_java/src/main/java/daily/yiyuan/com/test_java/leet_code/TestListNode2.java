@@ -34,9 +34,10 @@ public class TestListNode2 {
 
         addTwoNumbers(initListNodeWithoutHead(new int[]{2, 4, 3}), initListNodeWithoutHead(new int[]{9, 7, 6, 4}));
 
-
         ListNode l6 = initListNodeWithoutHead(new int[]{3, 4, 1});
         insertionSortList(l6);
+
+        intersectionNode();
     }
 
     private static void mergeKListNodes() {
@@ -379,6 +380,13 @@ public class TestListNode2 {
         return L;
     }
 
+    /**
+     * 每n个元素翻转一次链表
+     *
+     * @param node
+     * @param n
+     * @return
+     */
     public static ListNode reverseListNodeWithNum(ListNode node, int n) {
         if (node == null) {
             return node;
@@ -406,6 +414,66 @@ public class TestListNode2 {
             }
         }
         return L.next;
+    }
+
+
+    private static void intersectionNode() {
+        ListNode L1 = new ListNode(1);
+        ListNode two = new ListNode(2);
+        ListNode three = new ListNode(3);
+        L1.next = two;
+        two.next = three;
+
+        ListNode L2 = new ListNode(6);
+        ListNode five = new ListNode(5);
+        L2.next = five;
+        five.next = two;
+
+        ListNode node = getIntersectionNode(L2, L1);
+        System.out.println("node val = " + node.val);
+    }
+
+    /**
+     * 求2个链表相交的结点
+     * 遍历2个链表，计算出2个链表的长度的差值diff,长的链表先走diff步；然后2个链表同步走，直到找到2个相同的结点
+     *
+     * @param L1
+     * @param L2
+     * @return
+     */
+    private static ListNode getIntersectionNode(ListNode L1, ListNode L2) {
+        if (L1 == null || L2 == null)
+            return null;
+        ListNode LL = L1; // 指向较长的链表
+        ListNode LS = L2; // 指向较短的链表
+        int num1 = 0, num2 = 0;
+        while (L1 != null) {
+            num1++;
+            L1 = L1.next;
+        }
+
+        while (L2 != null) {
+            num2++;
+            L2 = L2.next;
+        }
+        int diff = num1 - num2;
+        if (num1 < num2) { // 表示链表1 比链表2 长度短
+            ListNode tmp = LL;
+            LL = LS;
+            LS = tmp;
+            tmp = null;
+            diff = num2 - num1;
+        }
+        while (diff > 0) {
+            diff--;
+            LL = LL.next;
+        }
+
+        while (LL != LS && LL != null) {
+            LL = LL.next;
+            LS = LS.next;
+        }
+        return LL;
     }
 
 }

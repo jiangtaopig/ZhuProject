@@ -1,9 +1,14 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -66,7 +71,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
             Observable.just(1)
                     .map(integer -> 1 / 0)
                     .onErrorResumeNext(throwable -> {//会把错误“吃掉”，不会执行下面的onError，所以最好加log
-                        Log.e("xxx", "error = "+throwable.fillInStackTrace());
+                        Log.e("xxx", "error = " + throwable.fillInStackTrace());
                         return Observable.just(-1);
                     })
                     .subscribe(new Subscriber<Integer>() {
@@ -144,6 +149,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
         Log.e("xxxx", ".....onDestroy .....");
 //        mDisposable.unsubscribe();
     }
+
 
 
     /**
