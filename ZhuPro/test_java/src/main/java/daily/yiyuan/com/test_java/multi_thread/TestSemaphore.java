@@ -12,7 +12,7 @@ import java.util.function.IntConsumer;
 public class TestSemaphore {
     public static void main(String[] args) {
         System.out.println("----------------------------------测试Semaphore---------------------------------");
-        testSemaphore();
+//        testSemaphore();
 
 //        testZeroOddEven();
 
@@ -20,24 +20,48 @@ public class TestSemaphore {
 //        testH2O();
 
 //        printCharAndNum();
+        startSemaphore();
 
+    }
 
+    public static void startSemaphore() {
+        Semaphore semaphore = new Semaphore(0);
+        final MySemaphore mySemaphore = new MySemaphore(semaphore);
+        new Thread() {
+            @Override
+            public void run() {
+                mySemaphore.startTask();
+            }
+        }.start();
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Thread() {
+            @Override
+            public void run() {
+                mySemaphore.endTask();
+            }
+        }.start();
     }
 
     private static void printCharAndNum() {
         final NumberChar numberChar = new NumberChar();
 
         final int[] nums = {1, 2, 3, 4};
-        final char [] chars = {'a', 'b'};
+        final char[] chars = {'a', 'b'};
 
-        for (int i = 0; i < nums.length; i++){
+        for (int i = 0; i < nums.length; i++) {
             final int tmp = i;
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     numberChar.printNum(new Runnable() {
@@ -50,9 +74,9 @@ public class TestSemaphore {
             }.start();
         }
 
-        for (int i = 0; i < chars.length; i++){
+        for (int i = 0; i < chars.length; i++) {
             final int tmp = i;
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     numberChar.printChar(new Runnable() {
@@ -405,7 +429,33 @@ class NumberChar {
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }
+    }
 
+
+}
+
+//-----------------------------------------------test semaphore 的使用------------------------------------------------------------------
+class MySemaphore {
+    private Semaphore semaphore;
+
+    public MySemaphore(Semaphore semaphore) {
+        this.semaphore = semaphore;
+    }
+
+    public void startTask() {
+        System.out.println("ThreadName : " + Thread.currentThread().getName() + " startTask start time >> "+System.currentTimeMillis());
+        try {
+            semaphore.acquire();
+            System.out.println("ThreadName : " + Thread.currentThread().getName() + " startTask 获取到锁 time >> "+System.currentTimeMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void endTask() {
+        System.out.println("ThreadName : " + Thread.currentThread().getName() + " endTask start time >> "+System.currentTimeMillis());
+        semaphore.release();
+        System.out.println("ThreadName : " + Thread.currentThread().getName() + " endTask end time >> "+System.currentTimeMillis());
     }
 }
 

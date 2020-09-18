@@ -68,7 +68,7 @@
             android:required="false" />
 
         <activity
-            android:name=".define_view.DefineViewActivity2"
+            android:name=".recycle.ItemDecorationActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -87,6 +87,8 @@
         <activity android:name=".EditPosterActivity"/>
 
         <activity android:name=".ImageSliderActivity"/>
+
+        <activity android:name=".kotlin.AnotherKotlinActivity"/>
 
         <activity
             android:name=".launch_mode.A1Activity"

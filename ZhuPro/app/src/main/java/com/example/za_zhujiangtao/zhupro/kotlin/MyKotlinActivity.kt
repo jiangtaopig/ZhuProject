@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.za_zhujiangtao.zhupro.BaseActivity
 import com.example.za_zhujiangtao.zhupro.EditPosterActivity
 import com.example.za_zhujiangtao.zhupro.R
@@ -257,6 +258,12 @@ class MyKotlinActivity : BaseActivity() {
             val maneger = Manager("zhujiangtao", 23)
             Log.e(Tag, "manager name's size = ${maneger.size}, name = ${maneger.name}")
 
+        }
+
+        kt_txt_4.setOnClickListener {
+            ARouter.getInstance().build("/kt/another")
+                    .withInt("/kt/id", 11)
+                    .navigation()
         }
     }
 

@@ -11,6 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.za_zhujiangtao.zhupro.R;
 
+import java.util.concurrent.Semaphore;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -55,5 +57,13 @@ public class RouterActivity1 extends AppCompatActivity {
             Log.e(TAG, "name = " + mUser.getName() + ", age = " + mUser.getAge() + ", sex = " + mUser.getSex());
         }
 
+        Semaphore semaphore = new Semaphore(0);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            semaphore.release();
+        }
     }
 }

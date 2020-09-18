@@ -36,4 +36,15 @@
         android:background="#f5f5f5"
         android:textColor="#ff0000"/>
 
+    <TextView
+        android:id="@+id/kt_txt_4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:text="jump to another kt activity"
+        android:gravity="center"
+        android:textSize="@dimen/dimen_20sp"
+        android:background="#f5f5f5"
+        android:textColor="#ff0000"/>
+
 </LinearLayout>
