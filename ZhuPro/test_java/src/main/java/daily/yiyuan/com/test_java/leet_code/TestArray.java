@@ -30,6 +30,15 @@ public class TestArray {
 
         int[] a = {6, 3, 7, 4, 9, 5};
         quickSort(a, 0, a.length - 1);
+
+        int val = minCoin(62);
+        System.out.println("---------------val----------------" + val);
+
+        double maxLen = getMaxLength(new int[]{3, 4, 5}, 3, 4);
+        System.out.println("maxLen = " + maxLen);
+
+        int num = candyCount(new int[]{1, 2, 2, 2});
+        System.out.println("...............num..........." + num);
     }
 
     /**
@@ -203,7 +212,108 @@ public class TestArray {
         a[i] = tmp;
         quickSort(a, low, i - 1);
         quickSort(a, i + 1, high);
-
     }
+
+    /**
+     * 有 1元、4元、 16元以及64元的硬币 和一张1024的纸币，现在购买商品的价格 [0 < N <= 1024],问最少收到多少硬币？
+     */
+
+    private static int minCoin(int value) {
+        int[] coins = new int[]{64, 16, 4, 1};
+        int remainVal = 1024 - value;
+        int len = coins.length;
+        int cnt = 0;
+        for (int i = 0; i < len && remainVal > 0; i++) {
+            cnt += remainVal / coins[i];
+            remainVal = remainVal % coins[i];
+        }
+        return cnt;
+    }
+
+    /**
+     * 有N根绳子，第i根绳子长度为LiLi，现在需要M根等长的绳子，你可以对N根绳子进行任意裁剪（不能拼接），请你帮忙计算出这M根绳子最长的长度是多少。
+     * 输入 3 4
+     * 3跟绳子长度分别为 ： 3 5 4
+     * 输出：
+     * 2.50
+     * 解释： 第一根和第三根绳子分别裁剪出一根2.50长度的绳子，第二根绳子刚好可以裁剪出两根2.50的长度绳子，刚好4根。
+     */
+
+    private static double getMaxLength(int[] arr, int n, int m) {
+        int max = arr[0];
+        // 找到最长的绳子
+        for (int i = 1, len = arr.length; i < len; i++) {
+            if (arr[i] > max)
+                max = arr[i];
+        }
+        double low = 0;
+        double high = max;
+        double mid = 0;
+        int cnt;
+        while (high - low > 1.0E-4) {
+            mid = (high - low) / 2 + low;
+            cnt = check(arr, mid);
+            if (cnt >= m) { // 计算出绳子的根数大于等于m,表示长度小了,记住一定要 >=
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+        return mid;
+    }
+
+    private static int check(int[] arr, double maxLen) {
+        int cnt = 0;
+        for (int i = 0; i < arr.length; i++) {
+            cnt += arr[i] / maxLen;
+        }
+        return cnt;
+    }
+
+    /**
+     * 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+     * 每个孩子至少分配到 1 个糖果。
+     * 相邻的孩子中，评分高的孩子必须获得更多的糖果。
+     * 那么这样下来，老师至少需要准备多少颗糖果呢？
+     * <p>
+     * 示例 1:
+     * 输入: [1,0,2]
+     * 输出: 5
+     * 解释: 你可以分别给这三个孩子分发 2、1、2 颗糖果。
+     * <p>
+     * 示例 2:
+     * 输入: [1,2,2]
+     * 输出: 4
+     * 解释: 你可以分别给这三个孩子分发 1、2、1 颗糖果。第三个孩子只得到 1 颗糖果，这已满足上述两个条件。
+     *
+     * @param score
+     */
+    private static int candyCount(int[] score) {
+        int[] candys = new int[score.length];
+        candys[0] = 1;
+        // 先正序遍历，如果后一位孩子的得分比前一位的高，则糖果数等于前一位孩子的糖果数加1，否则给1
+        for (int i = 0, len = score.length; i < len - 1; i++) {
+            if (score[i + 1] > score[i]) {
+                candys[i + 1] = candys[i] + 1;
+            } else {
+                candys[i + 1] = 1;
+            }
+        }
+
+        // 然后倒序遍历，如果前一个孩子的得分比后一位的得分高且糖果数小于等于后一位的糖果数，则前一个孩子的糖果数等于后一个孩子的糖果数加1
+        for (int i = score.length - 1; i > 0; i--) {
+            if (score[i - 1] > score[i] && candys[i - 1] <= candys[i]) {
+                candys[i - 1] = candys[i] + 1;
+            }
+        }
+
+        int cnt = 0;
+        for (int i = 0, len = candys.length; i < len; i++) {
+            cnt += candys[i];
+        }
+
+        return cnt;
+    }
+
 
 }
