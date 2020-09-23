@@ -40,5 +40,6 @@ public class ItemDecorationActivity extends BaseActivity {
         }
 
         mAdapter.setList(dataList);
+
     }
 }

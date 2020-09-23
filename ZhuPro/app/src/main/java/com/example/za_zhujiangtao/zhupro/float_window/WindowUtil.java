@@ -43,7 +43,7 @@ public class WindowUtil {
     private Rect mDeleteRect = new Rect();
     private static final int mViewWidth = 50;
     private int statusBarHeight = 0;
-//    private CustomCancelView mCustomCancelView;
+    //    private CustomCancelView mCustomCancelView;
     private static final int mCancelViewSize = 100;
     private int mScreenWidth;
     private int mScreenHeight;
@@ -73,7 +73,7 @@ public class WindowUtil {
 
     @SuppressLint("CheckResult")
     private void showWindow(Context context, boolean showJoinView) {
-        Log.e("showWindow", "mWindowManager "+mWindowManager);
+        Log.e("showWindow", "mWindowManager " + mWindowManager);
         if (null == mWindowManager) {
             mContext = context;
             mWindowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
@@ -119,14 +119,14 @@ public class WindowUtil {
 //        }
     }
 
-    public void hideJoinView(){
+    public void hideJoinView() {
 //        Log.e("zzzzz", "hideJoinView "+mCustomCancelView);
 //        if (mCustomCancelView != null) {
 //            mCustomCancelView.startAnimate(false);
 //        }
     }
 
-    private void initCollectView(){
+    private void initCollectView() {
         mCollectView = LayoutInflater.from(mContext).inflate(R.layout.article_window, null);
         initListener(mContext);
 //        ImageView ivImage = mCollectView.findViewById(R.id.aw_iv_image);
@@ -141,7 +141,7 @@ public class WindowUtil {
         mCollectViewParams.format = PixelFormat.RGBA_8888;   //窗口透明
         mCollectViewParams.gravity = Gravity.LEFT | Gravity.TOP;  //窗口位置
         mCollectViewParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mCollectViewParams.width =  RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getWidth());
+        mCollectViewParams.width = RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getWidth());
         mCollectViewParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getHeight());
 
         // 可以修改View的初始位置---这里是靠在屏幕居中
@@ -155,9 +155,9 @@ public class WindowUtil {
         });
     }
 
-    public void showCollectView(){
-        Log.e("showCollectView", "mCollectView = "+mCollectView);
-        if (mCollectView != null){
+    public void showCollectView() {
+        Log.e("showCollectView", "mCollectView = " + mCollectView);
+        if (mCollectView != null) {
             mCollectView.setVisibility(View.VISIBLE);
 //            mCustomCancelView.startAnimate(false);
 //            mCustomCancelView.isInSide(false);
@@ -165,15 +165,15 @@ public class WindowUtil {
     }
 
     public void dismissWindow() {
-        Log.e("dismissWindow", "mWindowManager = "+mWindowManager+", mCollectView = "+mCollectView);
+        Log.e("dismissWindow", "mWindowManager = " + mWindowManager + ", mCollectView = " + mCollectView);
         if (mWindowManager != null && mCollectView != null) {
             mWindowManager.removeViewImmediate(mCollectView);
 //            if (mCustomCancelView != null){
 //                mWindowManager.removeViewImmediate(mCustomCancelView);
 //                Log.e("dismissWindow", "..................");
-                mWindowManager = null;
+            mWindowManager = null;
 //                mCustomCancelView = null;
-                mCollectView = null;
+            mCollectView = null;
 //            }
         }
     }
@@ -223,12 +223,12 @@ public class WindowUtil {
                             mCollectView.performClick();
                         }
                         //判断mView是在Window中的位置，以中间为界
-//                        if (mCollectViewParams.x + mCollectView.getMeasuredWidth() / 2 >= mWindowManager.getDefaultDisplay().getWidth() / 2) {
-//                            finalMoveX = mWindowManager.getDefaultDisplay().getWidth() - mCollectView.getMeasuredWidth();
-//                        } else {
-//                            finalMoveX = 0;
-//                        }
-//                        stickToSide();
+                        if (mCollectViewParams.x + mCollectView.getMeasuredWidth() / 2 >= mScreenWidth / 2) {
+                            finalMoveX = mScreenWidth - mCollectView.getMeasuredWidth();
+                        } else {
+                            finalMoveX = 0;
+                        }
+                        stickToSide();
                         return !isPerformClick;
                 }
                 return false;
