@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -34,18 +36,33 @@ public class TestRecycleViewActivity extends BaseActivity {
         recycleAdapter = new RecycleAdapter();
         recyclerView.setAdapter(recycleAdapter);
 
+        // 由于我的 itemView 的高度是固定的23dp，所以设置 setHasFixedSize(true)，这样Recycleview 在 onMeasure 的时候可以直接计算出 RecycleView 的高度,而不需要多次计算子 itemView 的高度，
+        // 这种情况对于垂直RecyclerView中嵌套横向RecyclerView效果非常显著。
+        recyclerView.setHasFixedSize(true);
+
+
+        List<MsgBean> msgBeanList = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            String name = "小安" + i;
+            String msg = "消息" + i;
+            msgBeanList.add(new MsgBean(name, msg));
+        }
+        recycleAdapter.setMsgBeanList(msgBeanList);
         sendMsg.setOnClickListener(v -> {
-            int random = new Random().nextInt(20) + 1;
-            String name = "小安" + random;
-            String msg = "消息" + random;
-            addMessage(new MsgBean(name, msg));
+//            int random = new Random().nextInt(20) + 1;
+//            String name = "小安" + random;
+//            String msg = "消息" + random;
+//            addMessage(new MsgBean(name, msg));
+            recycleAdapter.notifyDataSetChanged();
+            recycleAdapter.notifyItemChanged(0);
         });
     }
 
     public void addMessage(MsgBean msgBean) {
         int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
         int count = recycleAdapter.getItemCount();
-        Log.e("TestRecycleViewActivity", "count = "+count+", lastVisibleItemPosition = "+lastVisibleItemPosition);
+        Log.e("TestRecycleViewActivity", "count = " + count + ", lastVisibleItemPosition = " + lastVisibleItemPosition);
         boolean scrollToBottom = (count - 1 <= lastVisibleItemPosition);
         recycleAdapter.addData(msgBean);
         recycleAdapter.notifyDataSetChanged();

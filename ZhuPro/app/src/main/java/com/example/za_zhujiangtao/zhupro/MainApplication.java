@@ -30,6 +30,7 @@ import com.example.za_zhujiangtao.zhupro.http.MyHttpModule;
 import com.example.za_zhujiangtao.zhupro.http.OkHttpClientCreator;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.mmkv.MMKV;
 
 import java.util.List;
 
@@ -81,6 +82,10 @@ public class MainApplication extends Application implements Application.Activity
         mRefWatcher = LeakCanary.install(this);
 
         initComponent();
+
+        // 初始化MMKV
+        String rootDir = MMKV.initialize(this);
+        Log.e("MainApplication", "rootDir = "+rootDir);
 
 //        initWebView();
     }

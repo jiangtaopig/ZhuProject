@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 
 public class SharePreferenceUtils {
-    private static final String DATA_NAME = "recently_using_app";
+    public static final String DATA_NAME = "recently_using_app";
 
     public static void putString(Context context, String key, String value) {
         if (key == null || "".equals(key))
@@ -21,7 +21,7 @@ public class SharePreferenceUtils {
         }
     }
 
-    public static SharedPreferences getSharedPreferences(Context context) {
+    private static SharedPreferences getSharedPreferences(Context context) {
         if (null == context) {
             return null;
         }

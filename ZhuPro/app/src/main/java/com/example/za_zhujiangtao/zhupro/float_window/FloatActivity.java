@@ -19,6 +19,9 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.swipe_back.app.TestSwipeBackActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import cn.jake.share.frdialog.dialog.FRDialog;
 
@@ -81,6 +84,9 @@ public class FloatActivity extends BaseActivity {
             Intent intent = new Intent(FloatActivity.this, TestSwipeBackActivity.class);
             startActivity(intent);
         });
+
+        List<String> strings = new ArrayList<>();
+        strings.add("1");
 
         setDrawableInTxt(this, textView, "我的文章我的文章我的文章我的文章我的文章我的文章我的文章我的文章我的文章我的文章我的文章我的文章", R.drawable.contact_add_receiver);
     }

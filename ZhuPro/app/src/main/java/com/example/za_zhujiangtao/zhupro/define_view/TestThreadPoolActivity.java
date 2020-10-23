@@ -13,6 +13,7 @@ import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -66,7 +67,6 @@ public class TestThreadPoolActivity extends BaseActivity {
     }
 
 
-
     private boolean compareAndIncrementWorkerCount(int expect) {
         return ctl.compareAndSet(expect, expect + 1);
     }
@@ -80,7 +80,7 @@ public class TestThreadPoolActivity extends BaseActivity {
         Log.e("test thread pool", "ctl = " + ctl + ", RUNNING = " + RUNNING + ", SHUTDOWN = " + SHUTDOWN
                 + ", STOP = " + STOP + ", TIDYING = " + TIDYING + ", TERMINATED = " + TERMINATED + ", CAPACITY = " + CAPACITY);
 
-        Observable.just(new int[] {1, 2, 3})
+        Observable.just(new int[]{1, 2, 3})
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<int[]>() {
@@ -140,30 +140,48 @@ public class TestThreadPoolActivity extends BaseActivity {
 //        });
 
         mTestThreadPool.setOnClickListener(v -> {
-            SparseArray<String> array = new SparseArray<>();
-            array.put(4, "m");
-            array.put(3, "b");
-            array.put(5, "c");
+            int c = ctl.get();
+            int threadCnt = workerCountOf(c);
+            Log.e("test thread pool", "threadCnt = " + threadCnt);
 
-            ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-            map.put("1", "a");
+            int c2 = ctl.get();
+            int rs = runStateOf(c2);
+            Log.e("test thread pool", "c = " + c + ", c2 = " + c2 + ", rs = " + rs);
 
-            Map<String, String> map1 = new HashMap<>();
+            if (compareAndIncrementWorkerCount(c2)) {
+                int c3 = ctl.get();
+                Log.e("test thread pool", "c3 = " + c3);
+            }
+
+            int rs2 = runStateOf(ctl.get());
+            Log.e("test thread pool", "rs2 = " + rs2);
 
 
         });
     }
 
-    private void testForBreak(){
-        retry:
+    private void testArrayBlockingQueue() {
 
-        for (; ;){
-            int i = new Random().nextInt(10)+1;
-            Log.e("xxx", "i = "+i);
-            if (i == 5){
-                Log.e("xxx", "break");
-                break retry; //break 跳出循环
+        // ArrayBlockingQueue 是不会主动扩容的，所以下面定义的 queue 长度是2，当尝试加入4条数据的时候就会报错 throw new IllegalStateException("Queue full");
+        ArrayBlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(2);
+        boolean b1 = blockingQueue.add("1");
+        boolean b2 = blockingQueue.add("2");
+        boolean b3 = blockingQueue.add("3");
+        boolean b4 = blockingQueue.add("4");
+        Log.e("test thread pool", "b1 = " + b1 + ", b2 =" + b2 + ", b3 = " + b3 + ", b4 = " + b4);
+    }
+
+
+    private void testForBreak() {
+        retry:
+        for (; ; ) {
+            int i = new Random().nextInt(10) + 1;
+            Log.e("test thread pool", "i = " + i);
+            if (i == 5) {
+                Log.e("test thread pool", "break");
+                break retry; //break 跳出循环,执行循环外面的逻辑
             }
         }
+        Log.e("test thread pool", "跳出了循环");
     }
 }

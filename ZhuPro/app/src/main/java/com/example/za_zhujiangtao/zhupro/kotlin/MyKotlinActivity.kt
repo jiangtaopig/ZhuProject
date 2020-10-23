@@ -195,9 +195,12 @@ class MyKotlinActivity : BaseActivity() {
             Log.e(Tag, "v  = $v ")
 
 
-            twoAndThress({ a, b -> a + b })
+            twoAndThress({ a, b -> a + b})
             //如果lambda表达式是唯一的参数，函数调用的括号可以去掉,函数的最后一个参数是函数，那么 作为相应参数传入的lambda表达式可以放在圆括号之外
-            twoAndThress { a, b -> a * b }
+            twoAndThress { a, b -> a * b
+                println("xxx")
+                0
+            }
 
             //如果 函数的最后一个参数是函数，那么 作为相应参数传入的lambda表达式可以放在圆括号之外
             val s = multiple(5) { a, b ->

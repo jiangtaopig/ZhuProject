@@ -4,17 +4,29 @@
     android:layout_height="match_parent"
     android:background="#999999">
 
-    <TextView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_glide"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimen_24sp"
-        android:text="12345678"
-        android:gravity="center"
-        />
+        android:text="load img" />
+
+    <ImageView
+        android:id="@+id/img_poster"
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="@dimen/dimen_200dp"
+        android:layout_below="@id/btn_glide"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/img_poster2"
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="@dimen/dimen_200dp"
+        android:layout_below="@id/btn_glide"
+        android:scaleType="centerCrop" />
 
     <com.example.za_zhujiangtao.zhupro.widget.SimpleChatInputView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

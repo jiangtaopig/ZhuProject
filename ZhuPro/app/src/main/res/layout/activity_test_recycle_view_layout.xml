@@ -17,8 +17,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:background="@color/cal_stroke"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/dimen_260dp" />
 
 
 </LinearLayout>

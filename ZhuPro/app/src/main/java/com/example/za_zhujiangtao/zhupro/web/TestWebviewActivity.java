@@ -94,7 +94,7 @@ public class TestWebviewActivity extends Activity {
 
         // 先载入JS代码
         // 格式规定为:file:///android_asset/文件名.html
-        webView.loadUrl("file:///android_asset/javascript.html");//file:///android_asset/javascript.html
+        webView.loadUrl("https://www.zuifuli.com/h5/");//file:///android_asset/javascript.html
 
         // 通过addJavascriptInterface()将Java对象映射到JS对象
         //参数1：Javascript对象名
@@ -144,7 +144,7 @@ public class TestWebviewActivity extends Activity {
             @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Log.e("TestWebviewActivity", "request url = " + request.getUrl().toString());
+//                Log.e("TestWebviewActivity", "request url = " + request.getUrl().toString());
                 if (request.getUrl().toString().contains("baidu")) {
                     view.loadUrl(request.getUrl().toString());
                     return true;
@@ -154,7 +154,7 @@ public class TestWebviewActivity extends Activity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.e("TestWebviewActivity", "url = " + url);
+//                Log.e("TestWebviewActivity", "url = " + url);
                 if (url.contains("baidu")) {
                     view.loadUrl(url);
                     return true;
@@ -187,7 +187,7 @@ public class TestWebviewActivity extends Activity {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                Log.e("TestWebviewActivity", "shouldInterceptRequest url = " + url);
+//                Log.e("TestWebviewActivity", "shouldInterceptRequest url = " + url);
 //                WebResourceResponse webResourceResponse = handleIntercept(request);
                 return null;
             }
@@ -347,7 +347,6 @@ public class TestWebviewActivity extends Activity {
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setAppCacheEnabled(true);
         settings.setDatabaseEnabled(true);
-        settings.setDomStorageEnabled(true);
 
         settings.setUseWideViewPort(true); // 关键点
         settings.setDefaultTextEncodingName("utf-8"); //设置编码
@@ -382,6 +381,11 @@ public class TestWebviewActivity extends Activity {
         //允许H5本地存储(localStorage & sessionStorage)
         settings.setDomStorageEnabled(true);
         settings.setGeolocationEnabled(true);
+
+        String app = " ;app/zuifuli/" +"1.0.0/";
+        String userAgent = settings.getUserAgentString() + app;
+        Log.d("TestWebviewActivity", "userAgent = " + userAgent);
+        settings.setUserAgentString(userAgent);
 
     }
 

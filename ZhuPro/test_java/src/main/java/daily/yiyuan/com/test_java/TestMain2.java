@@ -40,6 +40,19 @@ public class TestMain2 {
         System.out.println("s1 = " + s1);
         System.out.println("s3 = " + s3);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
+        String dateStr1 =  "2019.06.04-10:15:00";
+        String dateStr2 =  "2019.06.05-10:15:00";
+
+        try {
+            Date date1 = sdf.parse(dateStr1);
+            Date date2 = sdf.parse(dateStr2);
+            int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
+            System.out.println("------------ days = "+days);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         time2Column("2019.06.04-10:15:00");
 //        time2Column("2019.06.04-14:45:00");
         boolean flag = Pattern.matches("^/?.*", "z123");//开头是否有下划线?表示可以有或没有，.*表示匹配任意字符
@@ -73,9 +86,9 @@ public class TestMain2 {
         String dateStr = simpleDateFormat.format(new Date());
         System.out.println("dateStr = " + dateStr);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            String ss = sdf.format(simpleDateFormat.parse(dateStr));
+            String ss = sdfs.format(simpleDateFormat.parse(dateStr));
             System.out.println("ss ---- "+ss);
         } catch (ParseException e) {
             e.printStackTrace();
