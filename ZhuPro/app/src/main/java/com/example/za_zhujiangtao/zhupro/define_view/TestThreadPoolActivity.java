@@ -19,6 +19,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import butterknife.BindView;
 import io.reactivex.ObservableEmitter;
@@ -37,6 +39,15 @@ public class TestThreadPoolActivity extends BaseActivity {
 
     @BindView(R.id.test_thread_pool)
     Button mTestThreadPool;
+
+    @BindView(R.id.test_await)
+    Button mTestAwait;
+
+    @BindView(R.id.test_signal)
+    Button mTestSignal;
+
+    ReentrantLock reentrantLock = new ReentrantLock();
+    Condition condition = reentrantLock.newCondition();
 
     private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
     private static final int COUNT_BITS = Integer.SIZE - 3; //32 -3
@@ -75,89 +86,128 @@ public class TestThreadPoolActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
-        ExecutorService executorService = new ThreadPoolExecutor(2, 4, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<Runnable>());
+
+        ExecutorService executorService = new ThreadPoolExecutor(1, 2, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1));
 
         Log.e("test thread pool", "ctl = " + ctl + ", RUNNING = " + RUNNING + ", SHUTDOWN = " + SHUTDOWN
                 + ", STOP = " + STOP + ", TIDYING = " + TIDYING + ", TERMINATED = " + TERMINATED + ", CAPACITY = " + CAPACITY);
+        Log.e("test thread pool", "---------------------------------------------------------------------------------------------------");
 
-        Observable.just(new int[]{1, 2, 3})
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<int[]>() {
-                    @Override
-                    public void call(int[] ints) {
+        Runnable runnable1 = () -> {
+            Log.e("test thread pool", "r1 start + threadNmae = " + Thread.currentThread().getName());
+            long i = 0;
+           while (true){
+//               Log.e("test thread pool", "r1 start i = "+(i++));
+               if (Thread.currentThread().isInterrupted()){
+                   Log.e("test thread pool", "r1 threadNmae = " + Thread.currentThread().getName()+", hasInterrupted");
+                   break;
+               }
+           }
+            Log.e("test thread pool", "r1 end + threadNmae = " + Thread.currentThread().getName());
+        };
 
-                    }
-                });
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
+        Runnable runnable2 = () -> {
+            Log.e("test thread pool", "r2 start + threadNmae = " + Thread.currentThread().getName());
+            try {
+                Thread.sleep(3_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-        thread.start();
+            Log.e("test thread pool", "r2 end+ threadNmae = " + Thread.currentThread().getName());
+        };
 
+        Runnable runnable3 = () -> {
+            Log.e("test thread pool", "r3 start+ threadNmae = " + Thread.currentThread().getName());
+            try {
+                Thread.sleep(3_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//            while (true){
+//                Log.e("test thread pool", "r3  " );
+//            }
+            Log.e("test thread pool", "r3 end+ threadNmae = " + Thread.currentThread().getName());
+        };
 
-//        mTestThreadPool.setOnClickListener(v -> {
-//
-////            executorService.shutdown();
-//            executorService.execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.e("test thread pool", "---------- 执行run  ---------");
-//                }
-//            });
-//
-//            executorService.execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.e("test thread pool", "---------- 执行run  ---------");
-//                }
-//            });
-//
-//            executorService.execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.e("test thread pool", "---------- 执行run  ---------");
-//                }
-//            });
-//        });
 
         mTestThreadPool.setOnClickListener(v -> {
-            int c = ctl.get();
-            int threadCnt = workerCountOf(c);
-            Log.e("test thread pool", "threadCnt = " + threadCnt);
-
-            int c2 = ctl.get();
-            int rs = runStateOf(c2);
-            Log.e("test thread pool", "c = " + c + ", c2 = " + c2 + ", rs = " + rs);
-
-            if (compareAndIncrementWorkerCount(c2)) {
-                int c3 = ctl.get();
-                Log.e("test thread pool", "c3 = " + c3);
+//            testState();
+            executorService.execute(runnable1);
+//            executorService.execute(runnable2);
+//            executorService.execute(runnable3);
+//            executorService.shutdown();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            executorService.shutdownNow();
+        });
 
-            int rs2 = runStateOf(ctl.get());
-            Log.e("test thread pool", "rs2 = " + rs2);
+        mTestAwait.setOnClickListener(v -> {
 
+            new Thread("---zhuThread1---"){
+                @Override
+                public void run() {
+                    try {
+                        Log.e("----zjt----", Thread.currentThread().getName()+" start");
+                        reentrantLock.lock();
+                        Log.e("----zjt----", Thread.currentThread().getName()+" lock and wait");
+                        condition.await();
+                        Log.e("----zjt----", Thread.currentThread().getName()+" wake by signal");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        Log.e("----zjt----", Thread.currentThread().getName()+" release lock");
+                        reentrantLock.unlock();
+                    }
+                }
+            }.start();
 
         });
+
+
+        mTestSignal.setOnClickListener(v -> {
+
+                    new Thread("---zhuThread2---"){
+                        @Override
+                        public void run() {
+                            try {
+                                Log.e("----zjt----", Thread.currentThread().getName()+" start");
+                                reentrantLock.lock();
+                                Log.e("----zjt----", Thread.currentThread().getName()+" lock and signal");
+                                condition.signal();
+                            } finally {
+                                Log.e("----zjt----", Thread.currentThread().getName()+" release lock");
+                                reentrantLock.unlock();
+                            }
+                        }
+                    }.start();
+    });
+
+
+    }
+
+
+    /**
+     * 测试线程池的状态
+     */
+    private void testState() {
+        int c = ctl.get();
+        int threadCnt = workerCountOf(c);
+        Log.e("test thread pool", "threadCnt = " + threadCnt);
+
+        int c2 = ctl.get();
+        int rs = runStateOf(c2);
+        Log.e("test thread pool", "c = " + c + ", c2 = " + c2 + ", rs = " + rs);;
+
+        if (compareAndIncrementWorkerCount(c2)) {
+            int c3 = ctl.get();
+            Log.e("test thread pool", "c3 = " + c3);
+        }
+
+        int rs2 = runStateOf(ctl.get());
+        Log.e("test thread pool", "rs2 = " + rs2);
     }
 
     private void testArrayBlockingQueue() {
@@ -169,6 +219,23 @@ public class TestThreadPoolActivity extends BaseActivity {
         boolean b3 = blockingQueue.add("3");
         boolean b4 = blockingQueue.add("4");
         Log.e("test thread pool", "b1 = " + b1 + ", b2 =" + b2 + ", b3 = " + b3 + ", b4 = " + b4);
+    }
+
+
+    private void testReentrantLock(){
+
+        Thread thread = new Thread("aa"){
+            @Override
+            public void run() {
+
+            }
+        };
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

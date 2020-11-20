@@ -43,7 +43,7 @@ public class TestRecycleViewActivity extends BaseActivity {
 
         List<MsgBean> msgBeanList = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 4; i++) {
             String name = "小安" + i;
             String msg = "消息" + i;
             msgBeanList.add(new MsgBean(name, msg));
@@ -55,7 +55,7 @@ public class TestRecycleViewActivity extends BaseActivity {
 //            String msg = "消息" + random;
 //            addMessage(new MsgBean(name, msg));
             recycleAdapter.notifyDataSetChanged();
-            recycleAdapter.notifyItemChanged(0);
+//            recycleAdapter.notifyItemChanged(0);
         });
     }
 

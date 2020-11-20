@@ -45,6 +45,7 @@ class ConAndProService{
         try {
             lock.lock();
             while (list.size() == 1){ //注1
+                System.out.println("ThreadName : "+Thread.currentThread().getName()+"await");
                 condition.await();
             }
             int val = new Random().nextInt(10)+1;
@@ -58,7 +59,7 @@ class ConAndProService{
         }finally {
             System.out.println(Thread.currentThread().getName() +"释放了lock");
             try {
-                Thread.sleep(3000);
+                Thread.sleep(3_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -70,6 +71,7 @@ class ConAndProService{
         try {
             lock.lock();
             while (list.size() == 0){// 注3
+                System.out.println("ThreadName : "+Thread.currentThread().getName()+"*************** awit ***************  ");
                 condition.await(); // 注4
             }
             int val = list.pop();

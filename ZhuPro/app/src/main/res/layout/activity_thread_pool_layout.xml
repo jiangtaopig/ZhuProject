@@ -12,5 +12,19 @@
         android:text="test thread pool"
         android:textSize="@dimen/dimen_24sp"/>
 
+    <Button
+        android:id="@+id/test_await"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test await"
+        android:textSize="@dimen/dimen_24sp"/>
+
+    <Button
+        android:id="@+id/test_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test signal"
+        android:textSize="@dimen/dimen_24sp"/>
+
 
 </LinearLayout>

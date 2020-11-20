@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.function.Function;
+
 public class TestLayoutInflaterActivity extends AppCompatActivity {
 
     private LinearLayout rootLayout;
@@ -30,6 +32,11 @@ public class TestLayoutInflaterActivity extends AppCompatActivity {
         View view = test1(R.layout.inflater_layout, null, false);
         rootLayout.addView(view);
 
+        // :: 的用法；；
+        Function <String, Integer > parseInt = Integer::parseInt ;
+        Integer val = parseInt.apply("123");
+
+
     }
 
     /**
@@ -41,5 +48,14 @@ public class TestLayoutInflaterActivity extends AppCompatActivity {
      */
     private View test1(@Nullable int resource, ViewGroup root, boolean attachToRoot){
         return inflater.inflate(resource, root, attachToRoot);
+
     }
+
+
+    public void showDialog(View view){
+        // NoticeDialog 中设置了 style ,此 style 继承了 Theme.Dialog，所以导致 dialog 中的ProgressBar 设置了indeterminateTint来改变颜色，此ProgressBar 不转动
+        NoticeDialog noticeDialog = NoticeDialog.getInstance("我是中国人，我爱中国");
+        noticeDialog.show(getSupportFragmentManager(), "NOTICE");
+    }
+
 }

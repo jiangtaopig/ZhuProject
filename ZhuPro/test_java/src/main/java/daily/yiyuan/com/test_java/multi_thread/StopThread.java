@@ -5,6 +5,8 @@ package daily.yiyuan.com.test_java.multi_thread;
  * on 2020/3/27
  */
 public class StopThread {
+
+    // interrupt 只能中断阻塞状态(wait, sleep 等)下的线程。
     public static void main(String[] args) {
 //        Thread firstThread = new Thread(new MyFirstThread());
 //        firstThread.start();
@@ -37,16 +39,44 @@ public class StopThread {
 //        thirdThread.setStop(true);
 
         FourthThread fourthThread = new FourthThread();
-        fourthThread.start();
+//        fourthThread.start();
 
+//        try {
+//            Thread.sleep(300);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("开始调用 interrupt 方法");
+//        fourthThread.interrupt();
+
+        Object object = new Object();
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                System.out.println(".....start....");
+                try {
+                    System.out.println(".....wait....");
+                    synchronized (object){
+                        object.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.out.println(".....catch....");
+                }
+            }
+        };
+
+        thread.start();
 
         try {
-            Thread.sleep(300);
+            Thread.sleep(30);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("开始调用 interrupt 方法");
-        fourthThread.interrupt();
+
+        thread.interrupt();
 
 
     }
@@ -66,7 +96,7 @@ class MyFirstThread implements Runnable{
     }
 }
 
-class SecondThread extends Thread{
+class SecondThread extends Thread{ // interrupt 不能中断非阻塞状态下的线程
     @Override
     public void run() {
         super.run();

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bg_ffffff_9_round_rect"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_22dp"
+        android:textColor="#242424"
+        android:layout_marginLeft="@dimen/dimen_16dp"
+        android:layout_marginRight="@dimen/dimen_16dp"
+        android:text="等待这么美好"
+        android:textSize="@dimen/dimen_17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        android:layout_marginTop="@dimen/dimen_22dp"
+        android:background="#e5e5e5" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/red"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/txt_ok"
+        android:textSize="@dimen/dimen_17sp"
+        android:textColor="@color/color_666666"
+        android:layout_width="@dimen/dimen_300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/dimen_14dp"
+        android:paddingBottom="@dimen/dimen_13dp"
+        android:text="知道了" />
+
+
+</LinearLayout>

@@ -26,7 +26,7 @@ public class Print2NumAnd1Char {
 
 //        printCharAndNum();
 
-        printCharAndNum2();
+//        printCharAndNum2();
     }
 
     /**
@@ -58,7 +58,14 @@ public class Print2NumAnd1Char {
                     System.out.println("char ...i = " + i);
                     System.out.println(chars1[i] + "  ");
                     LockSupport.unpark(t1);//唤起线程t1
+                    try {
+                        Thread.sleep(2_000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("阻塞线程2s后");
                     LockSupport.park();//阻塞当前线程
+                    System.out.println("阻塞当前线程");
                 }
             }
         };
@@ -126,7 +133,6 @@ public class Print2NumAnd1Char {
 
     }
 
-
 }
 
 
@@ -149,10 +155,10 @@ class PrintNumberThread extends Thread {
         int cnt = 0;
         for (String val : numbs) {
             while (!isNum.get()) {
-                //使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。cpu会从众多的可执行态里选择，也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的
+                //使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。
+                // cpu会从众多的可执行态里选择，也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的
                 Thread.yield();
             }
-
             System.out.print(val);
             cnt++;
             if (cnt == 2) {
@@ -184,7 +190,6 @@ class PrintCharThread extends Thread {
             while (isNum.get()) {
                 Thread.yield();
             }
-
             System.out.print(val);
             cnt++;
             if (cnt == 1) {

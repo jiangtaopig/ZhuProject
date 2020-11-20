@@ -141,11 +141,13 @@ public class TestSemaphore {
 
     private static void testCyclicBarrier() {
         System.out.println("-------------------------仅测试CyclicBarrier------------------------------------------");
-        //其参数 3 表示屏障拦截的线程数量为3，每个线程调用await()方法告诉CyclicBarrier我已经到达了屏障，然后该线程被阻塞。直到达到屏障的数量等于3时，所有的线程才会继续执行下去
+        //其参数 3 表示屏障拦截的线程数量为3，每个线程调用await()方法告诉CyclicBarrier我已经到达了屏障，然后该线程被阻塞。
+        // 直到达到屏障的数量等于3时，所有的线程才会继续执行下去
         final CyclicBarrier cyclicBarrier = new CyclicBarrier(3, new Runnable() {
             @Override
-            public void run() {//最后一个到达的线程会执行下面的方法
-                System.out.println("3个线程都到达了 ThreadName" + Thread.currentThread().getName() + ".... run ........." + System.currentTimeMillis());
+            public void run() {//最后一个到达的线程会执行下面的方法, 此方法执行在最后一个到达的线程中
+                System.out.println("3个线程都到达了 ThreadName" + Thread.currentThread().getName() + ".... run ........."
+                        + System.currentTimeMillis());
             }
         });
 

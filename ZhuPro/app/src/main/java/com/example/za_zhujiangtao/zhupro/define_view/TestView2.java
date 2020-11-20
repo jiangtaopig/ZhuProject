@@ -97,4 +97,9 @@ public class TestView2 extends View {
         //这里一定要设置
         setMeasuredDimension(resultW, resultH);
     }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+    }
 }
