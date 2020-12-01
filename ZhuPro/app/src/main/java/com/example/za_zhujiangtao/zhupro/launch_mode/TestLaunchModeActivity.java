@@ -1,5 +1,6 @@
 package com.example.za_zhujiangtao.zhupro.launch_mode;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,12 +37,22 @@ public class TestLaunchModeActivity extends BaseActivity {
 
     private Button mJumpBtn;
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String s = (String) msg.obj;
             Log.e("TestLaunchModeActivity", "s = " + s + ", time = " + System.currentTimeMillis());
+            if (msg.arg1 == 1){
+                try {
+                    Thread.sleep(1_000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.e("TestLaunchModeActivity", "msg.arg1 = " + msg.arg1 + ", time = " + System.currentTimeMillis());
+            }
+
         }
     };
 
@@ -50,17 +61,19 @@ public class TestLaunchModeActivity extends BaseActivity {
         return R.layout.activity_launch_mode_layout;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onInitLogic() {
         initView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initView() {
         mJumpBtn = findViewById(R.id.jump_activity);
         mJumpBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(TestLaunchModeActivity.this, FloatActivity.class);
-            startActivity(intent);
-//            testHandler();
+//            Intent intent = new Intent(TestLaunchModeActivity.this, FloatActivity.class);
+//            startActivity(intent);
+            testHandler();
 
 //            FileUtils.writeFile("hotfix", "zjt2.txt", "i am zjt");
 //            moveFileFromSdcardToAppDir();
@@ -139,6 +152,7 @@ public class TestLaunchModeActivity extends BaseActivity {
 
         Message msg = mHandler.obtainMessage();
         msg.obj = "我不是延迟任务";
+        msg.arg1 = 1;
 
         mHandler.sendMessage(msg);
     }

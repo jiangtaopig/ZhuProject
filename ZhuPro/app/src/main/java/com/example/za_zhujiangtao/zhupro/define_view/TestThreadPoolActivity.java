@@ -1,35 +1,23 @@
 package com.example.za_zhujiangtao.zhupro.define_view;
 
 import android.util.Log;
-import android.util.SparseArray;
 import android.widget.Button;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.ThreadPoolExecutor;
-import com.example.za_zhujiangtao.zhupro.api.DataBase;
-import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.functions.Consumer;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -85,7 +73,6 @@ public class TestThreadPoolActivity extends BaseActivity {
 
     @Override
     protected void onInitLogic() {
-
 
         ExecutorService executorService = new ThreadPoolExecutor(1, 2, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1));
 

@@ -2,11 +2,15 @@ package com.example.za_zhujiangtao.zhupro.http.test;
 
 import com.example.za_zhujiangtao.zhupro.MainApplication;
 import com.example.za_zhujiangtao.zhupro.api.DataBase;
+import com.example.za_zhujiangtao.zhupro.api.RequestParams;
+import com.example.za_zhujiangtao.zhupro.api.ResponseBean;
 import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 
 import java.util.List;
+import java.util.Map;
 
-import retrofit2.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -26,5 +30,17 @@ public class TestApi {
 
     public Observable<BaseApiResult<List<DataBase.DataBean>>> getMukeData( int type, int num){
         return service.getMukeData(type, num);
+    }
+
+    public  Observable<BaseApiResult<ResponseBean.ResultBean>> login(RequestParams requestParams){
+        return service.login(requestParams);
+    }
+
+    public Observable<BaseApiResult<ResponseBean.ResultBean>> dynamicLogin(String url, RequestParams requestParams){
+        return service.dynamicLogin(url, requestParams);
+    }
+
+   public Observable<BaseApiResult<ResponseBean.ResultBean>> dynamicLogin2(String url, Map requestParams){
+        return service.dynamicLogin2(url, requestParams);
     }
 }

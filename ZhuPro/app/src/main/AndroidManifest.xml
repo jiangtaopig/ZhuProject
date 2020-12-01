@@ -68,7 +68,7 @@
             android:required="false" />
 
         <activity
-            android:name=".TestLayoutInflaterActivity"
+            android:name=".http.TestHttpActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">

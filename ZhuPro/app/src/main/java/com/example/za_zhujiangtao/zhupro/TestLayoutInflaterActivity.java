@@ -7,19 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.function.Function;
 
-public class TestLayoutInflaterActivity extends AppCompatActivity {
+import rx.schedulers.Schedulers;
+
+public class TestLayoutInflaterActivity extends BaseActivity {
 
     private LinearLayout rootLayout;
     private LayoutInflater inflater;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inflater_layout);
+    protected int layoutId() {
+        return R.layout.activity_inflater_layout;
+    }
 
+    @Override
+    protected void onInitLogic() {
         rootLayout = findViewById(R.id.root_layout);
         inflater = LayoutInflater.from(this);
 //        test1(R.layout.inflater_layout, rootLayout, true);
@@ -35,8 +40,6 @@ public class TestLayoutInflaterActivity extends AppCompatActivity {
         // :: 的用法；；
         Function <String, Integer > parseInt = Integer::parseInt ;
         Integer val = parseInt.apply("123");
-
-
     }
 
     /**
@@ -54,8 +57,15 @@ public class TestLayoutInflaterActivity extends AppCompatActivity {
 
     public void showDialog(View view){
         // NoticeDialog 中设置了 style ,此 style 继承了 Theme.Dialog，所以导致 dialog 中的ProgressBar 设置了indeterminateTint来改变颜色，此ProgressBar 不转动
-        NoticeDialog noticeDialog = NoticeDialog.getInstance("我是中国人，我爱中国");
-        noticeDialog.show(getSupportFragmentManager(), "NOTICE");
+//        NoticeDialog noticeDialog = NoticeDialog.getInstance("我是中国人，我爱中国");
+//        noticeDialog.show(getSupportFragmentManager(), "NOTICE");
+
+//        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
+        try {
+            Thread.sleep(10_000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
