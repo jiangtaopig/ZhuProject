@@ -9,6 +9,7 @@ import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Url;
 import rx.Observable;
@@ -42,5 +43,9 @@ public class TestApi {
 
    public Observable<BaseApiResult<ResponseBean.ResultBean>> dynamicLogin2(String url, Map requestParams){
         return service.dynamicLogin2(url, requestParams);
+    }
+
+    public  Observable<ResponseBody> downLoadFile(String url){
+        return service.downLoadFile(url);
     }
 }

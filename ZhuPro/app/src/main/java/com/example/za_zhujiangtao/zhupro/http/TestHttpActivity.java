@@ -1,22 +1,37 @@
 package com.example.za_zhujiangtao.zhupro.http;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.MessageQueue;
+import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.api.DataBase;
-import com.example.za_zhujiangtao.zhupro.api.RequestParams;
 import com.example.za_zhujiangtao.zhupro.api.ResponseBean;
-import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import com.example.za_zhujiangtao.zhupro.http.api.MyFunc1Subscriber;
 import com.example.za_zhujiangtao.zhupro.http.api.MyObjFunc1;
 import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
+import com.example.za_zhujiangtao.zhupro.utils.FileUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +40,10 @@ import butterknife.BindView;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
-import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +62,78 @@ import rx.schedulers.Schedulers;
  * on 2020/4/8
  */
 public class TestHttpActivity extends BaseActivity {
+
+    private static final String[][] MIME_MapTable = {
+            //{后缀名，    MIME类型}
+            {".3gp", "video/3gpp"},
+            {".apk", "application/vnd.android.package-archive"},
+            {".asf", "video/x-ms-asf"},
+            {".avi", "video/x-msvideo"},
+            {".bin", "application/octet-stream"},
+            {".bmp", "image/bmp"},
+            {".c", "text/plain"},
+            {".class", "application/octet-stream"},
+            {".conf", "text/plain"},
+            {".cpp", "text/plain"},
+            {".doc", "application/msword"},
+            {".docx", "application/msword"},
+            {".exe", "application/octet-stream"},
+            {".gif", "image/gif"},
+            {".gtar", "application/x-gtar"},
+            {".gz", "application/x-gzip"},
+            {".h", "text/plain"},
+            {".htm", "text/html"},
+            {".html", "text/html"},
+            {".jar", "application/java-archive"},
+            {".java", "text/plain"},
+            {".jpeg", "image/jpeg"},
+            {".JPEG", "image/jpeg"},
+            {".jpg", "image/jpeg"},
+            {".js", "application/x-javascript"},
+            {".log", "text/plain"},
+            {".m3u", "audio/x-mpegurl"},
+            {".m4a", "audio/mp4a-latm"},
+            {".m4b", "audio/mp4a-latm"},
+            {".m4p", "audio/mp4a-latm"},
+            {".m4u", "video/vnd.mpegurl"},
+            {".m4v", "video/x-m4v"},
+            {".mov", "video/quicktime"},
+            {".mp2", "audio/x-mpeg"},
+            {".mp3", "audio/x-mpeg"},
+            {".mp4", "video/mp4"},
+            {".mpc", "application/vnd.mpohun.certificate"},
+            {".mpe", "video/mpeg"},
+            {".mpeg", "video/mpeg"},
+            {".mpg", "video/mpeg"},
+            {".mpg4", "video/mp4"},
+            {".mpga", "audio/mpeg"},
+            {".msg", "application/vnd.ms-outlook"},
+            {".ogg", "audio/ogg"},
+            {".pdf", "application/pdf"},
+            {".png", "image/png"},
+            {".pps", "application/vnd.ms-powerpoint"},
+            {".ppt", "application/vnd.ms-powerpoint"},
+            {".pptx", "application/vnd.ms-powerpoint"},
+            {".prop", "text/plain"},
+            {".rar", "application/x-rar-compressed"},
+            {".rc", "text/plain"},
+            {".rmvb", "audio/x-pn-realaudio"},
+            {".rtf", "application/rtf"},
+            {".sh", "text/plain"},
+            {".tar", "application/x-tar"},
+            {".tgz", "application/x-compressed"},
+            {".txt", "text/plain"},
+            {".wav", "audio/x-wav"},
+            {".wma", "audio/x-ms-wma"},
+            {".wmv", "audio/x-ms-wmv"},
+            {".wps", "application/vnd.ms-works"},
+            //{".xml",    "text/xml"},
+            {".xml", "text/plain"},
+            {".z", "application/x-compress"},
+            {".zip", "application/zip"},
+            {".pdf", "application/pdf"},
+            {"", "*/*"}
+    };
 
     @BindView(R.id.txt_request_data)
     TextView mRequestTxt;
@@ -89,7 +174,10 @@ public class TestHttpActivity extends BaseActivity {
 
 //            doLogin();
 //            request2();
-            dynaticLogin();
+//            dynaticLogin();
+//            testHandler();
+
+            downLoad();
 
         });
     }
@@ -178,6 +266,8 @@ public class TestHttpActivity extends BaseActivity {
                 }
             }
         }.start();
+
+
     }
 
 
@@ -257,7 +347,7 @@ public class TestHttpActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                    public void onResponse(@NonNull okhttp3.Call call, okhttp3.Response response) throws IOException {
 
                         String res = response.body().string();
                         if (res != null) {
@@ -298,9 +388,127 @@ public class TestHttpActivity extends BaseActivity {
                         }
                     }
                 });
+    }
 
+    /**
+     * 文件下载到本地根目录后，选择可以打开的文件
+     */
+    private void downLoad() {
+        String url = "https://image.zuifuli.com/14/20200608/96302669b39302f0a5e701e234d6c202.pdf";
+        mTestApi.downLoadFile(url)
+                .flatMap(result -> {
+                    String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "zhujiangtao";
+                    // 关于文件和文件夹的操作一定要动态申请权限
+                    File parentFile = new File(path);
+                    if (!parentFile.exists()) {
+                        parentFile.mkdirs();
+                    }
+                    int index = url.lastIndexOf("/");
+                    String fileName = url.substring(index);
+                    File file = new File(path + fileName);
+                    InputStream inputStream = result.byteStream();
+                    FileOutputStream fileOutputStream = null;
+                    if (!file.exists()) {
+                        try {
+                            file.createNewFile();
+                            fileOutputStream = new FileOutputStream(file);
+                            byte[] bytes = new byte[1024];
+                            int readLength = 0;
+                            while ((readLength = inputStream.read(bytes)) != -1) {
+                                fileOutputStream.write(bytes, 0, readLength);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                inputStream.close();
+                                if (fileOutputStream != null)
+                                    fileOutputStream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    return Observable.just(file.getAbsolutePath());
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
+                    Log.e("TestHttp", "s = " + s);
+                    openAndroidFile(s);
+                });
+    }
 
+    public void openAndroidFile(String filepath) {
+        Intent intent = new Intent();
+        File file = new File(filepath);
+        Uri contentUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            contentUri = FileProvider.getUriForFile(this, "com.example.za_zhujiangtao.zhupro.fileProvider", file);
+        } else {
+            contentUri = Uri.fromFile(file);
+        }
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//设置标记
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setAction(Intent.ACTION_VIEW);//动作，查看
+        intent.setDataAndType(contentUri, getMIMEType(file));//设置类型
+        startActivity(intent);
+    }
 
+    private String getMIMEType(File file) {
+        String type = "*/*";
+        String fName = file.getName();
+        //获取后缀名前的分隔符"."在fName中的位置。
+        int dotIndex = fName.lastIndexOf(".");
+        if (dotIndex < 0)
+            return type;
+        /* 获取文件的后缀名 */
+        String fileType = fName.substring(dotIndex, fName.length()).toLowerCase();
+        if (fileType == null || "".equals(fileType))
+            return type;
+        //在MIME和文件类型的匹配表中找到对应的MIME类型。
+        for (int i = 0; i < MIME_MapTable.length; i++) {
+            if (fileType.equals(MIME_MapTable[i][0]))
+                type = MIME_MapTable[i][1];
+        }
+        return type;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void testHandler() {
+        @SuppressLint("HandlerLeak") Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+
+        handler.post(() -> {
+
+        });
+
+        MessageQueue queue = handler.getLooper().getQueue();
+        Log.e("hhhh", "queue = " + queue);
+        // handler、looper、MessageQueue 与线程的关系：
+        // 一个线程对应一个 Looper, 对应一个MessageQueue，对应多个Handler
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Handler h = new Handler();
+                MessageQueue q = h.getLooper().getQueue();
+                // 子线程中也可以往 主线程的 handler 中发送消息，所以 MessageQueue 中的 插入消息是有同步的。
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+                Log.e("hhhh", "子线程 q = " + q);
+                Looper.loop();
+
+            }
+        }.start();
     }
 
 

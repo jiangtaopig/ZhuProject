@@ -8,10 +8,12 @@ import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -34,5 +36,10 @@ public interface TestService {
 
     @POST
     Observable<BaseApiResult<ResponseBean.ResultBean>> dynamicLogin2(@Url String url, @Body Map requestParams);
+
+    @GET
+    @Streaming
+    Observable<ResponseBody> downLoadFile(@Url String url);
+
 
 }
