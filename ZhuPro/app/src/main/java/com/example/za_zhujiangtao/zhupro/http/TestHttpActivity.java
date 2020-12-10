@@ -21,6 +21,7 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.api.DataBase;
 import com.example.za_zhujiangtao.zhupro.api.ResponseBean;
+import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import com.example.za_zhujiangtao.zhupro.http.api.MyFunc1Subscriber;
 import com.example.za_zhujiangtao.zhupro.http.api.MyObjFunc1;
 import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -163,7 +166,7 @@ public class TestHttpActivity extends BaseActivity {
                 }
             });
 
-//            requestByOkHttp();
+            requestByOkHttp();
 
             Gson gson = new Gson();
 
@@ -177,7 +180,9 @@ public class TestHttpActivity extends BaseActivity {
 //            dynaticLogin();
 //            testHandler();
 
-            downLoad();
+//            downLoad();
+
+//            dynamic3();
 
         });
     }
@@ -251,21 +256,40 @@ public class TestHttpActivity extends BaseActivity {
                     Log.e("zjt test okhttp ", "msg >>> " + msg);
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
-        new Thread() {//接口请求需要在子线程中执行
-            @Override
-            public void run() {
-                Request request = new Request.Builder()
-                        .url("http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&f=JPEG?w=1200&h=1290")
-                        .method("POST", new FormBody.Builder().build())
-                        .build();
-                try {
-                    okhttp3.Response response = client.newCall(request).execute();
-                    Log.e("xxx", "response = " + response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+
+        Request request = new Request.Builder()
+                .url("http://www.imooc.com/api/teacher?type=4&num=10")
+                .build();
+        client.newCall(request)
+                .enqueue(new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(okhttp3.Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+
+                        if (response != null) {
+                            Log.e("xxx", "res >>> " + response.body().string());
+                        }
+                    }
+                });
+//        new Thread() {//接口请求需要在子线程中执行
+//            @Override
+//            public void run() {
+//                Request request = new Request.Builder()
+//                        .url("http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&f=JPEG?w=1200&h=1290")
+//                        .method("POST", new FormBody.Builder().build())
+//                        .build();
+//                try {
+//                    okhttp3.Response response = client.newCall(request).execute();
+//                    Log.e("xxx", "response = " + response.body().string());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
 
 
     }
@@ -385,6 +409,36 @@ public class TestHttpActivity extends BaseActivity {
                     public void onNext(ResponseBean.ResultBean resultBean) {
                         if (resultBean != null) {
                             Toast.makeText(getApplicationContext(), resultBean.getName(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void dynamic3() {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", "18321810001");
+        map.put("passwd", "1234567l");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=UTF-8"), new Gson().toJson(map));
+        mTestApi.dynamicLogin3("https://t-api.zuifuli.com/api/customer/v1/account/login", body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MyFunc1Subscriber<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        if (body != null) {
+                            try {
+                                String res = body.string();
+                                Type type = new TypeToken<BaseApiResult<ResponseBean.ResultBean>>() {
+                                }.getType();
+                                BaseApiResult<ResponseBean.ResultBean> apiResult = new Gson().fromJson(res, type);
+                                ResponseBean.ResultBean bean = apiResult.getResult();
+                                bean.getName();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
                 });

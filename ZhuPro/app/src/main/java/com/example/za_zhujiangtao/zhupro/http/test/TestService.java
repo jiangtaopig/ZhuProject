@@ -8,6 +8,7 @@ import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,6 +37,9 @@ public interface TestService {
 
     @POST
     Observable<BaseApiResult<ResponseBean.ResultBean>> dynamicLogin2(@Url String url, @Body Map requestParams);
+
+    @POST
+    Observable<ResponseBody> dynamicLogin3(@Url String url, @Body RequestBody requestBody);
 
     @GET
     @Streaming
