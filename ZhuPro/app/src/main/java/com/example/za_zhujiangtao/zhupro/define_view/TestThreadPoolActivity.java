@@ -74,7 +74,7 @@ public class TestThreadPoolActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
-        ExecutorService executorService = new ThreadPoolExecutor(1, 2, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1));
+        ThreadPoolExecutor executorService = new ThreadPoolExecutor(1, 2, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
 
         Log.e("test thread pool", "ctl = " + ctl + ", RUNNING = " + RUNNING + ", SHUTDOWN = " + SHUTDOWN
                 + ", STOP = " + STOP + ", TIDYING = " + TIDYING + ", TERMINATED = " + TERMINATED + ", CAPACITY = " + CAPACITY);
@@ -110,25 +110,44 @@ public class TestThreadPoolActivity extends BaseActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            while (true){
-//                Log.e("test thread pool", "r3  " );
-//            }
             Log.e("test thread pool", "r3 end+ threadNmae = " + Thread.currentThread().getName());
         };
 
-
-        mTestThreadPool.setOnClickListener(v -> {
-//            testState();
-            executorService.execute(runnable1);
-//            executorService.execute(runnable2);
-//            executorService.execute(runnable3);
-//            executorService.shutdown();
+        Runnable runnable4 = () -> {
+            Log.e("test thread pool", "r4 start + threadNmae = " + Thread.currentThread().getName());
             try {
-                Thread.sleep(100);
+                Thread.sleep(3_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            executorService.shutdownNow();
+            Log.e("test thread pool", "r4 end+ threadNmae = " + Thread.currentThread().getName());
+        };
+        Runnable runnable5 = () -> {
+            Log.e("test thread pool", "r5 start + threadNmae = " + Thread.currentThread().getName());
+            try {
+                Thread.sleep(3_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.e("test thread pool", "r5 end+ threadNmae = " + Thread.currentThread().getName());
+        };
+
+        mTestThreadPool.setOnClickListener(v -> {
+//            testState();
+//            executorService.execute(runnable1);
+            executorService.execute(runnable2);
+            executorService.execute(runnable3);
+            executorService.execute(runnable4);
+            executorService.execute(runnable5);
+            executorService.shutdown();
+            executorService.setCorePoolSize(2);
+
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            executorService.shutdownNow();
         });
 
         mTestAwait.setOnClickListener(v -> {

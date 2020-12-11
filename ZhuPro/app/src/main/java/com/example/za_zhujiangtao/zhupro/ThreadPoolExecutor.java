@@ -1100,6 +1100,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
                 if (workerCountOf(c) >= min)
                     return; // replacement not needed
             }
+            Log.e("test thread pool", "---------------  processWorkerExit -----------c="+c);
             addWorker(null, false);
         }
     }
