@@ -28,18 +28,18 @@ public class MyLinearLayout extends LinearLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.e("view_dispatch", "MyLinearLayout  onInterceptTouchEvent ACTION_DOWN");
+                Log.d("view_dispatch", "MyLinearLayout  onInterceptTouchEvent ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_MOVE");
+                Log.d("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_MOVE");
                 return true;
 //                break;
             case MotionEvent.ACTION_UP:
-                Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_UP");
+                Log.d("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_UP");
 //                return true;
                 break;
             case MotionEvent.ACTION_CANCEL:
-                Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_CANCEL");
+                Log.d("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_CANCEL");
                 break;
         }
         return super.onInterceptTouchEvent(ev);
@@ -49,16 +49,16 @@ public class MyLinearLayout extends LinearLayout {
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.e("view_dispatch", "MyLinearLayout  dispatchTouchEvent ACTION_DOWN");
+                Log.d("view_dispatch", "MyLinearLayout  dispatchTouchEvent ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.e("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_MOVE");
+                Log.d("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_MOVE");
                 break;
             case MotionEvent.ACTION_UP:
-                Log.e("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_UP");
+                Log.d("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_UP");
                 break;
             case MotionEvent.ACTION_CANCEL:
-                Log.e("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_CANCEL");
+                Log.d("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_CANCEL");
                 break;
         }
         return super.dispatchTouchEvent(event);
@@ -68,17 +68,17 @@ public class MyLinearLayout extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.e("view_dispatch", "MyLinearLayout  onTouchEvent ACTION_DOWN");
+                Log.d("view_dispatch", "MyLinearLayout  onTouchEvent ACTION_DOWN");
 //                return true;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.e("view_dispatch", "MyLinearLayout onTouchEvent ACTION_MOVE");
+                Log.d("view_dispatch", "MyLinearLayout onTouchEvent ACTION_MOVE");
                 break;
             case MotionEvent.ACTION_UP:
-                Log.e("view_dispatch", "MyLinearLayout onTouchEvent ACTION_UP");
+                Log.d("view_dispatch", "MyLinearLayout onTouchEvent ACTION_UP");
                 break;
             case MotionEvent.ACTION_CANCEL:
-                Log.e("view_dispatch", "MyLinearLayout onTouchEvent ACTION_CANCEL");
+                Log.d("view_dispatch", "MyLinearLayout onTouchEvent ACTION_CANCEL");
                 break;
         }
         return super.onTouchEvent(event);

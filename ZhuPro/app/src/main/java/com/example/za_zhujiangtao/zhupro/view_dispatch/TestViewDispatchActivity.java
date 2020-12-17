@@ -44,12 +44,9 @@ public class TestViewDispatchActivity extends Activity {
             Toast.makeText(this, "My Button", Toast.LENGTH_LONG).show();
         });
 
-        myButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+        myButton.setOnTouchListener((v, event) -> {
 //                Log.e("view_dispatch", "onTouch");
-                return false;
-            }
+            return false;
         });
     }
 

@@ -64,7 +64,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
 ////        }, 5000);
 
 
-//        testMemoryLeak();
+        testMemoryLeak();
 
         mJumpBtn.setOnClickListener(v -> {
 

@@ -94,8 +94,8 @@
            return super.dispatchTouchEvent(ev);  
        }  
 
-       //这个if里面的代码ACTION_DOWN 事件不会执行到，只有ACTION_MOVE、ACTION_UP才会走到这里,
-       // 假如在ACTION_MOVE或者ACTION_UP拦截了Touch事件, 那么就会将ACTION_CANCEL派发给target，然后直接返回true  ,表示消费了此Touch事件
+       // 这个if里面的代码ACTION_DOWN 事件不会执行到，只有ACTION_MOVE、ACTION_UP才会走到这里,
+       // 假如在ACTION_MOVE或者ACTION_UP拦截了Touch事件, 那么就会将ACTION_CANCEL派发给target， 将mMotionTarget置为null, 然后直接返回true  ,表示消费了此Touch事件
        if (!disallowIntercept && onInterceptTouchEvent(ev)) {  
            final float xc = scrolledXFloat - (float) target.mLeft;  
            final float yc = scrolledYFloat - (float) target.mTop;  
@@ -131,8 +131,16 @@
 
        //如果没有拦截ACTION_MOVE, ACTION_DOWN的话，直接将Touch事件派发给target  
        return target.dispatchTouchEvent(ev);  
-   }  
+   }
 
+   比方说，ViewPager 里面的item是一个ListView，当然了ViewPager已经处理了滑动冲突，这里只是举例说明；
+   这里需要使用外部拦截：
+
+注意一点，外部拦截时在重写ViewGroup的onInterceptTouchEvent方法时，ViewGroup不能拦截DOWN事件和UP事件。因为一旦ViewGroup拦截了DOWN事件，
+也就是和mFirstTouchTarget始终为空，同一事件序列中的其他事件都不会再往下传递；
+若ViewGroup拦截了UP事件，则子View就不会触发单击事件，因为子View的单击事件是在UP事件时被触发的。
+
+当 ViewPager 拦截了Move 事件后，会将事件设置为CANCEL后往下传递或自己处理，然后将 mMotionTarget 置为 null，那么后续的事件都会由ViewPager来处理了。
 
 
 
