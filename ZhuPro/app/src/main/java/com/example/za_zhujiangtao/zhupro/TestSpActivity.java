@@ -1,8 +1,12 @@
 package com.example.za_zhujiangtao.zhupro;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -18,7 +22,11 @@ import com.example.za_zhujiangtao.zhupro.utils.SharePreferenceUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +57,22 @@ public class TestSpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_sp_layout);
         ButterKnife.bind(this);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "q");
+        AtomicLong atomicLong = new AtomicLong(3);
+        atomicLong.getAndAdd(2);
+
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                return null;
+            }
+        };
+
+        asyncTask.execute("");
+
+        RecyclerView recyclerView;
 
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override

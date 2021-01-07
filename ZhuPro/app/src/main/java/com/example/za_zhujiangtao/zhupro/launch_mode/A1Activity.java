@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -88,9 +89,17 @@ public class A1Activity extends BaseActivity {
         mTxt.setText("I am A1 Activity");
         jump2B.setText("Jump 2 A2Activity");
         jump2B.setOnClickListener(v -> {
-            Intent intent = new Intent(A1Activity.this, A2Activity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            Intent intent = new Intent(A1Activity.this, A2Activity.class);
+////            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+
+            Intent intent = new Intent();
+            ComponentName componentName = new ComponentName("com.zjt.startmodepro", "com.zjt.startmodepro.B1Activity");
+            intent.setComponent(componentName);
             startActivity(intent);
+
+
+
         });
 
 

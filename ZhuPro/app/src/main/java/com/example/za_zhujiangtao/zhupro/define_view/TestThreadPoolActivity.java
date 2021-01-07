@@ -1,9 +1,17 @@
 package com.example.za_zhujiangtao.zhupro.define_view;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Button;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
+import com.example.za_zhujiangtao.zhupro.MainActivity;
+import com.example.za_zhujiangtao.zhupro.NotificationActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.ThreadPoolExecutor;
 
@@ -74,126 +82,93 @@ public class TestThreadPoolActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
-        ThreadPoolExecutor executorService = new ThreadPoolExecutor(1, 2, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
-
-        Log.e("test thread pool", "ctl = " + ctl + ", RUNNING = " + RUNNING + ", SHUTDOWN = " + SHUTDOWN
-                + ", STOP = " + STOP + ", TIDYING = " + TIDYING + ", TERMINATED = " + TERMINATED + ", CAPACITY = " + CAPACITY);
-        Log.e("test thread pool", "---------------------------------------------------------------------------------------------------");
-
-        Runnable runnable1 = () -> {
-            Log.e("test thread pool", "r1 start + threadNmae = " + Thread.currentThread().getName());
-            long i = 0;
-           while (true){
-//               Log.e("test thread pool", "r1 start i = "+(i++));
-               if (Thread.currentThread().isInterrupted()){
-                   Log.e("test thread pool", "r1 threadNmae = " + Thread.currentThread().getName()+", hasInterrupted");
-                   break;
-               }
-           }
-            Log.e("test thread pool", "r1 end + threadNmae = " + Thread.currentThread().getName());
-        };
-
-        Runnable runnable2 = () -> {
-            Log.e("test thread pool", "r2 start + threadNmae = " + Thread.currentThread().getName());
-            try {
-                Thread.sleep(3_000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.e("test thread pool", "r2 end+ threadNmae = " + Thread.currentThread().getName());
-        };
-
-        Runnable runnable3 = () -> {
-            Log.e("test thread pool", "r3 start+ threadNmae = " + Thread.currentThread().getName());
-            try {
-                Thread.sleep(3_000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.e("test thread pool", "r3 end+ threadNmae = " + Thread.currentThread().getName());
-        };
-
-        Runnable runnable4 = () -> {
-            Log.e("test thread pool", "r4 start + threadNmae = " + Thread.currentThread().getName());
-            try {
-                Thread.sleep(3_000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.e("test thread pool", "r4 end+ threadNmae = " + Thread.currentThread().getName());
-        };
-        Runnable runnable5 = () -> {
-            Log.e("test thread pool", "r5 start + threadNmae = " + Thread.currentThread().getName());
-            try {
-                Thread.sleep(3_000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.e("test thread pool", "r5 end+ threadNmae = " + Thread.currentThread().getName());
-        };
+//        Executors.newCachedThreadPool();
+//        Executors.newFixedThreadPool(2);
+//        Executors.newScheduledThreadPool(2);
+//        Executors.newSingleThreadExecutor();
 
         mTestThreadPool.setOnClickListener(v -> {
-//            testState();
-//            executorService.execute(runnable1);
-            executorService.execute(runnable2);
-            executorService.execute(runnable3);
-            executorService.execute(runnable4);
-            executorService.execute(runnable5);
+            ThreadPoolExecutor executorService = new ThreadPoolExecutor(2, 5, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
+            for (int i = 0; i < 15; i++) {
+                int a = i;
+                Runnable runnable = () -> {
+                    Log.e("gggg", "任务" + (a + 1) + "开始");
+                    try {
+                        Thread.sleep(3_000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.e("gggg", "任务" + (a + 1) + "结束");
+                };
+                executorService.execute(runnable);
+            }
             executorService.shutdown();
-            executorService.setCorePoolSize(2);
+            executorService.setMaximumPoolSize(10);
+            executorService.setCorePoolSize(10);
 
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            executorService.shutdownNow();
+
         });
 
         mTestAwait.setOnClickListener(v -> {
-
-            new Thread("---zhuThread1---"){
+            new Thread("---zhuThread1---") {
                 @Override
                 public void run() {
                     try {
-                        Log.e("----zjt----", Thread.currentThread().getName()+" start");
+                        Log.e("----zjt----", Thread.currentThread().getName() + " start");
                         reentrantLock.lock();
-                        Log.e("----zjt----", Thread.currentThread().getName()+" lock and wait");
+                        Log.e("----zjt----", Thread.currentThread().getName() + " lock and wait");
                         condition.await();
-                        Log.e("----zjt----", Thread.currentThread().getName()+" wake by signal");
+                        Log.e("----zjt----", Thread.currentThread().getName() + " wake by signal");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } finally {
-                        Log.e("----zjt----", Thread.currentThread().getName()+" release lock");
+                        Log.e("----zjt----", Thread.currentThread().getName() + " release lock");
                         reentrantLock.unlock();
                     }
                 }
             }.start();
 
+
         });
 
 
         mTestSignal.setOnClickListener(v -> {
+//            new Thread("---zhuThread2---") {
+//                @Override
+//                public void run() {
+//                    try {
+//                        Log.e("----zjt----", Thread.currentThread().getName() + " start");
+//                        reentrantLock.lock();
+//                        Log.e("----zjt----", Thread.currentThread().getName() + " lock and signal");
+//                        condition.signal();
+//                    } finally {
+//                        Log.e("----zjt----", Thread.currentThread().getName() + " release lock");
+//                        reentrantLock.unlock();
+//                    }
+//                }
+//            }.start();
 
-                    new Thread("---zhuThread2---"){
-                        @Override
-                        public void run() {
-                            try {
-                                Log.e("----zjt----", Thread.currentThread().getName()+" start");
-                                reentrantLock.lock();
-                                Log.e("----zjt----", Thread.currentThread().getName()+" lock and signal");
-                                condition.signal();
-                            } finally {
-                                Log.e("----zjt----", Thread.currentThread().getName()+" release lock");
-                                reentrantLock.unlock();
-                            }
-                        }
-                    }.start();
-    });
+            sendNotification();
 
-
+        });
     }
 
+    private void sendNotification() {
+        Intent intent = new Intent(TestThreadPoolActivity.this, NotificationActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(TestThreadPoolActivity.this, 0, intent, 0);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification notification = new NotificationCompat.Builder(TestThreadPoolActivity.this)
+                .setContentTitle("这是测试通知标题")  //设置标题
+                .setContentText("这是测试通知内容") //设置内容
+                .setWhen(System.currentTimeMillis())  //设置时间
+                .setSmallIcon(R.mipmap.ic_launcher)  //设置小图标  只能使用alpha图层的图片进行设置
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))   //设置大图标
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+        manager.notify(1, notification);
+
+    }
 
     /**
      * 测试线程池的状态
@@ -205,7 +180,8 @@ public class TestThreadPoolActivity extends BaseActivity {
 
         int c2 = ctl.get();
         int rs = runStateOf(c2);
-        Log.e("test thread pool", "c = " + c + ", c2 = " + c2 + ", rs = " + rs);;
+        Log.e("test thread pool", "c = " + c + ", c2 = " + c2 + ", rs = " + rs);
+        ;
 
         if (compareAndIncrementWorkerCount(c2)) {
             int c3 = ctl.get();
@@ -217,7 +193,6 @@ public class TestThreadPoolActivity extends BaseActivity {
     }
 
     private void testArrayBlockingQueue() {
-
         // ArrayBlockingQueue 是不会主动扩容的，所以下面定义的 queue 长度是2，当尝试加入4条数据的时候就会报错 throw new IllegalStateException("Queue full");
         ArrayBlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(2);
         boolean b1 = blockingQueue.add("1");
@@ -226,24 +201,6 @@ public class TestThreadPoolActivity extends BaseActivity {
         boolean b4 = blockingQueue.add("4");
         Log.e("test thread pool", "b1 = " + b1 + ", b2 =" + b2 + ", b3 = " + b3 + ", b4 = " + b4);
     }
-
-
-    private void testReentrantLock(){
-
-        Thread thread = new Thread("aa"){
-            @Override
-            public void run() {
-
-            }
-        };
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void testForBreak() {
         retry:

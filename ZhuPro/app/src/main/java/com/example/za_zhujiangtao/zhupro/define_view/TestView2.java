@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -56,7 +57,6 @@ public class TestView2 extends View {
         mPaint.setColor(Color.WHITE);
         mPaint.setStrokeWidth(6);
         canvas.drawLine(cx, cy, getWidth(), cy, mPaint);
-
         if (TextUtils.isEmpty(mText)) {
             return;
         }
@@ -77,6 +77,8 @@ public class TestView2 extends View {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
+        Log.e("TestView2", "onMeasure  widthMode = " + widthMode + ", heightMode = " + heightMode);
+
         //最后的宽和高
         int resultW = width;
         int resultH = height;
@@ -84,12 +86,12 @@ public class TestView2 extends View {
         int contentW = 0;
         int contentH = 0;
 
-        if (widthMode == MeasureSpec.AT_MOST && !TextUtils.isEmpty(mText)){
+        if (widthMode == MeasureSpec.AT_MOST && !TextUtils.isEmpty(mText)) {
             contentW += mPaint.measureText(mText) + getPaddingLeft() + getPaddingRight();
             resultW = contentW < resultW ? contentW : resultH;
         }
 
-        if (heightMode == MeasureSpec.AT_MOST){
+        if (heightMode == MeasureSpec.AT_MOST) {
             contentH += mTextSize + getPaddingTop() + getPaddingBottom();
             resultH = contentH < resultH ? contentH : resultH;
         }

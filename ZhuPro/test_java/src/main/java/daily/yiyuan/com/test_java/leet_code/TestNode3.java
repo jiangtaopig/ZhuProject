@@ -8,13 +8,16 @@ public class TestNode3 {
 
     public static void main(String[] args) {
 
-        ListNode node = InitListNodeUtils.initListNodeWithoutHead(new int[]{1, 2, 3, 4, 5, 6, 7});
+        ListNode node = InitListNodeUtils.initListNodeWithoutHead(new int[]{1, 2, 3, 4, 5});
 //        node = reverseListNodeWithNum(node, 4);
 //        node = reverseListNode(node);
-        resolve(node, 3);
-        int size = 0;
-        String ss = "A7FCFC6B5269BDCCE571798D618EA219A68B96CB87A0E21080C2E758D23E4CE9";
-        System.out.println("len = "+ss.length());
+//        resolve(node, 3);
+//        int size = 0;
+//        String ss = "A7FCFC6B5269BDCCE571798D618EA219A68B96CB87A0E21080C2E758D23E4CE9";
+//        System.out.println("len = "+ss.length());
+
+        reverseByNum(node, 2);
+
     }
 
     /**
@@ -27,19 +30,19 @@ public class TestNode3 {
             return null;
         }
         ListNode L = new ListNode(-1);
-        ListNode r = L;
         ListNode p = node;
         while (p != null){
             p = p.next;
-            node.next = r.next;
-            r.next = node;
+            node.next = L.next;
+            L.next = node;
             node = p;
         }
         return L.next;
     }
 
     /**
-     * 每 n 个结点逆序一次
+     * 每 n 个结点逆序一次 ,剩余个数不足 n 的 不用逆转
+     * 例如 n = 3， 1, 2, 3, 4, 5, 6, 7, 8 => 3, 2, 1, 6, 5, 4, 7, 8
      * @param node
      * @param n
      * @return
@@ -70,6 +73,34 @@ public class TestNode3 {
             r.next = p;
         }
        return L.next;
+    }
+
+    /**
+     * 每 n 个结点逆序一次 ,剩余个数不足 n 的同样要逆转
+     * @param node
+     * @param n
+     * @return
+     */
+    private static ListNode reverseByNum(ListNode node , int n){
+        ListNode L = new ListNode(-1);
+        ListNode p = node;
+        ListNode q = p;
+        int cnt = 0;
+        ListNode first = node; // 指向链表的第一个结点
+        ListNode r = L;
+        while (p != null && cnt < n){
+            q = q.next;
+            cnt++;
+            p.next = r.next;
+            r.next = p;
+            p = q;
+            if (cnt == n){
+                r = first;
+                first = q;
+                cnt = 0;
+            }
+        }
+        return L.next;
     }
 
     /**

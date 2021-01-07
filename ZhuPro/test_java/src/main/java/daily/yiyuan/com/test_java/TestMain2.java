@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
 import daily.yiyuan.com.test_java.bean.Course;
@@ -100,8 +101,13 @@ public class TestMain2 {
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("'(GMT'ZZ')'");
         System.out.println("-------tzone------" + tzone.getDisplayName()+", id = "+tzone.getID()+" .."+simpleDateFormat1.format(new Date()));
 
+        AtomicLong atomicLong = new AtomicLong(3);
+        atomicLong.getAndAdd(2);
+
 
     }
+
+
 
     static final int resizeStamp(int n) {
         return Integer.numberOfLeadingZeros(n) | (1 << (15));

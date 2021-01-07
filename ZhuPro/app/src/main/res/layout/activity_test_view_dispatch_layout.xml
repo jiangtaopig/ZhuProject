@@ -17,8 +17,9 @@
         android:id="@+id/my_txt"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#666666"
+        android:layout_marginTop="@dimen/dimen_20dp"
         android:gravity="center"
+        android:background="@color/color_f3ac30"
         android:text="textview click"
         android:textColor="@color/white"
         android:textSize="26sp" />
@@ -27,8 +28,8 @@
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimen_20sp"
+        android:text="123456789"
         android:textColor="@color/color_8f66ff"
-        android:text="123456789"/>
+        android:textSize="@dimen/dimen_20sp" />
 
 </com.example.za_zhujiangtao.zhupro.view_dispatch.MyLinearLayout>

@@ -77,10 +77,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
-
         <activity
-            android:name=".view_dispatch.TestViewDispatchActivity"
+            android:name=".KeyBoardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -94,6 +92,9 @@
             <!--</meta-data>-->
         </activity>
 
+        <activity android:name=".define_view.TestThreadPoolActivity"/>
+
+
 <!--        <activity android:name=".float_window.FloatActivity"/>-->
 
         <activity android:name=".EditPosterActivity"/>
@@ -102,10 +103,10 @@
 
         <activity android:name=".kotlin.AnotherKotlinActivity"/>
 
-        <activity
-            android:name=".launch_mode.A1Activity"
-            android:launchMode="singleTask"
-             />
+<!--        <activity-->
+<!--            android:name=".launch_mode.A1Activity"-->
+<!--            android:launchMode="singleTask"-->
+<!--             />-->
 
         <activity android:name=".launch_mode.A2Activity" />
 
