@@ -18,7 +18,7 @@ import dalvik.system.PathClassLoader;
  */
 public class DexFixUtils {
     public final static String DEX_DIR = "odex";
-    private static HashSet<File> loadedDex = new HashSet<File>();
+    private static HashSet<File> loadedDex = new HashSet<>();
 
     static {
         loadedDex.clear();

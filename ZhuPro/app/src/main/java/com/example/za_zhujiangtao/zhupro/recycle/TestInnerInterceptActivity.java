@@ -2,39 +2,28 @@ package com.example.za_zhujiangtao.zhupro.recycle;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
-
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-
 import butterknife.BindView;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
- * on 2020/12/25
+ * on 2021/1/7
+ * 测试 ScrollView 中嵌套 RecycleView 同向滑动的滑动冲突；
+ * ScrollView 默认是拦截 MOVE 事件的
  */
-public class TestRecycleCacheActivity extends BaseActivity {
+public class TestInnerInterceptActivity extends BaseActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
-
-    @BindView(R.id.txt_tv)
-    TextView titleTv;
 
     private CacheAdapter cacheAdapter;
 
     @Override
     protected int layoutId() {
-        return R.layout.activity_recycle_cache_layout;
+        return R.layout.activity_inner_intercept_layout;
     }
 
     @Override
@@ -49,23 +38,5 @@ public class TestRecycleCacheActivity extends BaseActivity {
         }
 
         cacheAdapter.setDataList(dataList);
-
-        titleTv.setOnClickListener(v -> {
-            cacheAdapter.notifyDataSetChanged();
-        });
-
-        FutureTask<Integer> futureTask = new FutureTask<>(new MyWorker());
-        new Thread(futureTask)
-                .start();
-
-    }
-
-    class MyWorker implements Callable<Integer>{
-
-        @Override
-        public Integer call() throws Exception {
-            Thread.sleep(3_000);
-            return 34;
-        }
     }
 }

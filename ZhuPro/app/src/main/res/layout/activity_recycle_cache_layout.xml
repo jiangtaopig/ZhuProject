@@ -11,11 +11,12 @@
         android:gravity="center"
         android:background="@color/color_f3ac30"
         android:textSize="22sp"
+        android:visibility="gone"
         android:text="测试 RecycleView Cache"/>
 
-    <android.support.v7.widget.RecyclerView
+    <com.example.za_zhujiangtao.zhupro.widget.InterceptRecycleView
         android:id="@+id/recycle_view"
-        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

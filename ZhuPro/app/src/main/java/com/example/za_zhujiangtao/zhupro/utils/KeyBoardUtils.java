@@ -65,8 +65,9 @@ public class KeyBoardUtils {
             //获取当前窗口可视区域大小的
             activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
             int newBlankhHeight = screenHeight - rect.bottom;
-            Log.e("test", "newBlankhHeight = "+newBlankhHeight+", screenHeight = "+screenHeight);
-            if (newBlankhHeight != blankHeight) {//软键盘高度和上一次高度比较,首次blankHeight =0
+            // 华为P40的屏幕高度为 2211，状态栏高度为129， 软键盘未弹起时 rect.bottom = 2340，即可视区域的bottom大于屏幕高度。
+            Log.e("KeyBoardUtils", "newBlankhHeight = " + newBlankhHeight + ", screenHeight = " + screenHeight + ", rect.bottom = " + rect.bottom);
+            if (newBlankhHeight != blankHeight) {//软键盘高度和上一次高度比较,首次blankHeight =0， 华为P40 这里等于 -129.
                 if (newBlankhHeight > blankHeight) {//说明弹出软键盘
                     // keyboard pop
                     if (onKeyBoardStatusChangeListener != null) {
