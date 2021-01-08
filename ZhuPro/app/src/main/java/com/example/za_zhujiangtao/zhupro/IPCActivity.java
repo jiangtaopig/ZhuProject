@@ -74,33 +74,29 @@ public class IPCActivity extends AppCompatActivity {
 //            doWork();
             CopyOnWriteArrayList<String> strings = new CopyOnWriteArrayList<>();
             strings.add("123");
-            Handler handler = new Handler();
         });
-
-        SparseArray<String> sparseArray = new SparseArray<>();
-
     }
 
-    private void doWork(){
-        Schedulers.computation().createWorker().schedule( () ->{
+    private void doWork() {
+        Schedulers.computation().createWorker().schedule(() -> {
             BinderPool binderPool = BinderPool.getInstance(IPCActivity.this);
             IBinder securityBinder = binderPool.queryBinder(BinderPool.BINDER_SECURITY_CENTER);
-            if (securityBinder != null){
+            if (securityBinder != null) {
                 ISecurityCenter securityCenter = SecurityCenterImpl.asInterface(securityBinder);
                 try {
                     String s = securityCenter.decrypt("安卓");
-                    Log.e(TAG, "......."+s);
+                    Log.e(TAG, "......." + s);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
 
             IBinder computeBinder = binderPool.queryBinder(BinderPool.BINDER_COMPUTE);
-            if (computeBinder != null){
+            if (computeBinder != null) {
                 ICompute iCompute = ComputeImpl.asInterface(computeBinder);
                 try {
                     int sum = iCompute.add(3, 5);
-                    Log.e(TAG, ".......sum = "+sum);
+                    Log.e(TAG, ".......sum = " + sum);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -110,45 +106,45 @@ public class IPCActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.query)
-    protected void query(){
-        Uri uri = Uri.parse(URI+"/book");
+    protected void query() {
+        Uri uri = Uri.parse(URI + "/book");
         transferBook(uri);
     }
 
     @OnClick(R.id.insert)
-    protected void insert(){
-        Uri uri = Uri.parse(URI+"/book");
+    protected void insert() {
+        Uri uri = Uri.parse(URI + "/book");
         ContentValues values = new ContentValues();
         values.put("_id", 6);
         values.put("name", "倚天屠龙记");
-        values.put("author","金庸");
+        values.put("author", "金庸");
 
         getContentResolver().insert(uri, values);
         transferBook(uri);
     }
 
     @OnClick(R.id.update)
-    protected void update(){
-        Uri uri = Uri.parse(URI+"/book");
+    protected void update() {
+        Uri uri = Uri.parse(URI + "/book");
         ContentValues values = new ContentValues();
         values.put("_id", 8);
         values.put("name", "韦小宝");
-        values.put("author","金庸");
+        values.put("author", "金庸");
         getContentResolver().update(uri, values, "_id=?", new String[]{"6"});
         transferBook(uri);
     }
 
     @OnClick(R.id.delete)
-    protected void delete(){
-        Uri uri = Uri.parse(URI+"/book");
+    protected void delete() {
+        Uri uri = Uri.parse(URI + "/book");
         getContentResolver().delete(uri, "name=?", new String[]{"倚天屠龙记"});
         transferBook(uri);
     }
 
     private void transferBook(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, new String[]{"_id", "name", "author"}, null, null, null);
-        while (cursor.moveToNext()){
-            Log.d(TAG, "name = "+cursor.getString(cursor.getColumnIndex("name"))+", author = "+cursor.getString(cursor.getColumnIndex("author")));
+        while (cursor.moveToNext()) {
+            Log.d(TAG, "name = " + cursor.getString(cursor.getColumnIndex("name")) + ", author = " + cursor.getString(cursor.getColumnIndex("author")));
         }
         cursor.close();
     }
@@ -156,19 +152,23 @@ public class IPCActivity extends AppCompatActivity {
     private ServiceConnection mAidlConnect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            // 这个 asInterface 是判断是本进程服务还是其他进程服务，如果是本进程的服务 直接调用 BookManagerService中 getAllBooks 和 addBook
+            // 如果是其他进程，那么会调用 aidl 自动生成的 IBookManager 中 Proxy 的 transact 方法区调用，即Binder驱动去调用
+            // 本例中的 BookManagerService中 在 AndroidManifest.xml 中注册的时候 定义了 android:process=":remote2", 所以是通过Binder驱动来获取数据的
+            // 把 android:process=":remote2" 去掉，则表示直接调用 BookManagerService中的方法。
             IBookManager bookManager = IBookManager.Stub.asInterface(service);
             mBookManager = bookManager;
             try {
                 List<Book> books = bookManager.getAllBooks();
-                for (Book book : books){
-                    Log.e("IPCActivity", "book name = "+book.getBookName()+", author = "+book.getAuthor());
+                for (Book book : books) {
+                    Log.e("IPCActivity", "book name = " + book.getBookName() + ", author = " + book.getAuthor());
                 }
-                Log.e("IPCActivity","..........................");
-                        Book book = new Book("鬼吹灯", "南派三叔");
+                Log.e("IPCActivity", "..........................");
+                Book book = new Book("鬼吹灯", "南派三叔");
                 bookManager.addBook(book);
                 List<Book> books2 = bookManager.getAllBooks();
-                for (Book bk : books2){
-                    Log.e("IPCActivity", "book name = "+bk.getBookName()+", author = "+bk.getAuthor());
+                for (Book bk : books2) {
+                    Log.e("IPCActivity", "book name = " + bk.getBookName() + ", author = " + bk.getAuthor());
                 }
                 mBookManager.registerListener(mOnNewBookArrivedListener);
 
@@ -183,11 +183,11 @@ public class IPCActivity extends AppCompatActivity {
         }
     };
 
-    private IOnNewBookArrivedListener mOnNewBookArrivedListener = new IOnNewBookArrivedListener.Stub(){
+    private IOnNewBookArrivedListener mOnNewBookArrivedListener = new IOnNewBookArrivedListener.Stub() {
 
         @Override
         public void onNewBookArrived(Book book) throws RemoteException {//这个是在Binder线程池中执行，不能直接更新UI
-            Log.e("IPCActivity", "....new book : "+book.getBookName() + ", threadName = "+Thread.currentThread().getName());
+            Log.e("IPCActivity", "....new book : " + book.getBookName() + ", threadName = " + Thread.currentThread().getName());
         }
     };
 
@@ -222,7 +222,7 @@ public class IPCActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MyConstants.MSG_FROM_SERVICE:
-                    Log.e("IPCActivity", "receive msg from service: "+msg.getData().getString("replay"));
+                    Log.e("IPCActivity", "receive msg from service: " + msg.getData().getString("replay"));
                     break;
                 default:
                     super.handleMessage(msg);
@@ -234,14 +234,14 @@ public class IPCActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mMessengerConnected){
+        if (mMessengerConnected) {
             unbindService(mMessengerConnection);
         }
         unbindService(mAidlConnect);
 
-        if (mBookManager != null && mBookManager.asBinder().isBinderAlive()){
+        if (mBookManager != null && mBookManager.asBinder().isBinderAlive()) {
             try {
-                Log.e("IPCActivity", "unregister listener :"+mOnNewBookArrivedListener);
+                Log.e("IPCActivity", "unregister listener :" + mOnNewBookArrivedListener);
                 mBookManager.unregisterListener(mOnNewBookArrivedListener);
             } catch (RemoteException e) {
                 e.printStackTrace();

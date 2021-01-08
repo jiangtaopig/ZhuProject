@@ -71,7 +71,8 @@ public class InterceptRecycleView extends RecyclerView {
                 Log.e("InterceptRecycleView", "mLastX = " + mLastX + ", mLastY = " + mLastY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                // 外层布局的 ScrollView 默认是拦截 MOVE 事件的，
+                // 外层布局的 ScrollView 默认是拦截 MOVE 事件的，不然调用 requestDisallowInterceptTouchEvent也是没用的。
+                // 因为 ViewGroup 的 dispatchTouchEvent 中是这样判断的==> if (!disallowIntercept && onInterceptTouchEvent(ev))
                 if (superDispatchMoveEvent(ev)) { // 希望外层的 ScrollView 来处理事件
                     getParent().requestDisallowInterceptTouchEvent(false);
                 }
