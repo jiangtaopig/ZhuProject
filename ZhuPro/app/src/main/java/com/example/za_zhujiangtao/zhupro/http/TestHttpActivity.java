@@ -25,7 +25,6 @@ import com.example.za_zhujiangtao.zhupro.http.api.BaseApiResult;
 import com.example.za_zhujiangtao.zhupro.http.api.MyFunc1Subscriber;
 import com.example.za_zhujiangtao.zhupro.http.api.MyObjFunc1;
 import com.example.za_zhujiangtao.zhupro.http.test.TestApi;
-import com.example.za_zhujiangtao.zhupro.utils.FileUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

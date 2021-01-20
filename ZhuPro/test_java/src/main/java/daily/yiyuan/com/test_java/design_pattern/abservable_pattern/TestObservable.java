@@ -6,7 +6,7 @@ package daily.yiyuan.com.test_java.design_pattern.abservable_pattern;
  */
 public class TestObservable {
     public static void main(String[] args) {
-        WeatherData subject = new WeatherData();
+        WeatherDataSubject subject = new WeatherDataSubject();
         Observer currentConditionOb = new CurrentConditionObserver(subject);
         Observer statisticsOb = new StatisticsObserver(subject);
 

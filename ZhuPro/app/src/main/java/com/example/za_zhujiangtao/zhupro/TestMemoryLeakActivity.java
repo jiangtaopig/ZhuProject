@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -46,6 +47,14 @@ public class TestMemoryLeakActivity extends BaseActivity {
     private MyHandler myHandler;
     private Subscription mDisposable;
     private int cnt;
+
+    public static void enter(Context context) {
+        Intent intent = new Intent(context, TestMemoryLeakActivity.class);
+
+        if (!(context instanceof AppCompatActivity))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     protected int layoutId() {
@@ -95,22 +104,7 @@ public class TestMemoryLeakActivity extends BaseActivity {
 
         boolean isMain = Platform.getInstance().isMain();
         Log.e("xxx", "isMain = " + isMain);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (true){
-//                    Log.e("xxxxx", "leark cnt = "+(cnt++));
-//                }
-//            }
-//        }).start();
 
-        Observable.just(1)
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-
-                    }
-                });
 
         ThreadLocal<String> threadLocal = new ThreadLocal<>();
         threadLocal.set("xxx");
@@ -118,18 +112,6 @@ public class TestMemoryLeakActivity extends BaseActivity {
         List<Integer> list = new ArrayList<>();
         list.add(1);
 
-        LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.add("1");
-        linkedList.add("2");
-        linkedList.add("3");
-        linkedList.remove("2");
-        linkedList.peek();
-        linkedList.peekFirst();
-        linkedList.peekLast();
-        linkedList.pollFirst();
-        linkedList.push("f");
-        linkedList.pop();
-        linkedList.poll();
     }
 
     private void testMemoryLeak() {
@@ -149,7 +131,6 @@ public class TestMemoryLeakActivity extends BaseActivity {
         Log.e("xxxx", ".....onDestroy .....");
 //        mDisposable.unsubscribe();
     }
-
 
 
     /**

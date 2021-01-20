@@ -1,4 +1,4 @@
-package com.example.za_zhujiangtao.zhupro;
+package com.example.za_zhujiangtao.zhupro.keyboard;
 
 import android.util.Log;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.za_zhujiangtao.zhupro.BaseActivity;
+import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
 import com.example.za_zhujiangtao.zhupro.utils.KeyBoardUtils;
 

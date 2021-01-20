@@ -71,9 +71,9 @@ public class TestLaunchModeActivity extends BaseActivity {
     private void initView() {
         mJumpBtn = findViewById(R.id.jump_activity);
         mJumpBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(TestLaunchModeActivity.this, FloatActivity.class);
-//            startActivity(intent);
-            testHandler();
+            Intent intent = new Intent(TestLaunchModeActivity.this, A2Activity.class);
+            startActivity(intent);
+//            testHandler();
 
 //            FileUtils.writeFile("hotfix", "zjt2.txt", "i am zjt");
 //            moveFileFromSdcardToAppDir();
@@ -129,14 +129,14 @@ public class TestLaunchModeActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void testHandler() {
+    private void testIdleHandler() {
         Message message = Message.obtain();
-        message.obj = "i am good man";
-        Log.e("TestLaunchModeActivity", "start time = " + System.currentTimeMillis());
-        mHandler.sendMessageDelayed(message, 3000);
+        message.obj = "i am good man, delay task";
+        Log.e("TestLaunchModeActivity", "---------------------");
+        mHandler.sendMessageDelayed(message, 3_000);
 
         try {
-            Thread.sleep(2 * 1000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -145,7 +145,7 @@ public class TestLaunchModeActivity extends BaseActivity {
         mHandler.getLooper().getQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
-                Log.e("TestLaunchModeActivity", "UI线程空闲才能执行 time = " + System.currentTimeMillis());
+                Log.e("TestLaunchModeActivity", "UI线程空闲才能执行  " );
                 return false;
             }
         });
@@ -183,5 +183,41 @@ public class TestLaunchModeActivity extends BaseActivity {
 
     private void doTask() {
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e("TestLaunchModeActivity", " onRestart");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("TestLaunchModeActivity", " onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("TestLaunchModeActivity", " onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("TestLaunchModeActivity", " onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("TestLaunchModeActivity", " onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("TestLaunchModeActivity", " onDestroy");
     }
 }

@@ -78,10 +78,10 @@
         </provider>
 
         <activity
-            android:name=".KeyBoardActivity"
+            android:name=".arouter.ARouterMainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -93,6 +93,8 @@
         </activity>
 
         <activity android:name=".define_view.TestThreadPoolActivity"/>
+
+        <activity android:name=".TestMemoryLeakActivity"/>
 
 
 <!--        <activity android:name=".float_window.FloatActivity"/>-->
@@ -108,7 +110,7 @@
 <!--            android:launchMode="singleTask"-->
 <!--             />-->
 
-        <activity android:name=".launch_mode.A2Activity" />
+<!--        <activity android:name=".launch_mode.A2Activity" />-->
 
         <activity
             android:name=".launch_mode.B1Activity"

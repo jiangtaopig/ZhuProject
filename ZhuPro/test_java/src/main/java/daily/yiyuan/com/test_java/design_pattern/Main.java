@@ -17,6 +17,7 @@ public class Main {
             myInfo = new MyInfo("xx"+i, i);
             myInfoList.add(myInfo);
         }
+
     }
 }
 

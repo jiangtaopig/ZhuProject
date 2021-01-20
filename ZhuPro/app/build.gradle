@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
+
+apply plugin: 'com.alibaba.arouter'
+
+
 def cfg = rootProject.ext.configuration // 配置
 android {
     compileSdkVersion cfg.compileVersion
@@ -185,6 +189,7 @@ dependencies {
 
     // 用来保存数据到本地，效率和稳定性都比 SharePreference好
     implementation 'com.tencent:mmkv-static:1.2.2'
+
 }
 
 tasks.withType(JavaCompile) {
@@ -193,4 +198,5 @@ tasks.withType(JavaCompile) {
 
 repositories {
     mavenCentral()
+
 }

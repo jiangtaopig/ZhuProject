@@ -58,12 +58,12 @@ public class RouterActivity1 extends AppCompatActivity {
         }
 
         Semaphore semaphore = new Semaphore(0);
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }finally {
-            semaphore.release();
-        }
+//        try {
+//            semaphore.acquire();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }finally {
+//            semaphore.release();
+//        }
     }
 }

@@ -8,6 +8,10 @@ import com.alibaba.fastjson.JSON;
 
 import java.lang.reflect.Type;
 
+/**
+ * ARouter 传参 withObject 时，会调用该方法
+ */
+
 @Route(path = "/service/json")
 public class JsonServiceImpl implements SerializationService {
     @Override

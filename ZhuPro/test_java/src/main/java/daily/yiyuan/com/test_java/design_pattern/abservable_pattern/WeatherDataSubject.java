@@ -7,15 +7,15 @@ import java.util.List;
  * Creaeted by ${za.zhu.jiangtao}
  * on 2020/6/11
  * 观察者模式
- * WeatherData 是用来收集天气数据, 一旦WeatherData有新的测量数据，目前的3个布告必须更新
+ * WeatherDataSubject 是用来收集天气数据, 一旦WeatherDataSubject有新的测量数据，目前的3个布告必须更新
  * 目前状况、天气统计、天气预报
  */
-public class WeatherData implements Subject { // 实现主题接口作为具体的 主题
+public class WeatherDataSubject implements Subject { // 实现主题接口作为具体的 主题
 
     private WeatherBean weatherBean;
     private List<Observer> observerList;
 
-    public WeatherData() {
+    public WeatherDataSubject() {
         observerList = new ArrayList<>();
     }
 
