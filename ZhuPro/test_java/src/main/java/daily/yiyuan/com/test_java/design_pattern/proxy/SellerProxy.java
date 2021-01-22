@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 /**
  * Creaeted by ${za.zhu.jiangtao}
  * on 2021/1/12
+ * 动态代理
  */
 class SellerProxy implements InvocationHandler {
 

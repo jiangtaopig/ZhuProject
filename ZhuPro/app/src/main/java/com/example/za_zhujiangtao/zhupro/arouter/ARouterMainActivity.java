@@ -1,6 +1,8 @@
 package com.example.za_zhujiangtao.zhupro.arouter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,8 @@ import com.example.za_zhujiangtao.zhupro.api.DataBase;
 import com.example.za_zhujiangtao.zhupro.api.MyApi;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -79,18 +83,18 @@ public class ARouterMainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
     @OnClick(R.id.test_intent_service)
-    protected void onJumpIntentService(){
+    protected void onJumpIntentService() {
         Intent intent = new Intent(this, MyIntentService.class);
-        intent.putExtra("NAME","ZZZZ");
+        intent.putExtra("NAME", "ZZZZ");
         startService(intent);
 
     }
 
-    private void testInterval(){
-
+    private void testInterval() {
         Observable.timer(0, 3000, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .take(2)
@@ -101,16 +105,27 @@ public class ARouterMainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.url_jump_btn)
-    protected void urlJump(){
-        ARouter.getInstance().build("/test/webview")
-                .withString("url", "file:///android_asset/test.html")
-                .navigation();
+    protected void urlJump() {
+//        ARouter.getInstance().build("/test/webview")
+//                .withString("url", "file:///android_asset/test.html")
+//                .navigation();
 
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.a1);
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        Log.e("ARouterMainActivity", "width = " + width + ", height = " + height);
+
+        int[] arrs = new int[]{1, 2, 3};
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0, len = arrs.length; i < len; i++) {
+            list.add(arrs[i]);
+        }
 //        testInterval();
     }
 
     @OnClick(R.id.jump_btn)
-    protected void jumpClick(){
+    protected void jumpClick() {
         User user = new User();
         user.setAge(22);
         user.setName("xx");
@@ -118,39 +133,39 @@ public class ARouterMainActivity extends AppCompatActivity {
         ARouter.getInstance().build("/com/router_activity1")
                 .withString("name", "zzjj")
                 .withInt("age", 33)
-                .withSerializable("bookInfo", new TestObj("盗墓笔记","南派三叔"))
+                .withSerializable("bookInfo", new TestObj("盗墓笔记", "南派三叔"))
                 .withObject("user", user)//用withObject必须要使用 SerializationService，本例中JsonServiceImpl 实现了该接口
                 .navigation(this, new NavCallback() {
-            @Override
-            public void onArrival(Postcard postcard) {
-                Log.e(TAG, "onArrival 跳转成功");
-            }
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        Log.e(TAG, "onArrival 跳转成功");
+                    }
 
-            @Override
-            public void onFound(Postcard postcard) {
-                super.onFound(postcard);
-                Log.e(TAG, "onFound");
-            }
+                    @Override
+                    public void onFound(Postcard postcard) {
+                        super.onFound(postcard);
+                        Log.e(TAG, "onFound");
+                    }
 
-            @Override
-            public void onLost(Postcard postcard) {
-                super.onLost(postcard);
-                Log.e(TAG, "onLost");
-            }
+                    @Override
+                    public void onLost(Postcard postcard) {
+                        super.onLost(postcard);
+                        Log.e(TAG, "onLost");
+                    }
 
-            @Override
-            public void onInterrupt(Postcard postcard) {
-                super.onInterrupt(postcard);
-                Log.e(TAG, "onInterrupt 拦截了");
-            }
-        });
+                    @Override
+                    public void onInterrupt(Postcard postcard) {
+                        super.onInterrupt(postcard);
+                        Log.e(TAG, "onInterrupt 拦截了");
+                    }
+                });
     }
 
-    public static class TestObj implements Serializable{
+    public static class TestObj implements Serializable {
         public String book;
         public String author;
 
-        public TestObj(String book, String author){
+        public TestObj(String book, String author) {
             this.book = book;
             this.author = author;
         }

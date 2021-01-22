@@ -14,7 +14,7 @@ public class CloneUtil {
 
     /**
      * 对象深克隆，浅克隆请使用{@link Cloneable}
-     *
+     * 深拷贝的对象必须要实现序列化接口
      * @param t
      * @param <T>
      * @return
