@@ -14,7 +14,7 @@ public class QuickSort {
     //即 4， 3， 5， 6， 9 ，7 ；这样6的左边都小于6，右边都大于6；同样的方式对6左边的4， 3, 5进行排序，对右边的9， 7进行排序，
 
     public static void main(String [] args){
-        int [] arr = {6, 3, 7, 4, 9, 6};
+        int [] arr = {6, 3, 7, 4, 9, 5};
         quickSort(arr, 0, arr.length-1);
         for (int i = 0; i < arr.length; i++){
             System.out.println("arr["+i+"] = "+arr[i]);

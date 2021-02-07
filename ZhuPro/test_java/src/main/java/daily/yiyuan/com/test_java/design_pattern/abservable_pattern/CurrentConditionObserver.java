@@ -8,15 +8,15 @@ package daily.yiyuan.com.test_java.design_pattern.abservable_pattern;
 public class CurrentConditionObserver implements Observer, IDisplay {
 
     private WeatherBean weatherBean;
-    private Subject weatherData;
+    private Subject realSubject;
 
-    public CurrentConditionObserver(Subject weatherData){
-        this.weatherData = weatherData;
-        this.weatherData.registerObserver(this);
+    public CurrentConditionObserver(Subject realSubject){
+        this.realSubject = realSubject;
+        this.realSubject.registerObserver(this);
     }
 
     public void unRegisterObserver(){
-        weatherData.unRegisterObserver(this);
+        realSubject.unRegisterObserver(this);
     }
 
     @Override

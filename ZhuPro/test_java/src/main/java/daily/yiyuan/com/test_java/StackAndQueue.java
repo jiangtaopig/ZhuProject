@@ -37,7 +37,7 @@ class TwoStack2Queue {
     }
 
     public int pop() {
-        int val = 0;
+        int val ;
         while (s2.isEmpty()) {
             while (!s1.isEmpty()) {
                 s2.push(s1.pop());

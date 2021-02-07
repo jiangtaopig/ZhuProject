@@ -6,11 +6,35 @@
 
     <TextView
         android:id="@+id/txt_msg"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="有消息吗？"
         android:background="@color/color_7fff8955"
-        android:layout_margin="@dimen/dimen_16dp"
+        android:padding="@dimen/dimen_18dp"
         />
+
+    <TextView
+        android:id="@+id/txt_send"
+        android:layout_width="@dimen/dimen_300dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp"
+        android:gravity="center"
+        android:text="send Msg"
+        android:background="@color/color_7fff8955"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        />
+
+    <TextView
+        android:id="@+id/txt_stop"
+        android:layout_width="@dimen/dimen_300dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp"
+        android:gravity="center"
+        android:text="stop Msg"
+        android:background="@color/color_7fff8955"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        />
+
 
 </LinearLayout>

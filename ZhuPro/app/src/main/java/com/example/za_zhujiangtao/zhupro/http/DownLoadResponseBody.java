@@ -54,7 +54,7 @@ public class DownLoadResponseBody extends ResponseBody {
                 long bytesRead = super.read(sink, byteCount);
                 Log.e("DownLoadResponseBody", "bytesRead = "+bytesRead);
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
-                if (mProgressListener != null){
+                if (mProgressListener != null && mResponseBody.contentLength() != 0){
                     mProgressListener.progress((int) (100 * totalBytesRead / mResponseBody.contentLength()));
                 }
                 return bytesRead;

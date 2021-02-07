@@ -89,14 +89,15 @@ public class A1Activity extends BaseActivity {
         mTxt.setText("I am A1 Activity");
         jump2B.setText("Jump 2 A2Activity");
         jump2B.setOnClickListener(v -> {
-//            Intent intent = new Intent(A1Activity.this, A2Activity.class);
-////            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-
-            Intent intent = new Intent();
-            ComponentName componentName = new ComponentName("com.zjt.startmodepro", "com.zjt.startmodepro.B1Activity");
-            intent.setComponent(componentName);
+            Intent intent = new Intent(A1Activity.this, TestLaunchModeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
+//            Intent intent = new Intent();
+//            ComponentName componentName = new ComponentName("com.zjt.startmodepro", "com.zjt.startmodepro.B1Activity");
+//            intent.setComponent(componentName);
+//            startActivity(intent);
 
 
 

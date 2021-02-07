@@ -1,10 +1,14 @@
 package com.example.za_zhujiangtao.zhupro.define_view;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Button;
@@ -19,11 +23,11 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Handler;
 
 import butterknife.BindView;
 
@@ -87,9 +91,17 @@ public class TestThreadPoolActivity extends BaseActivity {
 //        Executors.newScheduledThreadPool(2);
 //        Executors.newSingleThreadExecutor();
 
+        new Handler().postDelayed(() -> {
+
+        }, 10_000);
+
+        SynchronousQueue<String> synchronousQueue = new SynchronousQueue<>();
+        boolean f = synchronousQueue.offer("a");
+        Log.e("xxx", "f = " + f);
+
         mTestThreadPool.setOnClickListener(v -> {
-            ThreadPoolExecutor executorService = new ThreadPoolExecutor(2, 5, 100, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
-            for (int i = 0; i < 15; i++) {
+            ThreadPoolExecutor executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100, TimeUnit.SECONDS, new SynchronousQueue<>());
+            for (int i = 0; i < 5; i++) {
                 int a = i;
                 Runnable runnable = () -> {
                     Log.e("gggg", "任务" + (a + 1) + "开始");
@@ -103,8 +115,8 @@ public class TestThreadPoolActivity extends BaseActivity {
                 executorService.execute(runnable);
             }
             executorService.shutdown();
-            executorService.setMaximumPoolSize(10);
-            executorService.setCorePoolSize(10);
+//            executorService.setMaximumPoolSize(10);
+//            executorService.setCorePoolSize(10);
 
 
         });
@@ -148,7 +160,9 @@ public class TestThreadPoolActivity extends BaseActivity {
 //                }
 //            }.start();
 
-            sendNotification();
+//            sendNotification();
+
+            getTopActivity(this);
 
         });
     }
@@ -213,5 +227,17 @@ public class TestThreadPoolActivity extends BaseActivity {
             }
         }
         Log.e("test thread pool", "跳出了循环");
+    }
+
+
+    public String getTopActivity(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+        Log.d("测试", "pkg:" + cn.getPackageName());//包名
+        Log.d("测试", "cls:" + cn.getClassName());//包名加类名
+        String[] res = cn.getClassName().split("\\.");
+        String className = res[res.length - 1];
+        Log.e("测试", "cls:" + className);//包名加类名
+        return cn.getClassName();
     }
 }

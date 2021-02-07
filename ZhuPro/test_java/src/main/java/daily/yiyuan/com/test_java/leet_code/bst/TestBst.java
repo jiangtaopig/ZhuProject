@@ -83,9 +83,9 @@ public class TestBst {
 
     /**
      * 把二叉搜索树 转为 二叉累加树
-     * 7                    16
-     * /  \       转换后     /   \
-     * 4     9               20     9
+     *      7                    16
+     *    /  \       转换后     /   \
+     *  4     9              20     9
      * <p>
      * 比 结点 4 大的节点有 7， 9加上本身 4，所以累加树上这个结点的值 等于 7+9+4 = 20
      *
@@ -93,7 +93,6 @@ public class TestBst {
      * @return 仍然利用 中序遍历；但是 得降序
      */
     static int sum = 0;
-
     private static TreeNode convertBST(TreeNode root) {
         if (root == null)
             return root;

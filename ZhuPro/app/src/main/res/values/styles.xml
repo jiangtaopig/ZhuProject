@@ -326,4 +326,23 @@
         <attr name="android:text"/>
         <attr name="android:textSize"/>
     </declare-styleable>
+
+    <style name="MyDialogStyleBottom" parent="android:Theme.Dialog" >
+
+        <!-- 进入和退出时动画-->
+        <item name="android:windowAnimationStyle">@style/dialogPushUpInAnimation</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+
+        <!-- 点击空白区域是否消失  API Level>=11-->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+
+
+
 </resources>

@@ -63,9 +63,9 @@ public class A2Activity extends BaseActivity {
         mJumpBtn.setText("jump 2 B1Activity");
 
         mJumpBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainApplication.getContext(), A1Activity.class);
+            Intent intent = new Intent(this, A1Activity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//            startActivity(intent);
+            startActivity(intent);
 
 //            TestMemoryLeakActivity.enter(this);
 
@@ -108,6 +108,18 @@ public class A2Activity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("A2Activity", "A onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("A2Activity", "A onResume");
     }
 
     @Override

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.MessageQueue;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -186,6 +188,12 @@ public class TestLaunchModeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e("TestLaunchModeActivity", " onCreate");
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         Log.e("TestLaunchModeActivity", " onRestart");
@@ -219,5 +227,11 @@ public class TestLaunchModeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e("TestLaunchModeActivity", " onDestroy");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e("TestLaunchModeActivity", " onNewIntent");
     }
 }

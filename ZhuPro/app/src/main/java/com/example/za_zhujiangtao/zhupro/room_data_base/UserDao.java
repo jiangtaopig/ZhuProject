@@ -28,4 +28,7 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Query("SELECT COUNT(*) FROM users")
+    int queryGroupCount();
 }

@@ -78,7 +78,7 @@
         </provider>
 
         <activity
-            android:name=".arouter.ARouterMainActivity"
+            android:name=".room_data_base.TestRoomActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             >
@@ -105,12 +105,11 @@
 
         <activity android:name=".kotlin.AnotherKotlinActivity"/>
 
-<!--        <activity-->
-<!--            android:name=".launch_mode.A1Activity"-->
-<!--            android:launchMode="singleTask"-->
-<!--             />-->
+        <activity
+            android:name=".launch_mode.A1Activity"
+             />
 
-<!--        <activity android:name=".launch_mode.A2Activity" />-->
+        <activity android:name=".launch_mode.A2Activity" />
 
         <activity
             android:name=".launch_mode.B1Activity"

@@ -14,13 +14,13 @@
         android:id="@+id/query_all"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
-        android:text="Query ALL"/>
+        android:text="Query ALL By Ids"/>
 
     <Button
         android:id="@+id/query"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
-        android:text="Query A Data"/>
+        android:text="Query All Data"/>
 
     <Button
         android:id="@+id/delete"
@@ -33,5 +33,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
         android:text="Add A Data After Alert Table"/>
+
+    <Button
+        android:id="@+id/query_user_cnt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="Query User Number"/>
+
+    <Button
+        android:id="@+id/add_meet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="Add Meet"/>
+
+    <Button
+        android:id="@+id/query_meet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:text="Query Meet"/>
 
 </LinearLayout>

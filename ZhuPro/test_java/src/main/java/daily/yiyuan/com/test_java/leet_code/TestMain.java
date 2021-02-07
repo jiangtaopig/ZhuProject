@@ -1266,7 +1266,7 @@ public class TestMain {
         if (headA == null || headB == null) return null;
         ListNode pA = headA, pB = headB;
         while (pA != pB) {
-            pA = pA != null ? pA.next : headB;
+            pA = pA != null ? pA.next : headB; // 会走到 headB 而不是 pB
             pB = pB != null ? pB.next : headA;
         }
         return pA;
@@ -1507,6 +1507,11 @@ public class TestMain {
         return head;
     }
 
+    /**
+     * https://www.cnblogs.com/icecrea/p/12059619.html
+     * @param head
+     * @return
+     */
     public static int findCircleNodeBegain(ListNode head){
         int index = -1;
         if (head == null || head.next == null){
@@ -1515,25 +1520,12 @@ public class TestMain {
         //步骤一，设置快慢指针都指向链表开头，快指针每次走2步，慢指针每次走一步，直到快慢指针相遇，
         ListNode low = head;
         ListNode fast = head;
-        int cnt = 0;
-        while (head.next.next != null){
+        while (head.next != null && head.next.next != null){
             fast = head.next.next;
             low = head.next;
             if (fast == low){//直到快慢指针相遇
-                //步骤二：慢指针每次走一步，直到和快指针再次相遇，记录下走了多少步(也就是环形链表的长度)
-                cnt++;
-                low = low.next;
-                while (low != fast){
-                    low = low.next;
-                    cnt++;
-                }
-
-                //步骤三：让快慢指针再次指向链表开头，快指针先走环形链表长度cnt步，然后快慢指针每次都走一步，相遇的结点就是环形链表的起始点
-                low = fast = head;
-                while (cnt > 0){
-                    fast = fast.next;
-                    cnt--;
-                }
+                //步骤二：让慢指针再次指向链表开头，然后快慢指针每次都走一步，相遇的结点就是环形链表的起始点
+                low = head;
                 while (low != fast){
                     low = low.next;
                     fast = fast.next;

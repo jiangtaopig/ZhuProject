@@ -64,6 +64,7 @@ import rx.schedulers.Schedulers;
  * on 2020/4/8
  */
 public class TestHttpActivity extends BaseActivity {
+    private static final String TAG = "TestHttpActivity";
 
     private static final String[][] MIME_MapTable = {
             //{后缀名，    MIME类型}
@@ -155,17 +156,9 @@ public class TestHttpActivity extends BaseActivity {
             //以下2种方式都可以，第2中封装了 请求结果
 //            request1();
 //            request2();
-//            testRetrofit();
+            testRetrofit();
 
-            Observable<Integer> integerObservable = Observable.just(1, 2, 3);
-            integerObservable.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    Log.e("TestHttpActivity", "call integer = " + integer);
-                }
-            });
-
-            requestByOkHttp();
+//            requestByOkHttp();
 
             Gson gson = new Gson();
 
@@ -226,9 +219,9 @@ public class TestHttpActivity extends BaseActivity {
 
     private void request2() {
         mTestApi.getMukeData(4, 10)
+                .map(new MyObjFunc1<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new MyObjFunc1<>())
                 .subscribe(new MyFunc1Subscriber<List<DataBase.DataBean>>() {
                     @Override
                     public void onNext(List<DataBase.DataBean> dataBeans) {
@@ -268,29 +261,33 @@ public class TestHttpActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-
                         if (response != null) {
+                            Log.d(TAG, "thread name >>> "+Thread.currentThread().getName());
                             Log.e("xxx", "res >>> " + response.body().string());
                         }
                     }
                 });
-//        new Thread() {//接口请求需要在子线程中执行
-//            @Override
-//            public void run() {
-//                Request request = new Request.Builder()
-//                        .url("http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&f=JPEG?w=1200&h=1290")
-//                        .method("POST", new FormBody.Builder().build())
-//                        .build();
-//                try {
-//                    okhttp3.Response response = client.newCall(request).execute();
-//                    Log.e("xxx", "response = " + response.body().string());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
 
+//        requestBySynchronised(client);
 
+    }
+
+    private void requestBySynchronised(OkHttpClient client) {
+        new Thread() {//接口请求需要在子线程中执行
+            @Override
+            public void run() {
+                Request request = new Request.Builder()
+                        .url("http://pic.netbian.com/uploads/allimg/190902/152344-1567409024d50f.jpg")
+                        .get()
+                        .build();
+                try {
+                    okhttp3.Response response = client.newCall(request).execute();
+                    Log.e("xxx", "response = " + response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 
