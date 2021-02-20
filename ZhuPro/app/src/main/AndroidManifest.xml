@@ -78,7 +78,7 @@
         </provider>
 
         <activity
-            android:name=".room_data_base.TestRoomActivity"
+            android:name=".eventbus.TestEventBusActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             >
@@ -98,6 +98,8 @@
 
 
 <!--        <activity android:name=".float_window.FloatActivity"/>-->
+
+        <activity android:name=".eventbus.AnotherEventActivity"/>
 
         <activity android:name=".EditPosterActivity"/>
 
@@ -129,6 +131,7 @@
         <activity android:name=".arouter.ARouterWebActivity" />
 
         <activity android:name=".arouter.ARouterUrlActivity" />
+
 
         <service android:name=".launch_mode.MyBindService" />
 
