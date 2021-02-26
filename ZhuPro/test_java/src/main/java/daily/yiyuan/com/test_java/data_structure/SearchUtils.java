@@ -7,7 +7,7 @@ package daily.yiyuan.com.test_java.data_structure;
 public class SearchUtils {
     public static int binarySearch(int[] nums, int target) {
         int low = 0;
-        int high = nums.length-1;
+        int high = nums.length - 1;
         while (low <= high) {
             int index = (low + high)>>>1;////1.防止直接相加导致溢出 2.移位操作效率更高
             if (nums[index] == target) {

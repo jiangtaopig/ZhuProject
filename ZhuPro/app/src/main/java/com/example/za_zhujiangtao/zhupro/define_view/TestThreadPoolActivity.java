@@ -86,10 +86,10 @@ public class TestThreadPoolActivity extends BaseActivity {
     @Override
     protected void onInitLogic() {
 
-//        Executors.newCachedThreadPool();
-//        Executors.newFixedThreadPool(2);
-//        Executors.newScheduledThreadPool(2);
-//        Executors.newSingleThreadExecutor();
+        Executors.newCachedThreadPool();
+        Executors.newFixedThreadPool(2);
+        Executors.newScheduledThreadPool(2);
+        Executors.newSingleThreadExecutor();
 
         new Handler().postDelayed(() -> {
 

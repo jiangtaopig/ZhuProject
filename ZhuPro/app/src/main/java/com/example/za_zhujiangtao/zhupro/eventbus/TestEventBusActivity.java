@@ -1,6 +1,8 @@
 package com.example.za_zhujiangtao.zhupro.eventbus;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Button;
 
@@ -40,13 +42,21 @@ public class TestEventBusActivity extends BaseActivity {
 
         mPostStickyEventBtn.setOnClickListener(v -> {
             EventBus.getDefault().postSticky(new TestEvent("I am spider"));
+            Looper myLooper = Looper.myLooper();
+            Looper mainLopper = Looper.getMainLooper();
+            Log.e("xxx", "myLooper = " + myLooper + ", mainLopper = " + mainLopper);
+
         });
+
+        new Handler().postDelayed(() -> {
+
+        }, 1000);
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onMyEvent(MyEvent event){
-        if (event != null){
+    public void onMyEvent(MyEvent event) {
+        if (event != null) {
             String action = event.getAction();
             Log.e("xxx", "action = " + action);
         }

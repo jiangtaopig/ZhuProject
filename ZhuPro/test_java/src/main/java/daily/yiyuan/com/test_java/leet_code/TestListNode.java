@@ -48,7 +48,7 @@ public class TestListNode {
             fast = fast.next.next;
             slow = slow.next;
             if (fast == slow){//直到快慢指针相遇
-                //步骤二：慢指针每次走一步，直到和快指针再次相遇，记录下走了多少步(也就是环形链表的长度)
+                //步骤二：快指针不动，慢指针每次走一步，直到和快指针再次相遇，记录下走了多少步(也就是环形链表的长度)
                 cnt++;
                 slow = slow.next;
                 while (slow != fast){

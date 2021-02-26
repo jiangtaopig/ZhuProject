@@ -21,5 +21,15 @@ public class TestEncoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        int[][] arr = {{1, 2, 3}, {4, 5, 6}};
+        int row = arr.length;
+        int column = arr[0].length;
+
+        System.out.println("row = " + row + ", column = " + column);
+
+
     }
+
+
 }

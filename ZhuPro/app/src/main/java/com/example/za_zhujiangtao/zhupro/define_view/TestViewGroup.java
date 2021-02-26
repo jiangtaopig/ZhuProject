@@ -129,11 +129,11 @@ public class TestViewGroup extends ViewGroup {
          *  ViewGroup 给出的建议数值
          * */
         if (widthMode == MeasureSpec.AT_MOST) {
-            resultW = contentW < widthSize ? contentW : widthSize;
+            resultW = Math.min(contentW, widthSize);
         }
 
         if (heightMode == MeasureSpec.AT_MOST) {
-            resultH = contentH < heightSize ? contentH : heightSize;
+            resultH = Math.min(contentH, heightSize);
         }
 
         Log.e(TAG, "resultW = " + resultW + ", resultH = " + resultH);

@@ -19,8 +19,8 @@ public class TestSemaphore {
 //        testCyclicBarrier();
 //        testH2O();
 
-//        printCharAndNum();
-        startSemaphore();
+        printCharAndNum();
+//        startSemaphore();
 
     }
 
@@ -413,9 +413,7 @@ class NumberChar {
             cyclicBarrier.await();
             printNum.run();
             charSemaphore.release();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BrokenBarrierException e) {
+        } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }
     }
@@ -426,9 +424,7 @@ class NumberChar {
             charSemaphore.acquire();
             printChar.run();
             numSemaphore.release(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BrokenBarrierException e) {
+        } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }
     }

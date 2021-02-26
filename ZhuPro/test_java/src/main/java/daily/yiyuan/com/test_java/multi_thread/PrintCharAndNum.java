@@ -17,9 +17,6 @@ public class PrintCharAndNum {
 
 //        synchronizeMethod();
         semaphoreMethod();
-
-        Map<Integer, Integer> map = new HashMap<>();
-        map.getOrDefault(1, 0);
     }
 
 
@@ -40,7 +37,7 @@ public class PrintCharAndNum {
                         charS.acquire();
                         System.out.println("----" + strs[i] + "-------");
                         numS.release();
-                        Thread.sleep(2_000);
+//                        Thread.sleep(2_000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -59,7 +56,7 @@ public class PrintCharAndNum {
                         System.out.println("----" + strs[i] + "-------");
 
                         charS.release();
-                        Thread.sleep(2_000);
+//                        Thread.sleep(2_000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

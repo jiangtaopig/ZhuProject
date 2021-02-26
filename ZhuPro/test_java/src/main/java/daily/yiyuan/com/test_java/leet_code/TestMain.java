@@ -1408,7 +1408,7 @@ public class TestMain {
     //反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
     //输入: 1->2->3->4->5->NULL, m = 2, n = 4
     //输出: 1->4->3->2->5->NULL
-    //解法就是双指针，pre和p， pre指向开始反转之前的结点，遍历p直到p指向第一个开始反转的位置，然后把p后面的结点插入到pre结点的后面
+    //解法就是双指针，pre和p， pre指向开始反转之前的结点后不再移动，遍历p直到p指向第一个开始反转的位置，然后把p后面的结点插入到pre结点的后面
     public static ListNode reverseBetween(ListNode head, int m, int n) {
         if (head == null || head.next == null){
             return head;
@@ -1518,13 +1518,13 @@ public class TestMain {
             return index;
         }
         //步骤一，设置快慢指针都指向链表开头，快指针每次走2步，慢指针每次走一步，直到快慢指针相遇，
-        ListNode low = head;
-        ListNode fast = head;
-        while (head.next != null && head.next.next != null){
+        ListNode low ;
+        ListNode fast;
+        while (head.next.next != null){
             fast = head.next.next;
             low = head.next;
             if (fast == low){//直到快慢指针相遇
-                //步骤二：让慢指针再次指向链表开头，然后快慢指针每次都走一步，相遇的结点就是环形链表的起始点
+                //步骤二：让慢指针再次指向链表开头，然后快、慢指针每次都走一步，相遇的结点就是环形链表的起始点
                 low = head;
                 while (low != fast){
                     low = low.next;

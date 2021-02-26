@@ -83,12 +83,12 @@ public class TestView extends View {
 
         if (widthMode == MeasureSpec.AT_MOST) {
             maxWidth = (int) (getPaddingLeft() + getPaddingRight() + mPaint.measureText(mText));
-            resultW = maxWidth > width ? width : maxWidth;
+            resultW = Math.min(maxWidth, width);
         }
 
         if (heightMode == MeasureSpec.AT_MOST) {
             maxHeight = getPaddingBottom() + getPaddingTop() + mTextSize;
-            resultH = maxHeight > height ? height : maxHeight;
+            resultH = Math.min(maxHeight, height);
         }
 
         setMeasuredDimension(resultW, resultH);
