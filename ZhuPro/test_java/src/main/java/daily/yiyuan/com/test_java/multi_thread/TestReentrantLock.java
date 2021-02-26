@@ -24,9 +24,6 @@ class TestReentrantLock {
 
     }
 
-    /**
-     * 用2个线程，每输出2个数字再输出1个字符
-     */
     private static void testConsumerAndProducer() {
         ReentrantLock reentrantLock = new ReentrantLock();
         Condition condition1 = reentrantLock.newCondition();
@@ -97,7 +94,9 @@ class TestReentrantLock {
         thread1.start();
     }
 
-
+    /**
+     * 用2个线程，每输出2个数字再输出1个字符
+     */
     private static void print2NumAndOneChar(char[] chars, int [] nums){
         AtomicBoolean printNum = new AtomicBoolean(true);
         ReentrantLock reentrantLock = new ReentrantLock();
