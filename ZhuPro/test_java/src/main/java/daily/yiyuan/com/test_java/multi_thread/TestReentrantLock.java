@@ -98,6 +98,11 @@ class TestReentrantLock {
     }
 
 
+    /**
+     * 使用2个线程，一个线程输出2个数字后另一个线程1个字符
+     * @param chars
+     * @param nums
+     */
     private static void print2NumAndOneChar(char[] chars, int [] nums){
         AtomicBoolean printNum = new AtomicBoolean(true);
         ReentrantLock reentrantLock = new ReentrantLock();
