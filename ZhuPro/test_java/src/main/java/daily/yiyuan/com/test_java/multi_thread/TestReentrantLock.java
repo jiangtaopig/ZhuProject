@@ -1,5 +1,10 @@
 package daily.yiyuan.com.test_java.multi_thread;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
@@ -20,7 +25,8 @@ class TestReentrantLock {
     public static void main(String[] args) {
 
 //        testConsumerAndProducer();
-        print2NumAndOneChar(new char[]{'a', 'b', 'c'}, new int[]{1, 2, 3 ,4, 5, 6});
+        print2NumAndOneChar(new char[]{'a', 'b', 'c'}, new int[]{1, 2, 3, 4, 5, 6});
+
 
     }
 
@@ -45,14 +51,14 @@ class TestReentrantLock {
             }
         };
 
-        Thread thread2 = new Thread(){
+        Thread thread2 = new Thread() {
             @Override
             public void run() {
                 super.run();
                 try {
                     reentrantLock.lock();
                     System.out.println("开发人员来上班啦。。。。。");
-                    if (!isT1Run){
+                    if (!isT1Run) {
                         System.out.println("还没有新需求，休息下");
                         condition1.await();
                     }
@@ -68,14 +74,14 @@ class TestReentrantLock {
             }
         };
 
-        Thread thread3 = new Thread(){
+        Thread thread3 = new Thread() {
             @Override
             public void run() {
                 super.run();
                 try {
                     reentrantLock.lock();
                     System.out.println("测试人员来上班啦。。。");
-                    if (!isT2Run){
+                    if (!isT2Run) {
                         System.out.println("还没有任务，休息会");
                         condition2.await();
                     }
@@ -97,24 +103,24 @@ class TestReentrantLock {
     /**
      * 用2个线程，每输出2个数字再输出1个字符
      */
-    private static void print2NumAndOneChar(char[] chars, int [] nums){
+    private static void print2NumAndOneChar(char[] chars, int[] nums) {
         AtomicBoolean printNum = new AtomicBoolean(true);
         ReentrantLock reentrantLock = new ReentrantLock();
         Condition numCondition = reentrantLock.newCondition();
         Condition charCondition = reentrantLock.newCondition();
         AtomicInteger cmt = new AtomicInteger(0);
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
                     reentrantLock.lock();
-                    for (int i = 0; i< nums.length; i++){
-                        while (!printNum.get()){
+                    for (int i = 0; i < nums.length; i++) {
+                        while (!printNum.get()) {
                             numCondition.await();
                         }
-                        System.out.println("---  : "+nums[i]);
+                        System.out.println("---  : " + nums[i]);
                         cmt.incrementAndGet();
-                        if (cmt.get() == 2){
+                        if (cmt.get() == 2) {
                             printNum.set(false);
                             cmt.set(0);
                             charCondition.signalAll();
@@ -128,12 +134,12 @@ class TestReentrantLock {
             }
         }.start();
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
                     reentrantLock.lock();
-                    for (int i = 0; i < chars.length; i++){
+                    for (int i = 0; i < chars.length; i++) {
                         while (printNum.get())
                             charCondition.await();
                         System.out.println("****  : " + chars[i]);

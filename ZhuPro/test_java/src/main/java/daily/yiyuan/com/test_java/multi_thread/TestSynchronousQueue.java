@@ -2,7 +2,9 @@ package daily.yiyuan.com.test_java.multi_thread;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +26,11 @@ public class TestSynchronousQueue {
         numberFormat.setMaximumFractionDigits(2);
         String s = numberFormat.format(bigDecimal.doubleValue());
         System.out.println("s = "+s);
+
+        int aa = 1324;
+        NumberFormat numberFormat2 = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.CHINA));
+        String dd = numberFormat2.format(BigDecimal.valueOf(aa / 100.0));
+        System.out.println("dd = " + dd);
 
 
 

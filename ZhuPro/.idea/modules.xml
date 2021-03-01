@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZhuPro.iml" filepath="$PROJECT_DIR$/ZhuPro.iml" group="ZhuPro" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ZhuPro.iml" filepath="$PROJECT_DIR$/.idea/ZhuPro.iml" group="ZhuPro" />
       <module fileurl="file://$PROJECT_DIR$/annotation_my/annotation_my.iml" filepath="$PROJECT_DIR$/annotation_my/annotation_my.iml" group="ZhuPro/annotation_my" />
       <module fileurl="file://$PROJECT_DIR$/annotation_processor/annotation_processor.iml" filepath="$PROJECT_DIR$/annotation_processor/annotation_processor.iml" group="ZhuPro/annotation_processor" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ZhuPro/app" />
