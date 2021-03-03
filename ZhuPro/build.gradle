@@ -11,6 +11,10 @@ buildscript {
 //        maven {
 //            url 'https://storage.flutter-io.cn/download.flutter.io'
 //        }
+
+        maven {
+            url 'https://storage.flutter-io.cn/download.flutter.io'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'

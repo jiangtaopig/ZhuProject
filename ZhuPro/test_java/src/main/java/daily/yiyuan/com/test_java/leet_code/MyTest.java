@@ -42,4 +42,40 @@ public class MyTest {
         }
         return L.next;
     }
+
+
+    private static String sum (String str1, String str2){
+        int len1 = str1.length();
+        int len2 = str2.length();
+
+        int i = 0;
+        int max = Math.max(len1, len2);
+        int a ;
+        int b ;
+        int remain = 0;
+        StringBuilder sb = new StringBuilder();
+        while (i < max){
+            if (i < len1)
+                a = str1.charAt(len1 - i - 1) - '0';
+            else
+                a = 0;
+            if (i < len2)
+                b = str2.charAt(len2 - i - 1);
+            else
+                b = 0;
+            i++;
+            int tmp = a + b;
+            if (remain != 0){
+                tmp += remain;
+            }
+            remain = tmp / 10;
+            sb.append(remain % 10);
+
+        }
+        if (remain != 0)
+            sb.append(remain);
+        return sb.toString();
+    }
+
+
 }

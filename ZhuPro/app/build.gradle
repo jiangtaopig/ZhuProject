@@ -193,6 +193,14 @@ dependencies {
     // eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
 
+    implementation(name: 'flutter_release-1.0', ext: 'aar')
+    //implementation 'io.flutter:flutter_embedding_release:1.0.0-2c956a31c0a3d350827aee6c56bb63337c5b4e6e'
+    implementation 'io.flutter:flutter_embedding_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+
+    implementation 'io.flutter:armeabi_v7a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+    implementation 'io.flutter:arm64_v8a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+    implementation 'io.flutter:x86_64_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+
 
 }
 

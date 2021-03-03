@@ -34,11 +34,13 @@ public class TestEventBusActivity extends BaseActivity {
 
     @Override
     protected void onInitLogic() {
+
         EventBus.getDefault().register(this);
         mRigisterEventBusBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, AnotherEventActivity.class);
             startActivity(intent);
         });
+
 
         mPostStickyEventBtn.setOnClickListener(v -> {
             EventBus.getDefault().postSticky(new TestEvent("I am spider"));
