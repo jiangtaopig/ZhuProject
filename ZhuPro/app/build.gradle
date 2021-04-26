@@ -161,7 +161,7 @@ dependencies {
     //阿里云推送的辅助通道
     implementation(name: 'alicloud-android-third-push-3.0.6', ext: 'aar')
     //    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.6@aar'
-    implementation 'com.google.firebase:firebase-messaging:9.6.1'
+//    implementation 'com.google.firebase:firebase-messaging:9.6.1'
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'com.jack.frdialog:FRDialog:1.0.3'
@@ -193,13 +193,13 @@ dependencies {
     // eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
 
-    implementation(name: 'flutter_release-1.0', ext: 'aar')
+//    implementation(name: 'flutter_release-1.0', ext: 'aar')
     //implementation 'io.flutter:flutter_embedding_release:1.0.0-2c956a31c0a3d350827aee6c56bb63337c5b4e6e'
-    implementation 'io.flutter:flutter_embedding_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
-
-    implementation 'io.flutter:armeabi_v7a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
-    implementation 'io.flutter:arm64_v8a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
-    implementation 'io.flutter:x86_64_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+//    implementation 'io.flutter:flutter_embedding_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+////
+////    implementation 'io.flutter:armeabi_v7a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+////    implementation 'io.flutter:arm64_v8a_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
+////    implementation 'io.flutter:x86_64_release:1.0.0-ae90085a8437c0ae94d6b5ad2741739ebc742cb4'
 
 
 }

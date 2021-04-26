@@ -3,12 +3,9 @@ package com.example.za_zhujiangtao.zhupro.recycle;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.IntentService;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.os.HandlerThread;
-import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,9 +21,7 @@ import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 import com.example.za_zhujiangtao.zhupro.float_window.DisplayUtil;
 
-import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Creaeted by ${za.zhu.jiangtao}
@@ -78,7 +73,7 @@ public class ExpandRecycleViewActivity extends BaseActivity {
                 float y = recyclerView.getY();
                 float frameLayoutX = frameLayout.getX();
                 float frameLayoutY = frameLayout.getY();
-                Log.e("TestRecycleViewActivity", " x = " + x + ", y = " + y+", frameLayoutX = "+frameLayoutX+", frameLayoutY = "+frameLayoutY);
+                Log.e("TestRecycleViewActivity", " x = " + x + ", y = " + y + ", frameLayoutX = " + frameLayoutX + ", frameLayoutY = " + frameLayoutY);
                 if (expandLayout.getHeight() >= defaultHeight) {
                     expandLayout.getLayoutParams().height = defaultHeight; // 设置 RecycleView 的最大高度
                     expandLayout.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -104,18 +99,6 @@ public class ExpandRecycleViewActivity extends BaseActivity {
             performAnimation(expandLayout, defaultHeight, maxHeight, isExpand);
         });
 
-        ConcurrentHashMap<String, String> hashMap = new ConcurrentHashMap<>(5);
-        hashMap.put("1", "a");
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("1", "a");
-
-        new Thread(){
-            @Override
-            public void run() {
-               Log.e("xxxxx","myLooper = "+Looper.myLooper()+", mainLooper = "+Looper.getMainLooper());
-            }
-        }.start();
     }
 
     private void performAnimation(View targetView, int start, int end, boolean expand) {

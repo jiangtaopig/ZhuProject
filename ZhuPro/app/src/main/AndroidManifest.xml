@@ -118,6 +118,7 @@
             android:taskAffinity="com.zjt.b" />
 
         <activity android:name=".h5_acc.WebAccumulateActivity" />
+        <activity android:name=".section_recycle.RecycleViewMoreTypeActivity"/>
         <!--        <activity-->
         <!--            android:name=".DefineViewActivity"-->
         <!--            android:theme="@style/MyAppTheme">-->

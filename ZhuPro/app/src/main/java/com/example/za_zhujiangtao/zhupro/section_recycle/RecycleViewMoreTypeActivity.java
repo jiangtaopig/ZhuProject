@@ -54,11 +54,11 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
         mTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                int [] location = new int[2];
+                int[] location = new int[2];
                 mTv.getLocationOnScreen(location);
                 int height = mTv.getHeight();
                 mTvY = location[1];
-                Log.e("RecycleViewMoreType", "x = " + location[0] + ", y = " + location[1]+ ", height = " + height);
+                Log.e("RecycleViewMoreType", "x = " + location[0] + ", y = " + location[1] + ", height = " + height);
                 mTv.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
             }
@@ -70,18 +70,19 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
                 int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
-                Log.e("RecycleViewMoreType", "firstVisiblePosition = "+firstVisiblePosition);
+                Log.e("RecycleViewMoreType", "firstVisiblePosition = " + firstVisiblePosition);
                 if (mMoreTypeAdapter.getItemCount() > 0) {
+                    // 获取 position 为2的 ViewHolder
                     RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(2);
                     if (holder instanceof MoreTypeAdapter.NormalHolder) {
                         MoreTypeAdapter.NormalHolder normalHolder = (MoreTypeAdapter.NormalHolder) holder;
                         int[] location = new int[2];
                         normalHolder.itemView.getLocationInWindow(location);
                         mLastY = location[1];
-                        Log.e("RecycleViewMoreType", "x = " + location[0] + ", y = " + location[1]);
-                        if (mLastY <= mTvY){//RececleView 的指定item 滚动到 指定控件的位置，则指定控件透明度为完全不透明
+                        Log.e("RecycleViewMoreType", "x = " + location[0] + ", y = " + location[1] + " , mTvY = " + mTvY);
+                        if (mLastY <= mTvY) {//RececleView 的指定item 滚动到 指定控件的位置，则指定控件透明度为完全不透明，以此来实现吸顶的效果
                             mTv.setAlpha(1.0f);
-                        }else {
+                        } else {
                             mTv.setAlpha(0.3f);
                         }
                     }
@@ -93,7 +94,7 @@ public class RecycleViewMoreTypeActivity extends BaseActivity {
 
 
         mTv.setOnClickListener(v -> {
-           LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
             linearLayoutManager.scrollToPositionWithOffset(3, 0);
         });
 

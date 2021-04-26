@@ -22,6 +22,8 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        
+
         // ARouter自动加载理由表，提高启动速度
 //        classpath "com.alibaba:arouter-register:1.0.2"
     }

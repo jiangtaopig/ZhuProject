@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.za_zhujiangtao.zhupro.BaseActivity;
 import com.example.za_zhujiangtao.zhupro.R;
+import com.example.za_zhujiangtao.zhupro.section_recycle.RecycleViewMoreTypeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,15 +45,11 @@ public class TestEventBusActivity extends BaseActivity {
 
         mPostStickyEventBtn.setOnClickListener(v -> {
             EventBus.getDefault().postSticky(new TestEvent("I am spider"));
-            Looper myLooper = Looper.myLooper();
-            Looper mainLopper = Looper.getMainLooper();
-            Log.e("xxx", "myLooper = " + myLooper + ", mainLopper = " + mainLopper);
+            Intent intent = new Intent(this, RecycleViewMoreTypeActivity.class);
+            startActivity(intent);
 
         });
 
-        new Handler().postDelayed(() -> {
-
-        }, 1000);
     }
 
 
