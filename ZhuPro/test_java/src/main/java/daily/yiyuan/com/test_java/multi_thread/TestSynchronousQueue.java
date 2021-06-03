@@ -34,7 +34,7 @@ public class TestSynchronousQueue {
 
 
 
-//        SynchronousQueue<Integer> synchronousQueue = new SynchronousQueue<>();
+        SynchronousQueue<Integer> synchronousQueue = new SynchronousQueue<>();
 //        new Product(synchronousQueue)
 //                .start();
 

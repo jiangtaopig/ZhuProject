@@ -78,7 +78,7 @@
         </provider>
 
         <activity
-            android:name=".eventbus.TestEventBusActivity"
+            android:name=".web.TestWebviewActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             >
@@ -92,7 +92,7 @@
             <!--</meta-data>-->
         </activity>
 
-        <activity android:name=".define_view.TestThreadPoolActivity"/>
+<!--        <activity android:name=".define_view.TestThreadPoolActivity"/>-->
 
         <activity android:name=".TestMemoryLeakActivity"/>
 

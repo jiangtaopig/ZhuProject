@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -122,7 +123,7 @@ public class TestWebviewActivity extends Activity {
         });
 
         loadOtherHtml.setOnClickListener(v -> {
-            webView.loadUrl("https://www.baidu.com");//   file:///android_asset/test.html
+            webView.loadUrl("file:///android_asset/test.html");//   file:///android_asset/test.html
         });
 
         back.setOnClickListener(v -> {
@@ -158,7 +159,12 @@ public class TestWebviewActivity extends Activity {
                 if (url.contains("baidu")) {
                     view.loadUrl(url);
                     return true;
+                } else if(!(url.startsWith("http:") || url.startsWith("https:"))){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
                 }
+
                 return super.shouldOverrideUrlLoading(view, url);
             }
 

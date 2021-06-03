@@ -37,10 +37,32 @@ public class FactoryGroupedClasses {
         itemsMap.put(toInsert.getId(), toInsert);
     }
 
+    /**
+     * # MethodSpec
+     *     代表一个构造函数或方法声明
+     * # TypeSpec
+     *     代表一个类，接口，或者枚举声明
+     * # FieldSpec
+     *     代表一个成员变量，一个字段声明
+     * # JavaFile
+     *     包含一个顶级类的Java文件
+     * # ParameterSpec
+     *     用来创建参数
+     * # AnnotationSpec
+     *     用来创建注解
+     * # ClassName
+     *     用来包装一个类
+     * # TypeName
+     *     类型，如在添加返回值类型是使用 TypeName.VOID
+     *
+     * $S 字符串，如：$S, ”hello”
+     *
+     * $T 类、接口，如：$T, MainActivity
+     */
     public void generateCode(Elements elementUtils, Filer filer) throws IOException {
         TypeElement superClassName = elementUtils.getTypeElement(qualifiedClassName);
         String factoryClassName = superClassName.getSimpleName() + SUFFIX;
-        String qualifiedFactoryClassName = qualifiedClassName + SUFFIX;
+//        String qualifiedFactoryClassName = qualifiedClassName + SUFFIX;
         PackageElement pkg = elementUtils.getPackageOf(superClassName);
         String packageName = pkg.isUnnamed() ? null : pkg.getQualifiedName().toString();
 

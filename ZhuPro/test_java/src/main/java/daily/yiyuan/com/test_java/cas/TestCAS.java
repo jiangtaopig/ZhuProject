@@ -43,13 +43,33 @@ public class TestCAS {
             System.out.println(field.getName() + "---" + field.getType() + ", offset = " + unsafe.objectFieldOffset(field));
         }
 
+
+        try {
+            unsafe.putObject(MyInfo.class, unsafe.objectFieldOffset(MyInfo.class.getDeclaredField("name")), "pig");
+            String name = (String) unsafe.getObject(MyInfo.class, unsafe.objectFieldOffset(MyInfo.class.getDeclaredField("name")));
+            System.out.println("name = " + name);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    unsafe.putObject(MyInfo.class, unsafe.objectFieldOffset(MyInfo.class.getDeclaredField("name")), "dog");
+                    String name = (String) unsafe.getObject(MyInfo.class, unsafe.objectFieldOffset(MyInfo.class.getDeclaredField("name")));
+                    System.out.println("on thread , name = " + name);
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
         /*
         age---int, offset = 12   由于对象头占12个字节，所以 age 的偏移量等于12， int 占4个字节，所以 weight 的偏移量等于 12+4 = 16； weight是double类型 占 8 个字节，所以 name 的偏移量等于 16+8 = 24
         name---class java.lang.String, offset = 24
         weight---double, offset = 16
          */
-
-
     }
 
     private static class Node {

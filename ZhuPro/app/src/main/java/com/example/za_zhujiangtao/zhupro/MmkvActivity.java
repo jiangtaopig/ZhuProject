@@ -41,6 +41,9 @@ public class MmkvActivity extends BaseActivity {
             Toast.makeText(this, "failed", Toast.LENGTH_LONG).show();
         }
 
+        ReentrantLock reentrantLock = new ReentrantLock();
+        reentrantLock.lock();
+
     }
 
     public void query(View view) {

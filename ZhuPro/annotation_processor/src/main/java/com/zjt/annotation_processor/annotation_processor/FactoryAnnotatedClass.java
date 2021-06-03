@@ -7,6 +7,10 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 
+/**
+ * 保存被注解类的数据，比如合法的类的名字，以及@Factory注解本身的一些信息
+ */
+
 public class FactoryAnnotatedClass {
     private TypeElement mAnnotatedClassElement;
     private String mQualifiedSuperClassName;

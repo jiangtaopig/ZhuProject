@@ -28,8 +28,6 @@ public class TestEncoder {
 
         System.out.println("row = " + row + ", column = " + column);
 
-
+        System.out.printf("classname = " + TestEncoder.class.getCanonicalName());
     }
-
-
 }

@@ -91,29 +91,45 @@ public class TestThreadPoolActivity extends BaseActivity {
         Executors.newScheduledThreadPool(2);
         Executors.newSingleThreadExecutor();
 
-        new Handler().postDelayed(() -> {
-
-        }, 10_000);
-
         SynchronousQueue<String> synchronousQueue = new SynchronousQueue<>();
         boolean f = synchronousQueue.offer("a");
         Log.e("xxx", "f = " + f);
 
         mTestThreadPool.setOnClickListener(v -> {
             ThreadPoolExecutor executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100, TimeUnit.SECONDS, new SynchronousQueue<>());
-            for (int i = 0; i < 5; i++) {
-                int a = i;
-                Runnable runnable = () -> {
-                    Log.e("gggg", "任务" + (a + 1) + "开始");
-                    try {
-                        Thread.sleep(3_000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Log.e("gggg", "任务" + (a + 1) + "结束");
-                };
-                executorService.execute(runnable);
+//            for (int i = 0; i < 5; i++) {
+//                int a = i;
+//                Runnable runnable = () -> {
+//                    Log.e("gggg", "任务" + (a + 1) + "开始");
+//                    try {
+//                        Thread.sleep(3_000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Log.e("gggg", "任务" + (a + 1) + "结束");
+//                };
+//                executorService.execute(runnable);
+//            }
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("test thread pool", "1------- thread ===== " + Thread.currentThread().getName());
+                }
+            });
+
+            try {
+                Thread.sleep(1_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("test thread pool", "2------- thread ===== " + Thread.currentThread().getName());
+                }
+            });
+
             executorService.shutdown();
 //            executorService.setMaximumPoolSize(10);
 //            executorService.setCorePoolSize(10);

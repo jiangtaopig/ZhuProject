@@ -154,8 +154,11 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     api 'com.aliyun.ams:alicloud-android-utils:1.1.3'
     implementation 'com.android.support:multidex:1.0.3' //多 dex 配置 bugly热修复
+
+    // 使用自定义注解时的依赖
     annotationProcessor project(':annotation_processor')
     implementation project(':annotation_my')
+
     //DiskLruCache
     api 'com.jakewharton:disklrucache:2.0.2'
     //阿里云推送的辅助通道
