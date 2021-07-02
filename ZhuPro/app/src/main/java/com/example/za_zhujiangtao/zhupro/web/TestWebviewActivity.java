@@ -30,25 +30,17 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.za_zhujiangtao.zhupro.R;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -146,10 +138,10 @@ public class TestWebviewActivity extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
 //                Log.e("TestWebviewActivity", "request url = " + request.getUrl().toString());
-                if (request.getUrl().toString().contains("baidu")) {
-                    view.loadUrl(request.getUrl().toString());
-                    return true;
-                }
+//                if (request.getUrl().toString().contains("baidu")) {
+//                    view.loadUrl(request.getUrl().toString());
+//                    return true;
+//                }
                 return super.shouldOverrideUrlLoading(view, request);
             }
 
@@ -159,7 +151,7 @@ public class TestWebviewActivity extends Activity {
                 if (url.contains("baidu")) {
                     view.loadUrl(url);
                     return true;
-                } else if(!(url.startsWith("http:") || url.startsWith("https:"))){
+                } else if (!(url.startsWith("http:") || url.startsWith("https:"))) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                     return true;
@@ -388,7 +380,7 @@ public class TestWebviewActivity extends Activity {
         settings.setDomStorageEnabled(true);
         settings.setGeolocationEnabled(true);
 
-        String app = " ;app/zuifuli/" +"1.0.0/";
+        String app = " ;app/zuifuli/" + "1.0.0/";
         String userAgent = settings.getUserAgentString() + app;
         Log.d("TestWebviewActivity", "userAgent = " + userAgent);
         settings.setUserAgentString(userAgent);
