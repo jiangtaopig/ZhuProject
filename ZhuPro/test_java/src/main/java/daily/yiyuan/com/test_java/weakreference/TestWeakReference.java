@@ -1,4 +1,4 @@
-package daily.yiyuan.com.test_java;
+package daily.yiyuan.com.test_java.weakreference;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
@@ -9,12 +9,13 @@ import java.lang.ref.WeakReference;
  * on 2019/10/18
  */
 public class TestWeakReference {
+    private Student student;
     public static void main(String [] args){
 
         ReferenceQueue<Student> referenceQueue = new ReferenceQueue<>();
 
-//        Student s1 = new Student("xiaoming", 12);
-//        Student s2 = new Student("mazi", 33);
+        Student s1 = new Student("xiaoming", 12);
+        Student s2 = new Student("mazi", 33);
         //这里的WeakReference 的参数1 不能用上面注释的 s1，如果用了垃圾回收就不会回收 s1 ,因为s1是个强引用。
         WeakReference<Student> weakReference1 = new WeakReference<>(new Student("xiaoming", 12), referenceQueue);
         WeakReference<Student> weakReference2 = new WeakReference<>(new Student("mazi", 33), referenceQueue);
@@ -36,6 +37,7 @@ public class TestWeakReference {
         System.out.println("s2 = "+weakReference2.get());
 
         System.out.println("开始调用GC");
+
 
         System.gc();
 

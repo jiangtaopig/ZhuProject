@@ -34,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.za_zhujiangtao.zhupro.LayoutInflaterActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 
 import java.util.HashMap;

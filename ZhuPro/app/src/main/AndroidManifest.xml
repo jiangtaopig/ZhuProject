@@ -78,7 +78,7 @@
         </provider>
 
         <activity
-            android:name=".web.TestWebviewActivity"
+            android:name=".TestLayoutInflaterActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             >

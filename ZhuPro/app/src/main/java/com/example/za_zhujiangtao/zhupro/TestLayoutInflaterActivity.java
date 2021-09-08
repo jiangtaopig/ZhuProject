@@ -1,17 +1,15 @@
 package com.example.za_zhujiangtao.zhupro;
 
-import android.os.Bundle;
+import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.function.Function;
-
-import rx.schedulers.Schedulers;
 
 public class TestLayoutInflaterActivity extends BaseActivity {
 
@@ -23,6 +21,7 @@ public class TestLayoutInflaterActivity extends BaseActivity {
         return R.layout.activity_inflater_layout;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onInitLogic() {
         rootLayout = findViewById(R.id.root_layout);
@@ -38,24 +37,23 @@ public class TestLayoutInflaterActivity extends BaseActivity {
         rootLayout.addView(view);
 
         // :: 的用法；；
-        Function <String, Integer > parseInt = Integer::parseInt ;
+        Function<String, Integer> parseInt = Integer::parseInt;
         Integer val = parseInt.apply("123");
     }
 
     /**
-     *
-     * @param resource 要转化的为View的xml布局
-     * @param root 如果root布局传入的为null, 那么，resource 的 xml布局的根布局是无效的，例如这里的 android:layout_width="200dp"
-     *     android:layout_height="200dp" 将是无效的
+     * @param resource     要转化的为View的xml布局
+     * @param root         如果root布局传入的为null, 那么，resource 的 xml布局的根布局是无效的，例如这里的 android:layout_width="200dp"
+     *                     android:layout_height="200dp" 将是无效的
      * @param attachToRoot 是否将 resource 布局添加到root 的布局
      */
-    private View test1(@Nullable int resource, ViewGroup root, boolean attachToRoot){
+    private View test1(@Nullable int resource, ViewGroup root, boolean attachToRoot) {
         return inflater.inflate(resource, root, attachToRoot);
 
     }
 
 
-    public void showDialog(View view){
+    public void showDialog(View view) {
         // NoticeDialog 中设置了 style ,此 style 继承了 Theme.Dialog，所以导致 dialog 中的ProgressBar 设置了indeterminateTint来改变颜色，此ProgressBar 不转动
 //        NoticeDialog noticeDialog = NoticeDialog.getInstance("我是中国人，我爱中国");
 //        noticeDialog.show(getSupportFragmentManager(), "NOTICE");
