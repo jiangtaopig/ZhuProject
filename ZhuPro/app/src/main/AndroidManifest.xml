@@ -78,7 +78,7 @@
         </provider>
 
         <activity
-            android:name=".TestLayoutInflaterActivity"
+            android:name=".TestMainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             >
@@ -90,6 +90,10 @@
             <!--<meta-data android:name="android.app.shortcuts"-->
             <!--android:resource="@xml/shortcuts">-->
             <!--</meta-data>-->
+        </activity>
+
+        <activity android:name=".IPCActivity"
+            android:process=":zjt_ipc">
         </activity>
 
 <!--        <activity android:name=".define_view.TestThreadPoolActivity"/>-->
@@ -153,7 +157,7 @@
             android:process=":remote" />
         <service
             android:name=".BookManagerService"
-            android:process=":remote2" />
+             />
         <service
             android:name=".BinderPoolService"
             android:process=":remote3" />

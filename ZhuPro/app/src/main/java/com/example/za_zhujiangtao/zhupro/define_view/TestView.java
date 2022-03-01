@@ -80,7 +80,6 @@ public class TestView extends View {
         int maxWidth, maxHeight;
         int resultW = width, resultH = height;
 
-
         if (widthMode == MeasureSpec.AT_MOST) {
             maxWidth = (int) (getPaddingLeft() + getPaddingRight() + mPaint.measureText(mText));
             resultW = Math.min(maxWidth, width);

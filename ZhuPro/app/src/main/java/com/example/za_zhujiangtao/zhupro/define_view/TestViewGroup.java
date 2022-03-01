@@ -112,7 +112,7 @@ public class TestViewGroup extends ViewGroup {
 
         MarginLayoutParams layoutParams;
 
-        // 合并所以子view的大小得到ViewGroup的大小
+        // 合并所有子view的大小得到ViewGroup的大小
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             layoutParams = (MarginLayoutParams) child.getLayoutParams();

@@ -29,7 +29,7 @@ public class KeyBoardUtils {
     @SuppressLint("SourceLockedOrientationActivity")
     public KeyBoardUtils(Activity activity) {
         this.activity = activity;
-        //widthPixels及heightPixelst就为屏幕分辨率（为绝对宽度与高度）
+        //widthPixels及heightPixels就为屏幕分辨率（为绝对宽度与高度）
         screenHeight = activity.getResources().getDisplayMetrics().heightPixels;
         //根据输入法调整View移动
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -44,7 +44,7 @@ public class KeyBoardUtils {
      * 获取当前可见视图view,视图的可视状态发生改变监听
      */
     public void onCreate() {
-        //获取当前activiy的view
+        //获取当前activity的view
         View content = activity.findViewById(android.R.id.content);
         // content.addOnLayoutChangeListener(listener); 这个方法有时会出现一些问题
         content.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
@@ -64,14 +64,14 @@ public class KeyBoardUtils {
             Rect rect = new Rect();
             //获取当前窗口可视区域大小的
             activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-            int newBlankhHeight = screenHeight - rect.bottom;
+            int newBlankHeight = screenHeight - rect.bottom;
             // 华为P40的屏幕高度为 2211，状态栏高度为129， 软键盘未弹起时 rect.bottom = 2340，即可视区域的bottom大于屏幕高度。
-            Log.e("KeyBoardUtils", "newBlankhHeight = " + newBlankhHeight + ", screenHeight = " + screenHeight + ", rect.bottom = " + rect.bottom);
-            if (newBlankhHeight != blankHeight) {//软键盘高度和上一次高度比较,首次blankHeight =0， 华为P40 这里等于 -129.
-                if (newBlankhHeight > blankHeight) {//说明弹出软键盘
+            Log.e("KeyBoardUtils", "newBlankHeight = " + newBlankHeight + ", screenHeight = " + screenHeight + ", rect.bottom = " + rect.bottom);
+            if (newBlankHeight != blankHeight) {//软键盘高度和上一次高度比较,首次blankHeight =0， 华为P40 这里等于 -129.
+                if (newBlankHeight > blankHeight) {//说明弹出软键盘
                     // keyboard pop
                     if (onKeyBoardStatusChangeListener != null) {
-                        onKeyBoardStatusChangeListener.OnKeyBoardPop(newBlankhHeight);
+                        onKeyBoardStatusChangeListener.OnKeyBoardPop(newBlankHeight);
                     }
                 } else { // newBlankheight <= blankHeight
                     //说明隐藏软键盘
@@ -80,7 +80,7 @@ public class KeyBoardUtils {
                     }
                 }
             }
-            blankHeight = newBlankhHeight;
+            blankHeight = newBlankHeight;
         }
     };
 

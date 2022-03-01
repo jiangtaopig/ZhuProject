@@ -80,19 +80,19 @@ public class BookManagerService extends Service {
         mBookList.add(book2);
 
         //每隔10s添加一本新书，然后通知客户端
-        Observable.interval(10*1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                    if (!mServiceDestroyed.get()){
-                        String bookName = "神雕英雄传"+(int)(Math.random()*10 + 1);
-                        Book book = new Book(bookName, "金庸");
-                        try {
-                            onNewBookArrived(book);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+//        Observable.interval(10*1000, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(aLong -> {
+//                    if (!mServiceDestroyed.get()){
+//                        String bookName = "神雕英雄传"+(int)(Math.random()*10 + 1);
+//                        Book book = new Book(bookName, "金庸");
+//                        try {
+//                            onNewBookArrived(book);
+//                        } catch (RemoteException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
 
     }
     @Override
