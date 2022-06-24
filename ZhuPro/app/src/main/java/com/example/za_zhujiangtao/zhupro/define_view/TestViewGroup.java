@@ -58,7 +58,7 @@ public class TestViewGroup extends ViewGroup {
             childH = child.getMeasuredHeight();
 
             //在 onLayout 中，child.getWidth() 的 大小等于0 ， 所以要使用 getMeasuredWidth;
-            // getMeasureWidth()方法在measure()过程结束后就可以获取到了，而getWidth()方法要在layout()过程结束后才能获取到。
+            // getMeasureWidth() 方法在 measure() 过程结束后就可以获取到了，而 getWidth() 方法要在 layout() 过程结束后才能获取到。
             Log.e(TAG, "onLayout width = " + child.getWidth() + ",childW = " + childW);
 
             leftStart += layoutParams.leftMargin;
@@ -125,7 +125,8 @@ public class TestViewGroup extends ViewGroup {
             contentH += child.getMeasuredHeight() + layoutParams.topMargin + layoutParams.bottomMargin;
         }
 
-        /**重点处理 AT_MOST 模式，TestViewGroup 通过子元素的尺寸自主决定数值大小，但不能超过
+        /**
+         * 重点处理 AT_MOST 模式，TestViewGroup 通过子元素的尺寸自主决定数值大小，但不能超过
          *  ViewGroup 给出的建议数值
          * */
         if (widthMode == MeasureSpec.AT_MOST) {

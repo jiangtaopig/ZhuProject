@@ -58,7 +58,7 @@ public class TestSwipeBackActivity extends SwipeBackActivity {
         mSwipeBackLayout.setOnScrollListener(new ViewDragHelper.OnScrollListener() {
             @Override
             public void onScroll(float x, float y) {
-                mIsInCollectView = WindowUtil.getInstance().isRemove((int)x, (int)y);
+//                mIsInCollectView = WindowUtil.getInstance().isRemove((int)x, (int)y);
             }
 
             @Override
@@ -84,7 +84,7 @@ public class TestSwipeBackActivity extends SwipeBackActivity {
                         }, true);
                     }
                 }else if (mJoinViewVisiable){
-                    WindowUtil.getInstance().hideJoinView();
+//                    WindowUtil.getInstance().hideJoinView();
                 }
             }
 

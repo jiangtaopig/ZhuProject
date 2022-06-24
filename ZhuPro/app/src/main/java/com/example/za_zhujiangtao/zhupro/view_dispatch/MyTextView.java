@@ -42,7 +42,9 @@ public class MyTextView extends AppCompatTextView {
                 break;
 
         }
-        return super.dispatchTouchEvent(event);
+        boolean res = super.dispatchTouchEvent(event);
+        Log.e("view_dispatch", "MyTextView dispatchTouchEvent return >>> " + res);
+        return res;
     }
 
     @Override
@@ -58,10 +60,12 @@ public class MyTextView extends AppCompatTextView {
                 Log.e("view_dispatch", "MyTextView onTouchEvent ACTION_UP");
                 break;
             case MotionEvent.ACTION_CANCEL:
-                Log.e("view_dispatch", "MyButton onTouchEvent ACTION_CANCEL");
+                Log.e("view_dispatch", "MyTextView onTouchEvent ACTION_CANCEL");
                 break;
         }
-        return super.onTouchEvent(event);
+        boolean res = super.onTouchEvent(event);
+        Log.e("view_dispatch", "MyTextView onTouchEvent return >>> " + res);
+        return res;
     }
 
 }

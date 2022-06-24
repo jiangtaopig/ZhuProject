@@ -43,7 +43,9 @@ public class MyLinearLayout extends LinearLayout {
                 Log.d("view_dispatch", "MyLinearLayout onInterceptTouchEvent ACTION_CANCEL");
                 break;
         }
-        return super.onInterceptTouchEvent(ev);
+        boolean res = super.onInterceptTouchEvent(ev);
+        Log.e("view_dispatch", "MyLinearLayout onInterceptTouchEvent return >>> " + res);
+        return res;
     }
 
     @Override
@@ -62,7 +64,9 @@ public class MyLinearLayout extends LinearLayout {
                 Log.d("view_dispatch", "MyLinearLayout dispatchTouchEvent ACTION_CANCEL");
                 break;
         }
-        return super.dispatchTouchEvent(event);
+        boolean res = super.dispatchTouchEvent(event);
+        Log.e("view_dispatch", "MyLinearLayout dispatchTouchEvent return >>> " + res);
+        return res;
     }
 
     @Override
@@ -82,6 +86,8 @@ public class MyLinearLayout extends LinearLayout {
                 Log.d("view_dispatch", "MyLinearLayout onTouchEvent ACTION_CANCEL");
                 break;
         }
-        return super.onTouchEvent(event);
+        boolean res = super.onTouchEvent(event);
+        Log.e("view_dispatch", "MyLinearLayout onTouchEvent return >>> " + res);
+        return res;
     }
 }

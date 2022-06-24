@@ -33,6 +33,7 @@ class Main {
         XiaoWangProxy proxy = new XiaoWangProxy(realWineSeller);
         proxy.buyWine(2499.8);
 
+
         IPerfume perfume = new RealPerfumeSeller();
         XiaoWangProxy proxy1 = new XiaoWangProxy(perfume);
         proxy1.buyPerfume(399.9);

@@ -42,13 +42,13 @@ public class A2Activity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("A2Activity", "A onCreate");
+        Log.e("launch_mode", "A2Activity onCreate");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("A2Activity", "A onNewIntent");
+        Log.e("launch_mode", "A2Activity onNewIntent");
     }
 
     @Override
@@ -63,13 +63,13 @@ public class A2Activity extends BaseActivity {
         mJumpBtn.setText("jump 2 B1Activity");
 
         mJumpBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, A1Activity.class);
+            Intent intent = new Intent(this, B1Activity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
 //            TestMemoryLeakActivity.enter(this);
 
-            compressImg();
+//            compressImg();
         });
 
     }
@@ -113,30 +113,30 @@ public class A2Activity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e("A2Activity", "A onStart");
+        Log.e("launch_mode", "A2Activity onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("A2Activity", "A onResume");
+        Log.e("launch_mode", "A2Activity onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("A2Activity", "A onPause");
+        Log.e("launch_mode", "A2Activity onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("A2Activity", "A onStop");
+        Log.e("launch_mode", "A2Activity onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("A2Activity", "A onDestroy");
+        Log.e("launch_mode", "A2Activity onDestroy");
     }
 }

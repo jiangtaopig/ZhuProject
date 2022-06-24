@@ -46,6 +46,7 @@ public class InterceptRecycleView extends RecyclerView {
                 mIsScrollToTop = false;
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                layoutManager.getItemCount();
 
                 if (firstVisibleItem == 0) {
                     mIsScrollToTop = true;

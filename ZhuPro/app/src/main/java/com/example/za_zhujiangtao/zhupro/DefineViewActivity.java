@@ -18,6 +18,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -29,9 +30,11 @@ import com.example.za_zhujiangtao.zhupro.factory.ShapeFactory;
 import com.example.za_zhujiangtao.zhupro.launch_mode.A1Activity;
 import com.example.za_zhujiangtao.zhupro.utils.CatchUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
+import com.squareup.haha.perflib.HahaSpy;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 

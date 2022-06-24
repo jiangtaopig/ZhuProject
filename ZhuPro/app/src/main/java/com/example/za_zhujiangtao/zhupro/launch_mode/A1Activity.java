@@ -70,13 +70,13 @@ public class A1Activity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("A1Activity", "A onCreate");
+        Log.e("launch_mode", "A1Activity  onCreate");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("A1Activity", "A onNewIntent");
+        Log.e("launch_mode", "A1Activity onNewIntent");
     }
 
     @Override
@@ -89,8 +89,8 @@ public class A1Activity extends BaseActivity {
         mTxt.setText("I am A1 Activity");
         jump2B.setText("Jump 2 A2Activity");
         jump2B.setOnClickListener(v -> {
-            Intent intent = new Intent(A1Activity.this, TestLaunchModeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(A1Activity.this, A2Activity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
@@ -140,5 +140,6 @@ public class A1Activity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        unbindService(serviceConnection);
+        Log.e("launch_mode", "A1Activity onDestroy");
     }
 }

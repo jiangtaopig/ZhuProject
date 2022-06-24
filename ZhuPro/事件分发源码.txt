@@ -1,8 +1,7 @@
 
-[java] view plain copy 在CODE上查看代码片派生到我的代码片
 /** 
-    *   ViewGroup 的 事件分发源码
-    */  
+ *   ViewGroup 的 事件分发源码
+ */
    @Override  
    public boolean dispatchTouchEvent(MotionEvent ev) {  
        final int action = ev.getAction();  
@@ -12,13 +11,13 @@
        final float scrolledYFloat = yf + mScrollY;  
        final Rect frame = mTempRect;  
 
-       //这个值默认是false, 然后我们可以通过requestDisallowInterceptTouchEvent(boolean disallowIntercept)方法  
-       //来改变disallowIntercept的值  
+       //这个值默认是 false, 然后我们可以通过 requestDisallowInterceptTouchEvent(boolean disallowIntercept) 方法
+       //来改变 disallowIntercept 的值
        boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;  
 
        //这里是ACTION_DOWN的处理逻辑  
        if (action == MotionEvent.ACTION_DOWN) {  
-        //清除mMotionTarget, 每次ACTION_DOWN都很设置mMotionTarget为null  
+        //清除 mMotionTarget, 每次 ACTION_DOWN 都很设置 mMotionTarget 为 null
            if (mMotionTarget != null) {  
                mMotionTarget = null;  
            }  
@@ -82,8 +81,8 @@
        // The event wasn't an ACTION_DOWN, dispatch it to our target if  
        // we have one.  
        final View target = mMotionTarget;  
-       //mMotionTarget为null意味着没有找到消费Touch事件的View, 所以我们需要调用ViewGroup父类的  
-       //dispatchTouchEvent()方法，也就是View的dispatchTouchEvent()方法  
+       // mMotionTarget 为 null 意味着没有找到消费Touch事件的View, 所以我们需要调用ViewGroup父类的
+       // dispatchTouchEvent()方法，也就是View的dispatchTouchEvent()方法
        if (target == null) {  
            // We don't have a target, this means we're handling the  
            // event as a regular view.  
@@ -96,6 +95,7 @@
        }  
 
        // 这个if里面的代码ACTION_DOWN 事件不会执行到，只有ACTION_MOVE、ACTION_UP才会走到这里,
+       // 走到这里还有个条件就是 点击的 view 消费了 ACTION_DOWN 事件，否则 mMotionTarget = null , 在上一步 target == null 的判断时就返回了。
        // 假如在ACTION_MOVE或者ACTION_UP拦截了Touch事件, 那么就会将ACTION_CANCEL派发给target， 将mMotionTarget置为null, 然后直接返回true  ,表示消费了此Touch事件
        if (!disallowIntercept && onInterceptTouchEvent(ev)) {  
            final float xc = scrolledXFloat - (float) target.mLeft;  
@@ -130,36 +130,36 @@
            mMotionTarget = null;  
        }  
 
-       //如果没有拦截ACTION_MOVE, ACTION_DOWN的话，直接将Touch事件派发给target  
+       // 如果没有拦截 ACTION_DOWN 、ACTION_MOVE 、ACTION_UP 的话，直接将Touch事件派发给target
+       // 点击事件是在 ACTION_UP 中触发的
        return target.dispatchTouchEvent(ev);  
    }
 
    比方说，ViewPager 里面的item是一个ListView，当然了ViewPager已经处理了滑动冲突，这里只是举例说明；
    这里需要使用外部拦截：
 
-注意一点，外部拦截时在重写ViewGroup的onInterceptTouchEvent方法时，ViewGroup不能拦截DOWN事件和UP事件。因为一旦ViewGroup拦截了DOWN事件，
-也就是和mFirstTouchTarget始终为空，同一事件序列中的其他事件都不会再往下传递；
-若ViewGroup拦截了UP事件，则子View就不会触发单击事件，因为子View的单击事件是在UP事件时被触发的。
+   注意一点，外部拦截时在重写ViewGroup的onInterceptTouchEvent方法时，ViewGroup不能拦截DOWN事件和UP事件。因为一旦ViewGroup拦截了DOWN事件，
+   也就是和mFirstTouchTarget始终为空，同一事件序列中的其他事件都不会再往下传递；
+   若ViewGroup拦截了UP事件，则子View就不会触发单击事件，因为子View的单击事件是在UP事件时被触发的。
 
-当 ViewPager 拦截了Move 事件后，会将事件设置为CANCEL后往下传递或自己处理，然后将 mMotionTarget 置为 null，那么后续的事件都会由ViewPager来处理了。
+   当 ViewPager 拦截了Move 事件后，会将事件设置为CANCEL后往下传递或自己处理，然后将 mMotionTarget 置为 null，那么后续的事件都会由ViewPager来处理了。
 
 
 
    /**
      * View 的事件分发源码 缩略
-
      */
 
 
-public boolean dispatchTouchEvent (MotionEvent event) {  
+  public boolean dispatchTouchEvent (MotionEvent event) {
     if (mOnTouchListener != null && ( mViewFlags & ENABLED_MASK) == ENABLED &&  
             mOnTouchListener.onTouch( this, event)) {  
         return true;  
     }  
     return onTouchEvent(event);  
-}  
+  }
 
-public boolean onTouchEvent(MotionEvent event) {  
+  public boolean onTouchEvent(MotionEvent event) {
         。。。。。。。。。。。  
         此处有省略  ----如果是可点击的事件，比如说Button ImageButton等，直接返回true; 如果TextView设置了点击事件 则 TextView 也变成了可点击的了，就跟Button一样
         if (((viewFlags & CLICKABLE) == CLICKABLE ||  

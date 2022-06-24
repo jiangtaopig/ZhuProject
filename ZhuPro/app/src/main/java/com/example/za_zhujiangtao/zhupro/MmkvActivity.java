@@ -44,6 +44,7 @@ public class MmkvActivity extends BaseActivity {
         ReentrantLock reentrantLock = new ReentrantLock();
         reentrantLock.lock();
 
+
     }
 
     public void query(View view) {

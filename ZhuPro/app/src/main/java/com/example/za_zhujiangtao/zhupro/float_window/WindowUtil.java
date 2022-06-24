@@ -3,6 +3,7 @@ package com.example.za_zhujiangtao.zhupro.float_window;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -37,18 +39,14 @@ public class WindowUtil {
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mCollectViewParams;
-    private WindowManager.LayoutParams mCancelViewLayoutParams;
     private View mCollectView;
+    private View mNormalView;
+    private WindowManager.LayoutParams mNormalViewParams;
 
-    private Rect mDeleteRect = new Rect();
-    private static final int mViewWidth = 50;
     private int statusBarHeight = 0;
-    //    private CustomCancelView mCustomCancelView;
-    private static final int mCancelViewSize = 100;
     private int mScreenWidth;
     private int mScreenHeight;
     private Context mContext;
-    private List<String> mData = new ArrayList<>();
 
     private WindowUtil() {
 
@@ -65,93 +63,94 @@ public class WindowUtil {
 
     public void showPermissionWindow(Context context, OnPermissionListener onPermissionListener, boolean showJoinView) {
         if (RomUtils.checkFloatWindowPermission(context)) {
-            showWindow(context, showJoinView);
+            showWindow(context);
         } else {
             onPermissionListener.showPermissionDialog();
         }
     }
 
     @SuppressLint("CheckResult")
-    private void showWindow(Context context, boolean showJoinView) {
+    private void showWindow(Context context) {
         Log.e("showWindow", "mWindowManager " + mWindowManager);
         if (null == mWindowManager) {
             mContext = context;
             mWindowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
 
             mCollectViewParams = new WindowManager.LayoutParams();
-            mCancelViewLayoutParams = new WindowManager.LayoutParams();
+            mNormalViewParams = new WindowManager.LayoutParams();
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mCollectViewParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-                mCancelViewLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                mNormalViewParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
             } else {
                 mCollectViewParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-                mCancelViewLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+                mNormalViewParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
             }
-
             mScreenWidth = DisplayUtil.getScreenWidth(context);
             mScreenHeight = DisplayUtil.getScreenHeight(context);
-
-//            mCustomCancelView = (CustomCancelView) LayoutInflater.from(mContext).inflate(R.layout.activity_test, null);
-//            mCancelViewLayoutParams.format = PixelFormat.RGBA_8888;   //窗口透明
-//            mCancelViewLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;  //窗口位置
-//            mCancelViewLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-//            mCancelViewLayoutParams.width = DisplayUtil.dip2px(mCancelViewSize);
-//            mCancelViewLayoutParams.height = DisplayUtil.dip2px(mCancelViewSize);
-//            mWindowManager.addView(mCustomCancelView, mCancelViewLayoutParams);
-
-            if (mDeleteRect.isEmpty()) {
-                mDeleteRect.set(mScreenWidth - mCancelViewLayoutParams.width, mScreenHeight - mCancelViewLayoutParams.height, mScreenWidth, mScreenHeight);
-            }
-            Log.d("xxx", "top = " + mDeleteRect.top + ", left = " + mDeleteRect.left + ", right = " + mDeleteRect.right + ", bottom = " + mDeleteRect.bottom);
-            showJoinView();
-            initCollectView();
-        } else {
-            if (showJoinView) {
-                showJoinView();
-            }
+            initView();
         }
     }
 
-    public void showJoinView() {
-//        Log.e("zzzzz", "showJoinView "+mCustomCancelView);
-//        if (mCustomCancelView != null) {
-//            mCustomCancelView.startAnimate(true);
-//        }
-    }
-
-    public void hideJoinView() {
-//        Log.e("zzzzz", "hideJoinView "+mCustomCancelView);
-//        if (mCustomCancelView != null) {
-//            mCustomCancelView.startAnimate(false);
-//        }
-    }
-
-    private void initCollectView() {
+    @SuppressLint("CheckResult")
+    private void initView() {
         mCollectView = LayoutInflater.from(mContext).inflate(R.layout.article_window, null);
         initListener(mContext);
-//        ImageView ivImage = mCollectView.findViewById(R.id.aw_iv_image);
-//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
-//        lp.width = DisplayUtil.dip2px(mViewWidth - 5);
-//        lp.height = DisplayUtil.dip2px(mViewWidth - 5);
-//        ivImage.setLayoutParams(lp);
-//        RequestOptions requestOptions = RequestOptions.circleCropTransform();
-//        requestOptions.placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round);
-//        Glide.with(mContext).load("").apply(requestOptions).into(ivImage);
 
         mCollectViewParams.format = PixelFormat.RGBA_8888;   //窗口透明
-        mCollectViewParams.gravity = Gravity.LEFT | Gravity.TOP;  //窗口位置
+        mCollectViewParams.gravity = Gravity.START | Gravity.TOP;  //窗口位置
         mCollectViewParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mCollectViewParams.width = RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getWidth());
-        mCollectViewParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getHeight());
+        mCollectViewParams.width = WindowManager.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getWidth());
+        mCollectViewParams.height = WindowManager.LayoutParams.WRAP_CONTENT;//DisplayUtil.dip2px(mCollectView.getHeight());
 
-        // 可以修改View的初始位置---这里是靠在屏幕居中
-        mCollectViewParams.x = mScreenWidth - mCollectViewParams.width;
-        mCollectViewParams.y = (mScreenHeight - mCollectViewParams.height) / 2;
+        // 可以修改View的初始位置---这里 y 是靠在屏幕居中
+        mCollectViewParams.x = mScreenWidth - mCollectView.getWidth();
+        mCollectViewParams.y = (mScreenHeight - mCollectView.getHeight()) / 2;
+
+        Log.e("mCollectView", "mScreenWidth = " + mScreenWidth + ", mScreenHeight = " + mScreenHeight
+                +", mCollectViewParams.x = " +mCollectViewParams.x + ", mCollectViewParams.y = " + mCollectViewParams.y
+                + "mCollectView.getWidth() = " + mCollectView.getWidth() +", mCollectView.getHeight() = " + mCollectView.getHeight());
+
+        // 关键点，一定要把view加到 WindowManager.addView 把 view 加到 window 中
         mWindowManager.addView(mCollectView, mCollectViewParams);
         mCollectView.setVisibility(View.VISIBLE);
 
-        mCollectView.setOnClickListener(v -> {
-            Toast.makeText(mContext, "click!", Toast.LENGTH_SHORT).show();
+
+        mNormalView = LayoutInflater.from(mContext).inflate(R.layout.test_window_layout, null);
+
+        ImageView ivImage = mNormalView.findViewById(R.id.aw_iv_image);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ivImage.getLayoutParams();
+        lp.width = DisplayUtil.dip2px(100);
+        lp.height = DisplayUtil.dip2px(100);
+        ivImage.setLayoutParams(lp);
+        RequestOptions requestOptions = RequestOptions.circleCropTransform();
+        requestOptions
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+        Glide.with(mContext).load("https://tenfei05.cfp.cn/creative/vcg/veer/1600water/veer-104673459.jpg")
+                .apply(requestOptions)
+                .into(ivImage);
+
+        ivImage.setOnClickListener(v -> {
+            Toast.makeText(mContext, "normalview imageview click", Toast.LENGTH_LONG).show();
+        });
+
+        mNormalViewParams.format = PixelFormat.RGBA_8888;   //窗口透明
+        mNormalViewParams.gravity = Gravity.START | Gravity.TOP;  //窗口位置
+        mNormalViewParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        mNormalViewParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        mNormalViewParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        // 可以修改View的初始位置---这里 y 是靠在屏幕居中
+        mNormalViewParams.x = 0;
+        mNormalViewParams.y = (mScreenHeight - mNormalViewParams.height) / 2;
+
+        // 关键点，一定要把view加到 WindowManager.addView 把 view 加到 window 中
+//        mWindowManager.addView(mNormalView, mNormalViewParams);
+//        mNormalView.setVisibility(View.VISIBLE);
+
+        mNormalView.setOnClickListener(v -> {
+            Toast.makeText(mContext, "normal view", Toast.LENGTH_LONG).show();
         });
     }
 
@@ -159,8 +158,6 @@ public class WindowUtil {
         Log.e("showCollectView", "mCollectView = " + mCollectView);
         if (mCollectView != null) {
             mCollectView.setVisibility(View.VISIBLE);
-//            mCustomCancelView.startAnimate(false);
-//            mCustomCancelView.isInSide(false);
         }
     }
 
@@ -168,23 +165,16 @@ public class WindowUtil {
         Log.e("dismissWindow", "mWindowManager = " + mWindowManager + ", mCollectView = " + mCollectView);
         if (mWindowManager != null && mCollectView != null) {
             mWindowManager.removeViewImmediate(mCollectView);
-//            if (mCustomCancelView != null){
-//                mWindowManager.removeViewImmediate(mCustomCancelView);
-//                Log.e("dismissWindow", "..................");
             mWindowManager = null;
-//                mCustomCancelView = null;
             mCollectView = null;
-//            }
         }
     }
 
     private void initListener(final Context context) {
         mCollectView.setOnClickListener(v -> {
-//            String jumpUrl = SPUtil.getStringDefault(WebViewActivity.ARTICLE_JUMP_URL, "");
-//            if (!jumpUrl.isEmpty()) {
-//                WebViewActivity.start(context, jumpUrl);
-//            }
+            Toast.makeText(mContext, "click!", Toast.LENGTH_SHORT).show();
         });
+
 
         final int mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -206,6 +196,9 @@ public class WindowUtil {
                         startX = (int) event.getX();
                         startY = (int) event.getY();
                         isPerformClick = true;
+                        int w = mCollectView.getWidth();
+                        int h = mCollectView.getHeight();
+                        Log.e("mCollectView", "ACTION_DOWN : x = " + mCollectViewParams.x + ", y = " + mCollectViewParams.y+", w = "+w+", h = "+h);
                         return true;
                     case MotionEvent.ACTION_MOVE:
                         //判断是CLICK还是MOVE
@@ -213,10 +206,15 @@ public class WindowUtil {
                         if (Math.abs(startX - event.getX()) >= mTouchSlop || Math.abs(startY - event.getY()) >= mTouchSlop) {
                             isPerformClick = false;
                         }
-                        mCollectViewParams.x = (int) (event.getRawX() - startX);
-                        //这里修复了刚开始移动的时候，悬浮窗的y坐标是不正确的，要减去状态栏的高度，可以将这个去掉运行体验一下
-                        mCollectViewParams.y = (int) (event.getRawY() - startY - statusBarHeight);
-                        updateViewLayout();   //更新mView 的位置
+                        if (isPortrait()) {
+                            mCollectViewParams.x = (int) (event.getRawX() - startX);
+                            //这里修复了刚开始移动的时候，悬浮窗的y坐标是不正确的，要减去状态栏的高度，可以将这个去掉运行体验一下
+                            mCollectViewParams.y = (int) (event.getRawY() - startY - statusBarHeight);
+                        } else {
+                            mCollectViewParams.x = (int) (event.getRawX() - startX - statusBarHeight);
+                            mCollectViewParams.y = (int) (event.getRawY() - startY);
+                        }
+                        updateCollectViewLayout();
                         return true;
                     case MotionEvent.ACTION_UP:
                         if (isPerformClick) {
@@ -228,7 +226,7 @@ public class WindowUtil {
                         } else {
                             finalMoveX = 0;
                         }
-                        stickToSide();
+//                        stickToSide(); // 吸边的效果
                         return !isPerformClick;
                 }
                 return false;
@@ -239,36 +237,22 @@ public class WindowUtil {
                 animator.setInterpolator(new BounceInterpolator());
                 animator.addUpdateListener(animation -> {
                     mCollectViewParams.x = (int) animation.getAnimatedValue();
-                    updateViewLayout();
+                    updateCollectViewLayout();
                 });
                 animator.start();
             }
         });
     }
 
-    public boolean isRemove(int centerX, int centrY) {
-        boolean isInFloatView = mDeleteRect.contains(centerX, centrY);
-//        if (isInFloatView){
-//            mCustomCancelView.isInSide(true);
-//        }
-        return isInFloatView;
+    private boolean isPortrait () {
+        Configuration configuration = mContext.getResources().getConfiguration();
+        int orientation = configuration.orientation;
+        return Configuration.ORIENTATION_PORTRAIT == orientation;
     }
 
-    private void updateViewLayout() {
+    private void updateCollectViewLayout() {
         if (null != mCollectView && null != mCollectViewParams) {
             mWindowManager.updateViewLayout(mCollectView, mCollectViewParams);
-        }
-    }
-
-    public void hideWindow() {
-        if (mCollectView != null) {
-            mCollectView.setVisibility(View.GONE);
-        }
-    }
-
-    public void visibleWindow() {
-        if (mCollectView != null) {
-            mCollectView.setVisibility(View.VISIBLE);
         }
     }
 

@@ -163,13 +163,13 @@ public class IPCActivity extends AppCompatActivity {
     /**
      * AIDL 操作的正常流程是：
      * 1. client 端 通过 bindService 的 onServiceConnected 回调获取远程的 Binder 服务
-     * 2. client 调用远程服务在Binder对象中的引用 mRemote 的 transact 方法，transact 方法作用如下，是靠Binder驱动完成的：
+     * 2. client 调用远程服务在内核中的引用 mRemote 的 transact 方法，transact 方法作用如下，是靠Binder驱动完成的：
      *    a ：已线程间的通信模式，向服务端传递客户端传过来的参数
      *    b : 挂起客户端的线程，Binder 驱动会通过 ioctl 系统调用唤醒 Server 进程，并调用 Server 本地对象的 onTransact 函数
      *        服务端Binder 重写了 onTransact 方法，解析客户端传来的参数，然后，等待服务端执行完指定的操作（比如 addBook）后通知 client
      *    c : client 收到通知后，继续执行客户端进程的代码
      *
-     *    注意：任意一个服务端 Binder 对象被创建，同时会通过 Binder 驱动在内核中创建一个代理对象 mRemote，该对象的类型也是一个 Binder；客户端就是通过 mRemote 来访问远程服务
+     *    注意：任意一个服务端 Binder 对象被创建，同时会通过 Binder 驱动在内核中创建一个代理对象 mRemote，该对象的类型也是一个 Binder；客户端就是通过 mRemote 来访问远程服务。
      */
     private ServiceConnection mAidlConnect = new ServiceConnection() {
         @Override
@@ -179,7 +179,6 @@ public class IPCActivity extends AppCompatActivity {
             // 本例中的 BookManagerService中 在 AndroidManifest.xml 中注册的时候 定义了 android:process=":remote2", 所以是通过Binder驱动来获取数据的
             // 把 android:process=":remote2" 去掉，则表示直接调用 BookManagerService中的方法。
 
-            // 后面把 IPCActivity 的 process 指定成 "zjt_ipc"，而 BookManagerService中 的process 为默认的即是包名所在的进程
             IBookManager bookManager = IBookManager.Stub.asInterface(service);
             mBookManager = bookManager;
             try {
@@ -187,7 +186,7 @@ public class IPCActivity extends AppCompatActivity {
                 for (Book book : books) {
                     Log.e("IPCActivity", "book name = " + book.getBookName() + ", author = " + book.getAuthor());
                 }
-                Log.e("IPCActivity", "..........................");
+                Log.e("IPCActivity", ".......................... thread >> " + Thread.currentThread().getName());
 //                Book book = new Book("鬼吹灯", "南派三叔");
 //                bookManager.addBook(book);
 //                List<Book> books2 = bookManager.getAllBooks();

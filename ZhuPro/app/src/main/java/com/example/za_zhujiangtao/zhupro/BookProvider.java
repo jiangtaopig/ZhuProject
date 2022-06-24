@@ -54,6 +54,9 @@ public class BookProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        // 执行时机 application 的 attachBaseContext -> ContentProvider 的 onCreate -> application 的 onCreate
+
+        Log.d("xxxxx", "BookProvider onCreate");
         Log.d(TAG, "onCreate");
         mContext = getContext();
         //实际中不建议在主线程中进行耗时的数据库操作，这里只是为了演示

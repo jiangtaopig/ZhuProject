@@ -21,7 +21,6 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
-import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -34,7 +33,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.za_zhujiangtao.zhupro.LayoutInflaterActivity;
 import com.example.za_zhujiangtao.zhupro.R;
 
 import java.util.HashMap;
@@ -88,12 +86,16 @@ public class TestWebviewActivity extends Activity {
 
         // 先载入JS代码
         // 格式规定为:file:///android_asset/文件名.html
-        webView.loadUrl("https://www.zuifuli.com/h5/");//file:///android_asset/javascript.html
+        webView.loadUrl("file:///android_asset/javascript.html");//file:///android_asset/javascript.html
 
-        // 通过addJavascriptInterface()将Java对象映射到JS对象
-        //参数1：Javascript对象名
-        //参数2：Java对象名
-        webView.addJavascriptInterface(new AndroidInvokeJs(), "test");//AndroidInvokeJs类对象映射到js的test对象
+        /**
+         * js 调用 native
+         * 通过addJavascriptInterface()将Java对象映射到JS对象---
+         * 参数1：Javascript对象名
+         * 参数2：Java对象名
+         * AndroidInvokeJs类对象映射到js的test对象 ,js 文件中 这样调用test.hello("js调用了android中的hello方法")
+         */
+        webView.addJavascriptInterface(new JsInvokeAndroid(), "test");
 
 
         button.setOnClickListener(view -> {
@@ -104,12 +106,10 @@ public class TestWebviewActivity extends Activity {
                     // 调用javascript的callJS()方法
                     webView.loadUrl("javascript:callJS()");
                 } else {
-                    webView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String value) {
-                            //此处为 js 返回的结果
-                            Log.e("TestWebviewActivity", "evaluateJavascript value = " + value);
-                        }
+                    webView.evaluateJavascript("javascript:callJS()", value -> {
+                        //此处为 js 返回的结果
+                        Log.e("TestWebviewActivity", "evaluateJavascript value = " + value);
+                        Toast.makeText(this, "value >> "+value, Toast.LENGTH_LONG).show();
                     });
                 }
             });
@@ -388,28 +388,6 @@ public class TestWebviewActivity extends Activity {
 
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//    private WebResourceResponse handleIntercept(WebResourceRequest request) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        final Call call = okHttpClient.newCall(new Request.Builder()
-//                .url(request.getUrl().toString())
-//                .method(request.getMethod(), null)
-//                .headers(Headers.of(request.getRequestHeaders()))
-//                .build()
-//        );
-//        try {
-//            final Response response = call.execute();
-//            return new WebResourceResponse(
-//                    response.header("content-type", "text/html"), // You can set something other as default content-type
-//                    response.header("content-encoding", "utf-8"),  //you can set another encoding as default
-//                    response.body().byteStream()
-//            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
     private <ResponseType> void jsCallback(String action, boolean success, ResponseType response) {
         JSCallbackMessage<ResponseType> message = new JSCallbackMessage<>(action);
         message.setSuccess(success);
@@ -429,12 +407,12 @@ public class TestWebviewActivity extends Activity {
         }
     }
 
-    public class AndroidInvokeJs extends Object {
+    public class JsInvokeAndroid {
         // 定义JS需要调用的方法
         // 被JS调用的方法必须加入@JavascriptInterface注解
         @JavascriptInterface
         public void hello(String msg) {
-            Toast.makeText(TestWebviewActivity.this, "JS调用了Android的hello方法", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TestWebviewActivity.this, "JS调用了Android的hello方法 , msg = " + msg, Toast.LENGTH_SHORT).show();
         }
     }
 }
